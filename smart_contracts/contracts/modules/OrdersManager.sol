@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.15 <0.9.0;
 
-import './AccessControlManager.sol';
+import "./AccessControlManager.sol";
 
 import "../enums/OrderMemberDecision.sol";
 
-import '../structures/Order.sol';
-
+import "../structures/Order.sol";
 
 contract OrdersManager is AccessControlManager {
     event CreatedOrder(
@@ -19,8 +18,14 @@ contract OrdersManager is AccessControlManager {
     event ParticipantSetOrderStatus(
         uint256 orderId,
         uint256 deletedBy,
-        ParticipantDecision decision
+        OrderMemberDecision decision
     );
+
+    constructor() {
+        _grantRole(OWNER_ROLE, msg.sender);
+        _setRoleAdmin(DEFAULT_ADMIN_ROLE, ADMIN_ROLE);
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
 
     mapping(uint256 => Order) orders;
     uint256 private productIdCounter = 0;
@@ -77,16 +82,16 @@ contract OrdersManager is AccessControlManager {
         Order memory order = _getOrderById(_orderId);
 
         require(
-            (order.buyer.decision != ParticipantDecision.Disagreement ||
-                order.seller.decision != ParticipantDecision.Disagreement) ||
-                (order.seller.decision != ParticipantDecision.Deleted ||
-                    order.buyer.decision != ParticipantDecision.Deleted),
+            (order.buyer.decision != OrderMemberDecision.Disagreement ||
+                order.seller.decision != OrderMemberDecision.Disagreement) ||
+                (order.seller.decision != OrderMemberDecision.Deleted ||
+                    order.buyer.decision != OrderMemberDecision.Deleted),
             "This order was denied by buyer or seller."
         );
 
         require(
-            order.buyer.decision != ParticipantDecision.Agreement &&
-                order.seller.decision != ParticipantDecision.Agreement,
+            order.buyer.decision != OrderMemberDecision.Agreement &&
+                order.seller.decision != OrderMemberDecision.Agreement,
             "This action available only for unconfirmed orders."
         );
         _;
@@ -118,15 +123,15 @@ contract OrdersManager is AccessControlManager {
         newOrder.id = productIdCounter;
         ++productIdCounter; // increase a counter
         newOrder.createdAt = block.timestamp;
-        newOrder.buyer = Participant(
+        newOrder.buyer = OrderMember(
             _buyerId,
             false,
-            ParticipantDecision.Unhandled
+            OrderMemberDecision.Unhandled
         );
-        newOrder.seller = Participant(
+        newOrder.seller = OrderMember(
             _sellerId,
             false,
-            ParticipantDecision.Unhandled
+            OrderMemberDecision.Unhandled
         );
 
         emit CreatedOrder(newOrder.id, newOrder.createdAt, _sellerId, _buyerId);
@@ -247,7 +252,7 @@ contract OrdersManager is AccessControlManager {
         }
     }
 
-    function setOrderState(uint256 _orderId, ParticipantDecision _decision)
+    function setOrderState(uint256 _orderId, OrderMemberDecision _decision)
         public
         onlyMerchants
         onlyOrderParticipants(_orderId)

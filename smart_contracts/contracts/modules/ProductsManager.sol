@@ -14,13 +14,6 @@ import "../structures/Product.sol";
 import "../structures/ProductOwner.sol";
 
 contract ProductsManager is AccessControlManager {
-    // using Counters for Counters.Counter;
-
-    // Counters.Counter private _tokenIdCounter;
-
-    // constructor() {
-    //     // _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    // }
 
     event ProductWasProduced(uint256 id, uint256 date);
     event ProductWasDeleted(uint256 id);
@@ -60,7 +53,7 @@ contract ProductsManager is AccessControlManager {
             require(
                 _state != StateList.Produced ||
                     _state != StateList.Removed ||
-                    _state != StateList.Restored,
+                    _state != StateList.WasDestroyed,
                 "This states available only for manufacturers."
             );
         }
@@ -82,7 +75,7 @@ contract ProductsManager is AccessControlManager {
         Product storage product = _findProductInStorageById(_productId);
 
         require(
-            product.lastState.state != StateList.Destroyed ||
+            product.lastState.state != StateList.WasDestroyed ||
                 product.lastState.state != StateList.Removed,
             "Product was removed by manufacturer."
         );
@@ -93,7 +86,7 @@ contract ProductsManager is AccessControlManager {
         );
 
         require(
-            product.lastState.state != StateList.Compromised,
+            product.lastState.state != StateList.WasCompromised,
             "This product was compromised."
         );
 
@@ -259,7 +252,7 @@ contract ProductsManager is AccessControlManager {
         );
 
         require(
-            product.lastState.state != StateList.Destroyed ||
+            product.lastState.state != StateList.WasDestroyed ||
                 product.lastState.state != StateList.Removed,
             "Repairing available only for existing products."
         );
@@ -267,7 +260,7 @@ contract ProductsManager is AccessControlManager {
         State storage newState = product.stateHistory.push();
 
         product.lastState = newState;
-        newState.state = StateList.Restored;
+        newState.state = StateList.WasRestored;
         newState.date = currentTimestamp;
         newState.price = product.lastPrice;
         newState.createdBy = msg.sender;
@@ -292,7 +285,7 @@ contract ProductsManager is AccessControlManager {
         State storage newState = product.stateHistory.push();
 
         product.lastState = newState;
-        newState.state = StateList.Restored;
+        newState.state = StateList.WasRestored;
         newState.date = currentTimestamp;
         newState.price = product.lastPrice;
         newState.createdBy = msg.sender;
@@ -307,7 +300,7 @@ contract ProductsManager is AccessControlManager {
 
         addNewStateToProduct(
             _productId,
-            StateList.ChangedOwner,
+            StateList.OwnerWasChanged,
             0,
             _description
         );
@@ -352,8 +345,8 @@ contract ProductsManager is AccessControlManager {
             product.lastState.state == StateList.Sold &&
             product.owner.ownerType == ProductOwnerType.User
         ) {
-            product.lastState.state = StateList.Compromised;
-            newState.state = StateList.Compromised;
+            product.lastState.state = StateList.WasCompromised;
+            newState.state = StateList.WasCompromised;
             emit ProductWasCompromised(_productId, currentTimestamp);
         }
         // success transfer
@@ -373,7 +366,7 @@ contract ProductsManager is AccessControlManager {
         newState.createdBy = msg.sender;
         newState.description = _description;
 
-        if (newState.state == StateList.Compromised) {
+        if (newState.state == StateList.WasCompromised) {
             return false;
         } else {
             return true;
@@ -426,7 +419,7 @@ contract ProductsManager is AccessControlManager {
 
         require(
             product.lastState.state != StateList.Removed ||
-                product.lastState.state != StateList.Destroyed,
+                product.lastState.state != StateList.WasDestroyed,
             "Can not transfer ownerhip for products what was removed or destroyed."
         );
 
@@ -475,7 +468,7 @@ contract ProductsManager is AccessControlManager {
         newState.createdBy = msg.sender;
         newState.description = _description;
 
-        if (_state == StateList.ChangedPrice) {
+        if (_state == StateList.PriceWasChanged) {
             newState.price = _price;
         } else {
             newState.price = product.lastPrice;
