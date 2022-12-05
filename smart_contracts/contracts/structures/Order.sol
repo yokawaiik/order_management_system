@@ -3,6 +3,7 @@ pragma solidity >=0.8.15 <0.9.0;
 
 import "./OrderMember.sol";
 import "./ProductInOrder.sol";
+import "./OrderState.sol";
 
 struct Order {
     uint256 id;
@@ -11,4 +12,5 @@ struct Order {
     address createdBy;
     OrderMember buyer;
     OrderMember seller;
+    OrderState[] orderStateList;
 }

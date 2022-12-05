@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.15 < 0.9;
-// library
+pragma solidity >=0.8.15 <0.9.0;
+
 import "../../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
 
 import "../structures/User.sol";
@@ -14,6 +14,7 @@ contract AccessControlManager is AccessControl {
 
     bytes32 public constant MANUFACTURER_ROLE = keccak256("MANUFACTURER_ROLE");
     bytes32 public constant SUPPLIER_ROLE = keccak256("SUPPLIER_ROLE");
+    bytes32 public constant MAINTAINER_ROLE = keccak256("MAINTAINER_ROLE");
     bytes32 public constant TRANSPORTER_ROLE = keccak256("TRANSPORTER_ROLE");
     bytes32 public constant BUYER_ROLE = keccak256("BUYER_ROLE");
     bytes32 public constant SERVICE_ROLE = keccak256("SERVICE_ROLE");
@@ -38,27 +39,18 @@ contract AccessControlManager is AccessControl {
         _;
     }
 
-    modifier severalRoles(bytes32[] memory _roles) {
-        for (uint256 index = 0; index < _roles.length; index++) {
-            if (hasRole(_roles[index], msg.sender)) {
-                break;
-                _;
-            }
-        }
-        revert("This action available only for allowed roles.");
-    }
-
-    modifier onlyTransporters() {
+    modifier onlySalesBusinessProcessRole() {
         require(
             hasRole(TRANSPORTER_ROLE, msg.sender) ||
-                hasRole(TRANSPORTER_ROLE, msg.sender),
-            "This action available only for transporter."
+                hasRole(SUPPLIER_ROLE, msg.sender) ||
+                hasRole(MANUFACTURER_ROLE, msg.sender),
+            "This action available only for transporters, suppliers, manufacturers."
         );
         _;
     }
 
+
     constructor() {
-        // todo: check or remove
         _setRoleAdmin(DEFAULT_ADMIN_ROLE, ADMIN_ROLE);
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
@@ -66,12 +58,14 @@ contract AccessControlManager is AccessControl {
     mapping(uint256 => User) internal users;
     uint256 private userIdCounter;
 
-    function addUser(
+    function createUser(
         address _userAddress,
         string memory _login,
         string memory _password,
         bytes32 _role
-    ) public onlyRole(ADMIN_ROLE) {
+    ) public onlySalesBusinessProcessRole {
+        // ? info: need to have access to add a new user
+
         users[userIdCounter].id = userIdCounter;
         users[userIdCounter].userAddress = _userAddress;
         users[userIdCounter].password = _password;
@@ -86,7 +80,7 @@ contract AccessControlManager is AccessControl {
         address _userAddress,
         string memory _login,
         string memory _password
-    ) public {
+    ) public onlyRole(SUPPLIER_ROLE) {
         users[userIdCounter].id = userIdCounter;
         users[userIdCounter].userAddress = _userAddress;
         users[userIdCounter].password = _password;
@@ -97,20 +91,39 @@ contract AccessControlManager is AccessControl {
         ++userIdCounter;
     }
 
+    function _getUserInventoryByUserId(uint256 _userId)
+        internal
+        view
+        returns (uint256[] storage)
+    {
+        User storage user = _getUserById(_userId);
+        uint256[] storage inventory = user.inventory;
+
+        return inventory;
+    }
+
+    function getUserInventoryByUserId(uint256 _userId)
+        external
+        view
+        returns (uint256[] memory)
+    {
+        uint256[] memory inventory = _getUserInventoryByUserId(_userId);
+
+        return inventory;
+    }
+
     function getUsersCount() public view returns (uint256) {
         return userIdCounter;
     }
 
     // ? info: find user by id
-    function findUserById(uint256 _userId) public view returns (User memory) {
-        User memory user = users[_userId];
+    function getUserById(uint256 _userId) public view returns (User memory) {
+        User memory user = _getUserById(_userId);
         user.password = "";
-        require(user.createdAt == 0, "User with such an id wasn't find.");
-
         return users[_userId];
     }
 
-    function findUserIdByAddress(address _userAddress)
+    function getUserIdByAddress(address _userAddress)
         public
         view
         returns (uint256)
@@ -126,7 +139,7 @@ contract AccessControlManager is AccessControl {
 
         require(
             users[foundUserId].createdAt != 0 &&
-                users[foundUserId].userAddress != _userAddress,
+                users[foundUserId].userAddress == _userAddress,
             "User with such an id wasn't find."
         );
 
@@ -146,16 +159,24 @@ contract AccessControlManager is AccessControl {
     }
 
     // ? info: find user by address
-    function findUserByAddress(address _userAddress)
+    function _getUserByAddress(address _userAddress)
+        internal
+        view
+        returns (User storage)
+    {
+        uint256 foundUserId = getUserIdByAddress(_userAddress);
+        User storage user = _getUserById(foundUserId);
+        return user;
+    }
+
+    // ? info: find user by address
+    function getUserByAddress(address _userAddress)
         public
         view
         returns (User memory)
     {
-        uint256 foundUserId = findUserIdByAddress(_userAddress);
-
-        User memory user = findUserById(foundUserId);
+        User memory user = _getUserByAddress(_userAddress);
         user.password = "";
-
         return user;
     }
 
@@ -178,7 +199,6 @@ contract AccessControlManager is AccessControl {
         return memoryArray;
     }
 
-    // todo: maybe it add in other module
     function _checkProductInInventory(
         uint256 _productId,
         uint256[] storage _inventory

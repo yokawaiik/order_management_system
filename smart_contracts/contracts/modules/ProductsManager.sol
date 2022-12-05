@@ -14,7 +14,6 @@ import "../structures/Product.sol";
 import "../structures/ProductOwner.sol";
 
 contract ProductsManager is AccessControlManager {
-
     event ProductWasProduced(uint256 id, uint256 date);
     event ProductWasDeleted(uint256 id);
     event UpdatedProductState(uint256 id, uint256 date, StateList state);
@@ -30,30 +29,10 @@ contract ProductsManager is AccessControlManager {
     // certificates of products
     uint256 private productIdCounter = 0;
 
-    // ? info: find product by id
-    function findProductById(uint256 productId)
-        public
-        view
-        returns (Product memory)
-    {
-        return _findProductInStorageById(productId);
-    }
-
-    function getProductState(uint256 _productId)
-        public
-        view
-        returns (State memory)
-    {
-        Product memory product = _findProductInStorageById(_productId);
-        return product.lastState;
-    }
-
     modifier onlyRolesMatchingToStates(StateList _state) {
         if (hasRole(MANUFACTURER_ROLE, msg.sender) != true) {
             require(
-                _state != StateList.Produced ||
-                    _state != StateList.Removed ||
-                    _state != StateList.WasDestroyed,
+                _state != StateList.Produced || _state != StateList.Removed,
                 "This states available only for manufacturers."
             );
         }
@@ -61,10 +40,28 @@ contract ProductsManager is AccessControlManager {
     }
 
     modifier onlyProductInInventory(uint256 _productId) {
-        uint256 userId = findUserIdByAddress(msg.sender);
-        User memory currentUser = findUserById(userId);
+        uint256 userId = _getUserByAddress(msg.sender).id;
+        User memory currentUser = _getUserByAddress(msg.sender);
         _getProductIndexInUserInventory(_productId, currentUser.inventory);
         _;
+    }
+
+    // ? info: find product by id
+    function getProductById(uint256 productId)
+        public
+        view
+        returns (Product memory)
+    {
+        return _getProductInStorageById(productId);
+    }
+
+    function getProductState(uint256 _productId)
+        public
+        view
+        returns (State memory)
+    {
+        Product memory product = _getProductInStorageById(_productId);
+        return product.lastState;
     }
 
     function checkLegalityProductToTransferOrSale(uint256 _productId)
@@ -72,7 +69,7 @@ contract ProductsManager is AccessControlManager {
         view
         returns (bool)
     {
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
 
         require(
             product.lastState.state != StateList.WasDestroyed ||
@@ -123,7 +120,7 @@ contract ProductsManager is AccessControlManager {
         return memoryArray;
     }
 
-    function produceProduct(
+    function produceNewProduct(
         uint256 _productType,
         uint256 _price,
         string memory _description,
@@ -137,7 +134,7 @@ contract ProductsManager is AccessControlManager {
             "Guarantee expires at must be more then current time."
         );
 
-        uint256 currentUserId = findUserByAddress(msg.sender).id;
+        uint256 currentUserId = _getUserByAddress(msg.sender).id;
 
         uint256 newProductId = productIdCounter;
         Product storage newProduct = products[newProductId];
@@ -172,7 +169,7 @@ contract ProductsManager is AccessControlManager {
 
         newProduct.lastState = pushedState;
 
-        uint256 foundUserId = findUserIdByAddress(msg.sender);
+        uint256 foundUserId = _getUserByAddress(msg.sender).id;
 
         newProduct.ownershipHistory.push(newProduct.owner);
 
@@ -191,7 +188,7 @@ contract ProductsManager is AccessControlManager {
         public
         onlyRole(MANUFACTURER_ROLE)
     {
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
 
         uint256 currentTimestamp = block.timestamp;
 
@@ -214,7 +211,7 @@ contract ProductsManager is AccessControlManager {
         newState.createdBy = msg.sender;
         newState.description = _description;
 
-        uint256 foundUserId = findUserIdByAddress(msg.sender);
+        uint256 foundUserId = _getUserByAddress(msg.sender).id;
 
         _removeProductFromInventory(_productId, foundUserId);
         emit ProductWasDeleted(_productId);
@@ -242,7 +239,7 @@ contract ProductsManager is AccessControlManager {
         onlyRole(MANUFACTURER_ROLE)
         onlyProductInInventory(_productId)
     {
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
 
         uint256 currentTimestamp = block.timestamp;
 
@@ -273,7 +270,7 @@ contract ProductsManager is AccessControlManager {
         uint256 _productId,
         string memory _description
     ) public onlyRole(MANUFACTURER_ROLE) {
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
 
         uint256 currentTimestamp = block.timestamp;
 
@@ -296,9 +293,9 @@ contract ProductsManager is AccessControlManager {
     function _resetOwnership(uint256 _productId, string memory _description)
         internal
     {
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
 
-        addNewStateToProduct(
+        updateProductState(
             _productId,
             StateList.OwnerWasChanged,
             0,
@@ -318,7 +315,7 @@ contract ProductsManager is AccessControlManager {
         );
     }
 
-    function _findProductInStorageById(uint256 _productId)
+    function _getProductInStorageById(uint256 _productId)
         internal
         view
         returns (Product storage)
@@ -336,7 +333,7 @@ contract ProductsManager is AccessControlManager {
         string memory _description
     ) public onlyMerchants onlyProductInInventory(_productId) returns (bool) {
         uint256 currentTimestamp = block.timestamp;
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
         checkLegalityProductToTransferOrSale(_productId);
 
         State storage newState = product.stateHistory.push();
@@ -380,11 +377,11 @@ contract ProductsManager is AccessControlManager {
         string memory _description
     )
         public
-        onlyTransporters
+        onlyRole(TRANSPORTER_ROLE)
         onlyRolesMatchingToStates(_state)
         onlyProductInInventory(_productId)
     {
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
 
         uint256 currentTimestamp = block.timestamp;
 
@@ -405,11 +402,11 @@ contract ProductsManager is AccessControlManager {
         ProductOwnerType _ownerType
     ) public onlyMerchants onlyProductInInventory(_productId) {
         uint256 currentTimestamp = block.timestamp;
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
 
         ProductOwner memory currentProductOwner = product.owner;
 
-        uint256 currentUserId = findUserIdByAddress(msg.sender);
+        uint256 currentUserId = _getUserByAddress(msg.sender).id;
 
         require(
             currentProductOwner.createdAt != 0 &&
@@ -448,7 +445,7 @@ contract ProductsManager is AccessControlManager {
     }
 
     // ? info: add new state to product history
-    function addNewStateToProduct(
+    function updateProductState(
         uint256 _productId,
         StateList _state,
         uint256 _price,
@@ -459,7 +456,7 @@ contract ProductsManager is AccessControlManager {
         onlyRolesMatchingToStates(_state)
         onlyProductInInventory(_productId)
     {
-        Product storage product = _findProductInStorageById(_productId);
+        Product storage product = _getProductInStorageById(_productId);
 
         State storage newState = product.stateHistory.push();
 

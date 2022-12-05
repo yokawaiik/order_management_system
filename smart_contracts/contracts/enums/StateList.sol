@@ -12,8 +12,12 @@ enum StateList {
     Removed, // 6
     // ? info: Ensuring originality
     WasCompromised, // 7
-    // ? info: Service and Maintenance
-    WasServiced, // 8
+    // ? info: Maintenance
+    InService, // 8
+    WasFinished, // 8
+    WasDeny, // 8
+    WasGotByOwner, // 8
+    // ? info: only for Manufacturer
     WasDestroyed, // 9
     WasRestored, // 10
     // ? info: Owner conception

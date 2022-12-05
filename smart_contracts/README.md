@@ -1,8 +1,48 @@
 # Sample Hardhat Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
-Try running some of the following tasks:
+
+
+
+Product Manager:
+produceNewProduct()
+restoreProduct()
+removeProduct()
+getProductById()
+getAllProductsByOwner()
+setNewOwnerToProduct()
+
+	Users Manager (Access Control):
+getUserInventory()
+transferItemToUser()
+createUser()
+getUserById()
+revokeUser()
+setRole()
+
+		Order Manager:
+			getOrderById()
+			getOrderByRequestUserId()	
+getOrderBySupplyerUserId()
+			getOrderByProductId()
+			createOrder()
+updateOrderById()
+			addProductToOrderById()
+			removeProductFromOrderById()
+			setStateProductTransferById()
+			updateOrderStatusById()
+
+		Support (Service) Manager:
+			getSupportOrderById()
+			getSupportOrderByRequestUserId()
+			getSupportOrderByProductId()
+			createSupportOrder()
+			setStateSupportProductTransfer()
+			updateSupportOrderStatus()
+
+
+
+
 
 ```shell
 npx hardhat help
