@@ -6,6 +6,8 @@ import "./MaintenanceState.sol";
 
 struct Maintenance {
     uint256 id;
+    // todo: for every manufacturer: mapping(uint => uint[])
+    // todo: uint[] manufacturers
     uint256 product;
     uint256 createdAt;
     MaintenanceMember giver;

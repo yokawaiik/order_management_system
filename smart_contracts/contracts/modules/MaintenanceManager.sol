@@ -257,68 +257,72 @@ contract MaintenanceManager is AccessControlManager, ProductsManager {
 
         emit UpdatedMaintenanceMemberState(_maintenanceId, currentUserId);
     }
+    // todo: divide this method into
+    // todo:  updateMaintenanceMemberDecisionByUser
+    // todo:  updateMaintenanceMemberDecisionByMerchant
+
 
     // ? info : when legal last owner sold his product to another person
     // ? but forgot to transfer the ownership
-    // function createMaintenanceByOnlyMaintainer(
-    //     uint256 _userId,
-    //     uint256 _productId,
-    //     string memory _description,
-    //     string memory _location
-    // ) public onlyMerchants {
-    //     uint256 currentUserId = _getUserByAddress(msg.sender).id;
+    function createMaintenanceByOnlyMaintainer(
+        uint256 _userId,
+        uint256 _productId,
+        string memory _description,
+        string memory _location
+    ) public onlyMerchants {
+        uint256 currentUserId = _getUserByAddress(msg.sender).id;
 
-    //     Maintenance storage newMaintenance = maintenanceList[
-    //         maintenanceIdCounter
-    //     ];
+        Maintenance storage newMaintenance = maintenanceList[
+            maintenanceIdCounter
+        ];
 
-    //     newMaintenance.id = maintenanceIdCounter;
-    //     newMaintenance.createdAt = block.timestamp;
-    //     newMaintenance.product = _productId;
+        newMaintenance.id = maintenanceIdCounter;
+        newMaintenance.createdAt = block.timestamp;
+        newMaintenance.product = _productId;
 
-    //     newMaintenance.giver = MaintenanceMember(
-    //         _userId,
-    //         MaintenanceMemberDecision.Gave
-    //     );
-    //     newMaintenance.receiver = MaintenanceMember(
-    //         currentUserId,
-    //         MaintenanceMemberDecision.Received
-    //     );
+        newMaintenance.giver = MaintenanceMember(
+            _userId,
+            MaintenanceMemberDecision.Gave
+        );
+        newMaintenance.receiver = MaintenanceMember(
+            currentUserId,
+            MaintenanceMemberDecision.Received
+        );
 
-    //     ++maintenanceIdCounter;
+        ++maintenanceIdCounter;
 
-    //     // reset ownership and getting product
-    //     _resetOwnership(newMaintenance.product, _description);
+        // reset ownership and getting product
+        _resetOwnership(newMaintenance.product, _description);
 
-    //     Product storage product = _getProductInStorageById(
-    //         newMaintenance.product
-    //     );
-    //     require(
-    //         product.owner.createdAt != 0,
-    //         "This product doesn't have an owner."
-    //     );
+        Product storage product = _getProductInStorageById(
+            newMaintenance.product
+        );
+        require(
+            product.owner.createdAt != 0,
+            "This product doesn't have an owner."
+        );
 
-    //     User storage lastUser = _getUserById(product.owner.id);
-    //     User storage newUser = _getUserById(_userId);
-    //     _removeProductFromInventory(lastUser.inventory, product.id); // remove product from last user
+        User storage lastUser = _getUserById(product.owner.id);
+        User storage newUser = _getUserById(_userId);
+        _removeProductFromInventory(lastUser.inventory, product.id); // remove product from last user
 
-    //     transferProductOwnership(product.id, _userId, ProductOwnerType.User);
-    //     _addProductToInventory(newUser.inventory, product.id);
+        transferProductOwnership(product.id, _userId, ProductOwnerType.User);
+        _addProductToInventory(newUser.inventory, product.id);
 
-    //     updateProductState(
-    //         newMaintenance.product,
-    //         StateList.InService,
-    //         0,
-    //         _description
-    //     );
+        updateProductState(
+            newMaintenance.product,
+            StateList.InService,
+            0,
+            _description
+        );
 
-    //     updateMaintenanceState(
-    //         newMaintenance.id,
-    //         _location,
-    //         StateList.InService,
-    //         _description
-    //     );
+        updateMaintenanceState(
+            newMaintenance.id,
+            _location,
+            StateList.InService,
+            _description
+        );
 
-    //     emit UpdatedMaintenanceMemberState(newMaintenance.id, currentUserId);
-    // }
+        emit UpdatedMaintenanceMemberState(newMaintenance.id, currentUserId);
+    }
 }
