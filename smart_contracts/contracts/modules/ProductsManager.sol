@@ -26,6 +26,7 @@ contract ProductsManager is AccessControlManager {
     );
 
     mapping(uint256 => Product) private products;
+
     // certificates of products
     uint256 private productIdCounter = 0;
 
@@ -99,25 +100,6 @@ contract ProductsManager is AccessControlManager {
         }
 
         revert("Such product didn't find in inventory.");
-    }
-
-    function exportProducts()
-        external
-        view
-        onlyRole(OWNER_ROLE)
-        returns (Product[] memory)
-    {
-        Product[] memory memoryArray = new Product[](productIdCounter);
-
-        if (productIdCounter == 0) {
-            return memoryArray;
-        }
-
-        for (uint256 i = 0; i < productIdCounter; i++) {
-            memoryArray[i] = products[i];
-        }
-
-        return memoryArray;
     }
 
     function produceNewProduct(
