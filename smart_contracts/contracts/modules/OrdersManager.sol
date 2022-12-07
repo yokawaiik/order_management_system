@@ -219,7 +219,7 @@ contract OrdersManager is AccessControlManager {
     function _removeProductFromOrderByIdProductList(
         ProductInOrder[] storage _array,
         uint256 _productId
-    ) internal onlyMerchants {
+    ) internal  {
         for (uint256 i = 0; i < _array.length; i++) {
             if (_array[i].id == _productId) {
                 for (uint256 j = i; j < _array.length - 1; j++) {

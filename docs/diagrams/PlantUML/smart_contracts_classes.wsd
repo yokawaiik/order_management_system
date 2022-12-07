@@ -1,0 +1,162 @@
+@startuml 'smart contracts classes'
+
+' class OrderManagementSystem as "Контракт: Система Управления Заказами"
+' class OrderManagementSystemUpgradable as "Контракт: Обновляемый Контракт"
+
+' class AccessControlManager as "Контракт: Менеджер Контроля Доступа"
+' class MaintenanceManager as "Контракт: Менеджер Управления Поддержкой"
+' class OrdersManager as "Контракт:  Менеджер Управления Заказами"
+' class ProductsManager as "Контракт:  Менеджер Управления Продукцией"
+
+class OrderManagementSystem  as "Контракт: Система Управления Заказами" 
+
+class OrderManagementSystemUpgradable as "Контракт: Обновляемый Контракт" {
+    - owner : address
+    + version : uint
+    - orderManagementSystemContract : address
+
+    # modifier onlyOwner()
+
+    + address getContractAddress()
+    + void updateContractAddress()
+    # uint _incrementCounter()
+}
+
+
+class AccessControlManager as "Контракт: Менеджер Контроля Доступа" {
+    -- constants --
+    OWNER_ROLE : bytes32
+    ADMIN_ROLE : bytes32
+    ORACLE_ROLE : bytes32
+    MANUFACTURER_ROLE : bytes32
+    SUPPLIER_ROLE : bytes32
+    MAINTAINER_ROLE : bytes32
+    TRANSPORTER_ROLE : bytes32
+    BUYER_ROLE : bytes32
+    SERVICE_ROLE : bytes32
+    -- storage data --
+    - users : mapping
+    userIdCounter : uint
+    -- modifiers --
+    modifier onlyRole(bytes32)
+    modifier onlyMerchants
+    modifier onlySalesBusinessProcessRole
+    -- сontract access control methods --
+    + void revokeRole(bytes32, address)
+    + void renounceRole(bytes32, address)
+    # void _setRoleAdmin(bytes32, bytes32)
+    # void _grantRole(bytes32, address)
+    + void grantRole(bytes32, address) onlyRole(ADMIN_ROLE)
+    -- business process methods --
+    + void createUser(address, string, string, bytes32) onlySalesBusinessProcessRole
+    + void addBuyer() onlyRole(SUPPLIER_ROLE)
+    # uint[] _getUserInventoryByUserId(uint)
+    + uint[] getUserInventoryByUserId(uint)
+    + uint getUsersCount(uint)
+    + User getUserById(uint)
+    + uint getUserIdByAddress(address)
+    # User _getUserById(uint256)
+    # uint _getUserByAddress(address)
+    + User getUserByAddress(address)
+    + User[] exportUsers() onlyRole(OWNER_ROLE)
+    # uint _checkProductInInventory(uint, uint)
+    # uint _removeProductFromInventory(uint, uint)
+    # uint _addProductToInventory(uint, uint)
+}
+
+class MaintenanceManager as "Контракт: Менеджер Управления Поддержкой" {
+    -- storage --
+    - maintenanceList : mapping
+    - maintenanceIdCounter : uint
+    -- events --
+    event UpdatedMaintenanceMemberState
+    event UpdatedMaintenancState
+    -- modifiers --
+    # modifier onlyMaintenanceState(uint)
+    -- business process methods --
+    # Maintenance _getMaintenanceById(uint)
+    + Maintenance getMaintenanceById(uint)
+    + Maintenance[] exportMaintenance() onlyRole(OWNER_ROLE)
+    + void createMaintenance(uint, string, string, uint, uint) onlyMerchants
+    + void updateMaintenanceState(uint) onlyRole(MAINTAINER_ROLE) onlyMaintenanceState(uint)
+    + void updateMaintenanceMemberDecision(uint, uint, string) onlyMaintenanceMembers(_maintenanceId)
+    + void createMaintenanceByOnlyMaintainer(uint, uint, string, string) onlyMerchants
+}
+
+class OrdersManager as "Контракт: Менеджер Управления Заказами" {
+    -- storage --
+    - orders : mapping
+    productIdCounter : uint
+    -- events --
+    event CreatedOrder
+    event ProductWasAddedToOrder
+    event ParticipantSetOrderStatus
+    -- modifiers --
+    modifier onlyOrderParticipants(uint)
+    modifier onlyUnconfirmedOrders(uint)
+    modifier onlyUntransferredProductsInOrders(uint)
+    -- business process methods --
+    # Order _getOrderById(uint) onlyMerchants
+    + Order getOrderById(uint) onlyMerchants
+    + Order exportOrders() onlyRole(OWNER_ROLE)
+    + void createOrder(address, address, string, string) onlyMerchants
+    + void removeOrderById(uint)
+    + void addProductToOrderById(uint, uint) onlyMerchants onlyUnconfirmedOrders(uint) onlyOrderParticipants(uint)
+    # void _checkProductInOrderProductList(ProductInOrder[], uint)
+    + void removeProductFromOrderById(uint, uint)
+    # void _removeProductFromOrderById(ProductInOrder[], uint) onlyMerchants
+    # void _removeProductFromOrderByIdProductList(ProductInOrder[], uint)
+    # void _transferProductsInOrder(uint, bool)
+    + void updateOrderStateById(ProductInOrder[], uint, uint)
+}
+
+class ProductsManager as "Контракт: Менеджер Управления Продукцией" {
+    -- storage --
+    - products: mapping
+    - productIdCounter: uint
+    -- events --
+    event ProductWasProduced
+    event ProductWasDeleted
+    event UpdatedProductState
+    event ProductWasCompromised
+    event ProductIsRestored
+    event TransferedOwnership
+    -- modifiers --
+    modifier onlyRolesMatchingToStates(uint)
+    modifier onlyProductInInventory(uint)
+    -- business process methods --
+    + State getProductById(uint)
+    + void getProductState(uint)
+    + bool checkLegalityProductToTransferOrSale(uint)
+    # uint _getProductIndexInUserInventory(uint, uint)
+    + produceNewProduct(uint, uint, string, bytes32, uint) onlyRole(MANUFACTURER_ROLE)
+    # void _addProductToInventory(uint, uint)
+    + void removeProduct(uint, string) onlyRole(MANUFACTURER_ROLE)
+    # void _removeProductFromInventory(uint, uint) onlyProductInInventory(uint)
+    + void restoreProduct(uint, string) onlyRole(MANUFACTURER_ROLE) onlyProductInInventory(uint)
+    + void unlockProductOwnership(uint, string) onlyRole(MANUFACTURER_ROLE)
+    # void _resetOwnership(uint, string)
+    # Product _getProductInStorageById(uint)
+    + void sellProduct(uint, uint, string) onlyMerchants onlyProductInInventory(uint)
+    + void addShippingEvent(uint, uint, string) onlyRole(TRANSPORTER_ROLE) onlyRolesMatchingToStates(uint) onlyProductInInventory(uint)
+    + void transferProductOwnership(uint, uint, uint) onlyMerchants onlyProductInInventory(uint)
+    + void updateProductState(uint, uint, uint, string) onlyMerchants onlyRolesMatchingToStates(uint) onlyProductInInventory(uint)
+}
+
+
+
+OrderManagementSystemUpgradable ..> OrderManagementSystem
+OrderManagementSystem <|-- AccessControlManager
+OrderManagementSystem <|-- MaintenanceManager
+OrderManagementSystem <|-- OrdersManager
+OrderManagementSystem <|-- ProductsManager
+
+MaintenanceManager <|-- AccessControlManager
+OrdersManager <|-- AccessControlManager
+ProductsManager <|-- AccessControlManager
+
+
+
+
+
+@enduml

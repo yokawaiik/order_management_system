@@ -18,7 +18,7 @@ contract MaintenanceManager is AccessControlManager, ProductsManager {
         string _description,
         uint256 userId
     );
-    mapping(uint256 => Maintenance) maintenanceList;
+    mapping(uint256 => Maintenance) private maintenanceList;
     uint256 private maintenanceIdCounter = 0;
 
     function _getMaintenanceById(uint256 _maintenanceId)
