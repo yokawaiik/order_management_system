@@ -2,28 +2,38 @@
 pragma solidity >=0.8.15 <0.9.0;
 
 import "./AccessControlManager.sol";
+import "./ProductsManager.sol";
 
 import "../enums/OrderMemberDecision.sol";
-import "../enums/OrderStateList.sol";
-
+import "../enums/StateList.sol";
+import "../enums/OrderMode.sol";
 import "../structures/Order.sol";
 import "../structures/OrderState.sol";
 
 import {StringLibrary} from "../libraries/StringLibrary.sol";
 
-contract OrdersManager is AccessControlManager {
+contract OrdersManager is AccessControlManager, ProductsManager {
+
     event CreatedOrder(
         uint256 orderId,
         uint256 createdAt,
         uint256 seller,
         uint256 buyer
     );
+    
     event ProductWasAddedToOrder(uint256 productId, uint256 orderId);
-    event ParticipantSetOrderStatus(
+
+    event OrderStateWasUpdated(
         uint256 orderId,
-        uint256 deletedBy,
-        OrderMemberDecision decision
+        StateList _state,
+        address _user,
+        string _description
     );
+
+    event UserApprovedTransferring(uint256 _id, address _userAddress, bool _decision);
+    event ProductsInOrderWasTransferred(uint256 _id, address _userAddress, bool _decision);
+
+
 
     constructor() {
         _grantRole(OWNER_ROLE, msg.sender);
@@ -82,30 +92,32 @@ contract OrdersManager is AccessControlManager {
         _;
     }
 
+    // todo: check this logic
     modifier onlyUnconfirmedOrders(uint256 _orderId) {
         Order memory order = _getOrderById(_orderId);
 
         require(
-            (order.buyer.decision != OrderMemberDecision.Disagreement ||
-                order.seller.decision != OrderMemberDecision.Disagreement) ||
-                (order.seller.decision != OrderMemberDecision.Deleted ||
-                    order.buyer.decision != OrderMemberDecision.Deleted),
+            (order.buyer.decision == OrderMemberDecision.Disagreement ||
+                order.seller.decision == OrderMemberDecision.Disagreement) ||
+                (order.seller.decision == OrderMemberDecision.Deleted ||
+                    order.buyer.decision == OrderMemberDecision.Deleted),
             "This order was denied by buyer or seller."
         );
 
         require(
-            order.buyer.decision != OrderMemberDecision.Agreement &&
-                order.seller.decision != OrderMemberDecision.Agreement,
+            order.buyer.decision == OrderMemberDecision.Agreement &&
+                order.seller.decision == OrderMemberDecision.Agreement,
             "This action available only for unconfirmed orders."
         );
         _;
     }
 
+    // todo: check this logic
     modifier onlyUntransferredProductsInOrders(uint256 _orderId) {
         Order memory order = _getOrderById(_orderId);
 
         require(
-            order.buyer.transferred != true && order.seller.transferred != true,
+            order.buyer.transferred == true && order.seller.transferred == true,
             "Can't transfer because products were transferred."
         );
         _;
@@ -115,7 +127,8 @@ contract OrdersManager is AccessControlManager {
         address _buyerAddress,
         address _sellerAddress,
         string memory _description,
-        string memory _location
+        string memory _location,
+        OrderMode _orderMode
     ) public onlyMerchants {
         require(
             _buyerAddress == msg.sender || _sellerAddress == msg.sender,
@@ -127,6 +140,7 @@ contract OrdersManager is AccessControlManager {
 
         Order storage newOrder = orders[productIdCounter];
         newOrder.id = productIdCounter;
+        newOrder.mode = _orderMode;
         ++productIdCounter; // increase a counter
         newOrder.createdAt = block.timestamp;
         newOrder.buyer = OrderMember(
@@ -153,7 +167,7 @@ contract OrdersManager is AccessControlManager {
             currentOrderState.location = _location;
         }
         currentOrderState.user = msg.sender;
-        currentOrderState.state = OrderStateList.Unhandled;
+        currentOrderState.state = StateList.Unhandled;
 
         emit CreatedOrder(newOrder.id, newOrder.createdAt, _sellerId, _buyerId);
     }
@@ -219,7 +233,7 @@ contract OrdersManager is AccessControlManager {
     function _removeProductFromOrderByIdProductList(
         ProductInOrder[] storage _array,
         uint256 _productId
-    ) internal  {
+    ) internal {
         for (uint256 i = 0; i < _array.length; i++) {
             if (_array[i].id == _productId) {
                 for (uint256 j = i; j < _array.length - 1; j++) {
@@ -231,12 +245,13 @@ contract OrdersManager is AccessControlManager {
         }
     }
 
+
+    // method approve for everybody because regular user also approve
     function approveTransferringProductsByOrderId(
         uint256 _orderId,
         bool _decision
     )
         public
-        onlyMerchants
         onlyOrderParticipants(_orderId)
         onlyUntransferredProductsInOrders(_orderId)
     {
@@ -259,7 +274,13 @@ contract OrdersManager is AccessControlManager {
                 order.seller.userId,
                 order.buyer.userId
             );
+            emit ProductsInOrderWasTransferred(order.id, msg.sender, _decision);
+        } 
+        // just emit event
+        else {
+            emit UserApprovedTransferring(order.id, msg.sender, _decision);
         }
+
     }
 
     function _transferProductsInOrder(
@@ -285,31 +306,77 @@ contract OrdersManager is AccessControlManager {
         }
     }
 
+    // only strict correspondence of order functions
+    // todo: check this logic
+    modifier strictOrderModeCheckAndStateList(
+        uint256 _orderId,
+        StateList _orderState
+    ) {
+
+        require(
+            _orderState != StateList.Unhandled,
+            "These operations are forbidden: Unhandled."
+        );
+
+        Order memory order = _getOrderById(_orderId);
+
+        if (order.mode == OrderMode.Default) {
+            require(
+                _orderState == StateList.InTransit ||
+                    _orderState == StateList.InWarehouse ||
+                    _orderState == StateList.OnSale ||
+                    _orderState == StateList.Sold ||
+                    _orderState == StateList.Removed,
+                "Available only maintenance states: InTransit, InWarehouse, OnSale, Sold, Removed."
+            );
+
+            require(
+                _orderState == StateList.Received &&
+                    _orderState ==
+                    order.orderStateList[order.orderStateList.length - 1].state,
+                "Operation 'Received' is forbidden because order has already received."
+            );
+
+        }
+        // Maintenance
+        else {
+            require(
+                _orderState == StateList.InService ||
+                    _orderState == StateList.WasFinished ||
+                    _orderState == StateList.WasDeny,
+                "Available only maintenance states: InService, WasFinished, WasDeny."
+            );
+
+            // if order was got
+            require(
+            order
+                .orderStateList[
+                    order.orderStateList.length - 1
+                ]
+                .state != StateList.WasGotByOwner,
+            "Unavailable state, because order has already been got by owner."
+        );
+        }
+
+        _;
+    }
+
     function updateOrderStateById(
         uint256 _orderId,
         string memory _description,
         string memory _location,
-        OrderStateList _orderState,
+        StateList _orderState,
         OrderMemberDecision _orderMemberDecision
     )
         public
         onlyMerchants
         onlyOrderParticipants(_orderId)
         onlyUnconfirmedOrders(_orderId)
+        strictOrderModeCheckAndStateList(_orderId, _orderState)
     {
-        require(
-            _orderState != OrderStateList.Unhandled,
-            "These operations are forbidden: Unhandled."
-        );
 
         Order storage order = _getOrderById(_orderId);
 
-        require(
-            _orderState == OrderStateList.Received &&
-                _orderState ==
-                order.orderStateList[order.orderStateList.length - 1].state,
-            "Operation 'Received' is forbidden because order has already received."
-        );
 
         uint256 currentUserId = _getUserByAddress(msg.sender).id;
 
@@ -335,11 +402,22 @@ contract OrdersManager is AccessControlManager {
         currentOrderState.user = msg.sender;
 
         currentOrderState.state = _orderState;
+        
 
-        emit ParticipantSetOrderStatus(
+
+        ProductInOrder[] storage productsList = order.productList;
+
+        // todo: checkhow it works
+        for (uint256 i = 0; i < productsList.length; i++) {
+            updateProductState(productsList[i].id, _orderState, 0, _description);
+        }
+
+        emit OrderStateWasUpdated(
             _orderId,
-            currentUserId,
-            _orderMemberDecision
+            _orderState,
+            msg.sender,
+            _description
         );
     }
+
 }

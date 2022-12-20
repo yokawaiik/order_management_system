@@ -13,7 +13,11 @@ import "../structures/State.sol";
 import "../structures/Product.sol";
 import "../structures/ProductOwner.sol";
 
+
+
+// 
 contract ProductsManager is AccessControlManager {
+    
     event ProductWasProduced(uint256 id, uint256 date);
     event ProductWasDeleted(uint256 id);
     event UpdatedProductState(uint256 id, uint256 date, StateList state);

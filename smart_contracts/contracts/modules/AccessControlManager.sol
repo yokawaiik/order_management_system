@@ -5,6 +5,8 @@ import "../../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
 
 import "../structures/User.sol";
 
+import "../libraries/StringLibrary.sol";
+
 contract AccessControlManager is AccessControl {
     // ? info: constants
     // ? info: all roles for app
@@ -17,9 +19,12 @@ contract AccessControlManager is AccessControl {
     bytes32 public constant MAINTAINER_ROLE = keccak256("MAINTAINER_ROLE");
     bytes32 public constant TRANSPORTER_ROLE = keccak256("TRANSPORTER_ROLE");
     bytes32 public constant BUYER_ROLE = keccak256("BUYER_ROLE");
-    bytes32 public constant SERVICE_ROLE = keccak256("SERVICE_ROLE");
 
     uint256 public constant TIME_TO_CORRECT_MISTAKE = 15 * 60;
+
+
+    // todo: add organization concept
+
 
     // ? info: app has a method - grantRole
     // ? info: app has a method - revokeRole
@@ -28,7 +33,7 @@ contract AccessControlManager is AccessControl {
     // ? info: modifiers
     // ? info: permissions
     modifier onlyMerchants() {
-        string memory message = "This action available only for owner.";
+        string memory message = "This action available only for merchants.";
         require(
             hasRole(MANUFACTURER_ROLE, msg.sender) ||
                 hasRole(SUPPLIER_ROLE, msg.sender) ||
@@ -68,8 +73,10 @@ contract AccessControlManager is AccessControl {
 
         users[userIdCounter].id = userIdCounter;
         users[userIdCounter].userAddress = _userAddress;
-        users[userIdCounter].password = _password;
+        
+        users[userIdCounter].password = StringLibrary.hash(_password);
         users[userIdCounter].login = _login;
+
         users[userIdCounter].createdAt = block.timestamp;
         users[userIdCounter].role = _role;
 
@@ -83,7 +90,7 @@ contract AccessControlManager is AccessControl {
     ) public onlyRole(SUPPLIER_ROLE) {
         users[userIdCounter].id = userIdCounter;
         users[userIdCounter].userAddress = _userAddress;
-        users[userIdCounter].password = _password;
+        users[userIdCounter].password = StringLibrary.hash(_password);
         users[userIdCounter].login = _login;
         users[userIdCounter].createdAt = block.timestamp;
         users[userIdCounter].role = BUYER_ROLE;

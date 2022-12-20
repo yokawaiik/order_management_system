@@ -1,39 +1,34 @@
-@startuml 'smart contracts classes'
+@startuml "smart contracts classes"
 
-' class OrderManagementSystem as "Контракт: Система Управления Заказами"
-' class OrderManagementSystemUpgradable as "Контракт: Обновляемый Контракт"
 
-' class AccessControlManager as "Контракт: Менеджер Контроля Доступа"
-' class MaintenanceManager as "Контракт: Менеджер Управления Поддержкой"
-' class OrdersManager as "Контракт:  Менеджер Управления Заказами"
-' class ProductsManager as "Контракт:  Менеджер Управления Продукцией"
+' class OrderManagementSystem   as "Контракт: Система Управления Заказами"  {} 
+' class OrderManagementSystem  << (C, Orchid) php >> {} 
+class OrderManagementSystem  << (C, Orchid) Contract >>  {} 
 
-class OrderManagementSystem  as "Контракт: Система Управления Заказами" 
-
-class OrderManagementSystemUpgradable as "Контракт: Обновляемый Контракт" {
+class OrderManagementSystemUpgradable << (C, Orchid) Contract >> {
+    -- storage data --
     - owner : address
     + version : uint
     - orderManagementSystemContract : address
-
+    -- modifiers --
     # modifier onlyOwner()
-
+    -- сontract access control methods --
     + address getContractAddress()
     + void updateContractAddress()
     # uint _incrementCounter()
 }
 
 
-class AccessControlManager as "Контракт: Менеджер Контроля Доступа" {
+class AccessControlManager << (C, Orchid) Contract >> {
     -- constants --
-    OWNER_ROLE : bytes32
-    ADMIN_ROLE : bytes32
-    ORACLE_ROLE : bytes32
-    MANUFACTURER_ROLE : bytes32
-    SUPPLIER_ROLE : bytes32
-    MAINTAINER_ROLE : bytes32
-    TRANSPORTER_ROLE : bytes32
-    BUYER_ROLE : bytes32
-    SERVICE_ROLE : bytes32
+    + OWNER_ROLE : bytes32
+    + ADMIN_ROLE : bytes32
+    + ORACLE_ROLE : bytes32
+    + MANUFACTURER_ROLE : bytes32
+    + SUPPLIER_ROLE : bytes32
+    + MAINTAINER_ROLE : bytes32
+    + TRANSPORTER_ROLE : bytes32
+    + BUYER_ROLE : bytes32
     -- storage data --
     - users : mapping
     userIdCounter : uint
@@ -46,9 +41,9 @@ class AccessControlManager as "Контракт: Менеджер Контрол
     + void renounceRole(bytes32, address)
     # void _setRoleAdmin(bytes32, bytes32)
     # void _grantRole(bytes32, address)
-    + void grantRole(bytes32, address) onlyRole(ADMIN_ROLE)
+    + void grantRole(bytes32, address)
     -- business process methods --
-    + void createUser(address, string, string, bytes32) onlySalesBusinessProcessRole
+    + void createUser(address, string, string, bytes32)
     + void addBuyer() onlyRole(SUPPLIER_ROLE)
     # uint[] _getUserInventoryByUserId(uint)
     + uint[] getUserInventoryByUserId(uint)
@@ -64,7 +59,7 @@ class AccessControlManager as "Контракт: Менеджер Контрол
     # uint _addProductToInventory(uint, uint)
 }
 
-class MaintenanceManager as "Контракт: Менеджер Управления Поддержкой" {
+class MaintenanceManager << (C, Orchid) Contract >> {
     -- storage --
     - maintenanceList : mapping
     - maintenanceIdCounter : uint
@@ -76,14 +71,14 @@ class MaintenanceManager as "Контракт: Менеджер Управлен
     -- business process methods --
     # Maintenance _getMaintenanceById(uint)
     + Maintenance getMaintenanceById(uint)
-    + Maintenance[] exportMaintenance() onlyRole(OWNER_ROLE)
-    + void createMaintenance(uint, string, string, uint, uint) onlyMerchants
-    + void updateMaintenanceState(uint) onlyRole(MAINTAINER_ROLE) onlyMaintenanceState(uint)
-    + void updateMaintenanceMemberDecision(uint, uint, string) onlyMaintenanceMembers(_maintenanceId)
-    + void createMaintenanceByOnlyMaintainer(uint, uint, string, string) onlyMerchants
+    + Maintenance[] exportMaintenance()
+    + void createMaintenance(uint, string, string, uint, uint)
+    + void updateMaintenanceState(uint)
+    + void updateMaintenanceMemberDecision(uint, uint, string)
+    + void createMaintenanceByOnlyMaintainer(uint, uint, string, string)
 }
 
-class OrdersManager as "Контракт: Менеджер Управления Заказами" {
+class OrdersManager << (C, Orchid) Contract >> {
     -- storage --
     - orders : mapping
     productIdCounter : uint
@@ -96,21 +91,21 @@ class OrdersManager as "Контракт: Менеджер Управления 
     modifier onlyUnconfirmedOrders(uint)
     modifier onlyUntransferredProductsInOrders(uint)
     -- business process methods --
-    # Order _getOrderById(uint) onlyMerchants
-    + Order getOrderById(uint) onlyMerchants
+    # Order _getOrderById(uint)
+    + Order getOrderById(uint)
     + Order exportOrders() onlyRole(OWNER_ROLE)
-    + void createOrder(address, address, string, string) onlyMerchants
+    + void createOrder(address, address, string, string)
     + void removeOrderById(uint)
-    + void addProductToOrderById(uint, uint) onlyMerchants onlyUnconfirmedOrders(uint) onlyOrderParticipants(uint)
+    + void addProductToOrderById(uint, uint)
     # void _checkProductInOrderProductList(ProductInOrder[], uint)
     + void removeProductFromOrderById(uint, uint)
-    # void _removeProductFromOrderById(ProductInOrder[], uint) onlyMerchants
+    # void _removeProductFromOrderById(ProductInOrder[], uint)
     # void _removeProductFromOrderByIdProductList(ProductInOrder[], uint)
     # void _transferProductsInOrder(uint, bool)
     + void updateOrderStateById(ProductInOrder[], uint, uint)
 }
 
-class ProductsManager as "Контракт: Менеджер Управления Продукцией" {
+class ProductsManager << (C, Orchid) Contract >> {
     -- storage --
     - products: mapping
     - productIdCounter: uint
@@ -129,18 +124,18 @@ class ProductsManager as "Контракт: Менеджер Управлени�
     + void getProductState(uint)
     + bool checkLegalityProductToTransferOrSale(uint)
     # uint _getProductIndexInUserInventory(uint, uint)
-    + produceNewProduct(uint, uint, string, bytes32, uint) onlyRole(MANUFACTURER_ROLE)
+    + produceNewProduct(uint, uint, string, bytes32, uint)
     # void _addProductToInventory(uint, uint)
-    + void removeProduct(uint, string) onlyRole(MANUFACTURER_ROLE)
-    # void _removeProductFromInventory(uint, uint) onlyProductInInventory(uint)
-    + void restoreProduct(uint, string) onlyRole(MANUFACTURER_ROLE) onlyProductInInventory(uint)
-    + void unlockProductOwnership(uint, string) onlyRole(MANUFACTURER_ROLE)
+    + void removeProduct(uint, string)
+    # void _removeProductFromInventory(uint, uint)
+    + void restoreProduct(uint, string)
+    + void unlockProductOwnership(uint, string)
     # void _resetOwnership(uint, string)
     # Product _getProductInStorageById(uint)
-    + void sellProduct(uint, uint, string) onlyMerchants onlyProductInInventory(uint)
-    + void addShippingEvent(uint, uint, string) onlyRole(TRANSPORTER_ROLE) onlyRolesMatchingToStates(uint) onlyProductInInventory(uint)
-    + void transferProductOwnership(uint, uint, uint) onlyMerchants onlyProductInInventory(uint)
-    + void updateProductState(uint, uint, uint, string) onlyMerchants onlyRolesMatchingToStates(uint) onlyProductInInventory(uint)
+    + void sellProduct(uint, uint, string)
+    + void addShippingEvent(uint, uint, string)
+    + void transferProductOwnership(uint, uint, uint)
+    + void updateProductState(uint, uint, uint, string)
 }
 
 

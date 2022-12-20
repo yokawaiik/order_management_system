@@ -10,4 +10,8 @@ library StringLibrary {
         return
             keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
     }
+
+    function hash(string memory _string) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked(_string));
+    }
 }

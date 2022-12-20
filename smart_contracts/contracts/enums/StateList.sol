@@ -3,24 +3,31 @@ pragma solidity >=0.8.15 <0.9.0;
 
 enum StateList {
     // ? info: Basic StateList
-    Unhandled, // 0
-    Produced, // 1
-    InTransit, // 2
-    InWarehouse, // 3
-    OnSale, // 4
-    Sold, // 5
-    Removed, // 6
+    Unhandled, 
+    Produced, 
+    InTransit, 
+    InWarehouse, 
+    OnSale, 
+    Sold, 
+    Removed, 
     // ? info: Ensuring originality
-    WasCompromised, // 7
+    WasCompromised, 
     // ? info: Maintenance
-    InService, // 8
-    WasFinished, // 8
-    WasDeny, // 8
-    WasGotByOwner, // 8
+    InService, 
+    WasFinished, 
+    WasDeny, 
+    WasGotByOwner,
     // ? info: only for Manufacturer
-    WasDestroyed, // 9
-    WasRestored, // 10
+    WasDestroyed, 
+    WasRestored, 
     // ? info: Owner conception
-    OwnerWasChanged, // 11
-    PriceWasChanged // 12
+    OwnerWasChanged, 
+    PriceWasChanged, 
+
+    // ? maintenance
+    
+    Refused, // 
+    Gave, //  user gave his product
+    Received, //  user receive his product come back | repairer received product by user
+    Returned //  repairer returned product by user
 }

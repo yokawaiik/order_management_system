@@ -6,13 +6,9 @@ import "../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
 import "./modules/ProductsManager.sol";
 import "./modules/AccessControlManager.sol";
 import "./modules/OrdersManager.sol";
-import "./modules/MaintenanceManager.sol";
 
 contract OrderManagementSystem is
     AccessControlManager,
     ProductsManager,
-    OrdersManager,
-    MaintenanceManager
-{
-    // ! todo: add all modules
-}
+    OrdersManager
+{}
