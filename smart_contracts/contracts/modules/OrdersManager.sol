@@ -555,7 +555,6 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         StateList _productsStates
     )
         public
-        // OrderMemberDecision _orderMemberDecision
         onlyOrganizationEmploye(_organizationId)
         onlyOrderParticipants(_orderId)
         onlyConfirmedOrders(_orderId)
