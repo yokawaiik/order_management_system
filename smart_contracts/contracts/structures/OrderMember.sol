@@ -6,7 +6,8 @@ import "../enums/OrderMemberDecision.sol";
 
 
 struct OrderMember {
-   uint256 userId;
+   uint organizationId;
+   address userAddress;
    bool transferred;
    OrderMemberDecision decision;
 }

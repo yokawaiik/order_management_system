@@ -10,6 +10,7 @@ enum StateList {
     OnSale, 
     Sold, 
     Removed, 
+    Unlocked,
     // ? info: Ensuring originality
     WasCompromised, 
     // ? info: Maintenance

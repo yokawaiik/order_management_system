@@ -3,42 +3,13 @@
 
 
 
-
-Product Manager:
-produceNewProduct()
-restoreProduct()
-removeProduct()
-getProductById()
-getAllProductsByOwner()
-setNewOwnerToProduct()
-
-	Users Manager (Access Control):
-getUserInventory()
-transferItemToUser()
-createUser()
-getUserById()
-revokeUser()
-setRole()
-
-		Order Manager:
-			getOrderById()
-			getOrderByRequestUserId()	
-getOrderBySupplyerUserId()
-			getOrderByProductId()
-			createOrder()
-updateOrderById()
-			addProductToOrderById()
-			removeProductFromOrderById()
-			setStateProductTransferById()
-			updateOrderStatusById()
-
-		Support (Service) Manager:
-			getSupportOrderById()
-			getSupportOrderByRequestUserId()
-			getSupportOrderByProductId()
-			createSupportOrder()
-			setStateSupportProductTransfer()
-			updateSupportOrderStatus()
+- [x] AccessControlManager
+- only organizations have an inventory
+- [x] ProductsManager 
+- transfer only organization to organization
+- no transfer product from organization to user
+- [x] OrdersManager
+- create order, block products when order is confirmed, finish order and transferring products
 
 
 

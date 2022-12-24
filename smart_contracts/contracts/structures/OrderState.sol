@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.15 <0.9.0;
 
-import "../enums/StateList.sol";
+import "../enums/OrderStateList.sol";
 
 struct OrderState {
+    OrderStateList state;
     string location;
-    StateList state;
     string description;
-    address user;
+    address createdBy;
+    uint256 createdAt;
 }

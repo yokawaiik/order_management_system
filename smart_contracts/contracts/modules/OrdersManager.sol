@@ -6,34 +6,46 @@ import "./ProductsManager.sol";
 
 import "../enums/OrderMemberDecision.sol";
 import "../enums/StateList.sol";
+import "../enums/OrderStateList.sol";
 import "../enums/OrderMode.sol";
 import "../structures/Order.sol";
-import "../structures/OrderState.sol";
+import "../structures/State.sol";
 
 import {StringLibrary} from "../libraries/StringLibrary.sol";
 
 contract OrdersManager is AccessControlManager, ProductsManager {
-
     event CreatedOrder(
         uint256 orderId,
         uint256 createdAt,
-        uint256 seller,
-        uint256 buyer
+        address seller,
+        address buyer
     );
-    
+
     event ProductWasAddedToOrder(uint256 productId, uint256 orderId);
 
     event OrderStateWasUpdated(
         uint256 orderId,
-        StateList _state,
+        OrderStateList _state,
         address _user,
         string _description
     );
 
-    event UserApprovedTransferring(uint256 _id, address _userAddress, bool _decision);
-    event ProductsInOrderWasTransferred(uint256 _id, address _userAddress, bool _decision);
+    event DecisionWasMadeOnOrder(
+        uint256 _orderId,
+        address _userAddress,
+        OrderMemberDecision _memberDecision
+    );
 
-
+    event UserApprovedTransferring(
+        uint256 _orderId,
+        address _userAddress,
+        bool _decision
+    );
+    event ProductsInOrderWasTransferred(
+        uint256 _orderId,
+        address _userAddress,
+        bool _decision
+    );
 
     constructor() {
         _grantRole(OWNER_ROLE, msg.sender);
@@ -47,7 +59,6 @@ contract OrdersManager is AccessControlManager, ProductsManager {
     function _getOrderById(uint256 _orderId)
         internal
         view
-        onlyMerchants
         returns (Order storage)
     {
         Order storage order = orders[_orderId];
@@ -55,39 +66,36 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         return order;
     }
 
-    function getOrderById(uint256 _orderId)
+    function getOrderById(uint256 _organizationId, uint256 _orderId)
         public
         view
-        onlyMerchants
+        onlyOrganizationEmploye(_organizationId)
         returns (Order memory)
     {
         return _getOrderById(_orderId);
     }
 
-    function exportOrders()
+    function exportOrder(uint256 _orderId)
         external
         view
         onlyRole(OWNER_ROLE)
-        returns (Order[] memory)
+        returns (Order memory)
     {
-        Order[] memory memoryArray = new Order[](productIdCounter);
-
-        for (uint256 i = 0; i < productIdCounter; i++) {
-            memoryArray[i] = orders[i];
-        }
-
-        return memoryArray;
+        return _getOrderById(_orderId);
     }
 
+    // organization participant users
     modifier onlyOrderParticipants(uint256 _orderId) {
         Order memory order = _getOrderById(_orderId);
 
-        uint256 currentUserId = _getUserByAddress(msg.sender).id;
+        User memory user = _getUserByAddress(msg.sender);
 
         require(
-            order.buyer.userId == currentUserId ||
-                order.seller.userId == currentUserId,
-            "Change order is possible only for participant."
+            user.organizationMember.organizationId ==
+                order.buyer.organizationId ||
+                user.organizationMember.organizationId ==
+                order.seller.organizationId,
+            "This action is possible only for orders' organization participants."
         );
         _;
     }
@@ -97,9 +105,9 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         Order memory order = _getOrderById(_orderId);
 
         require(
-            (order.buyer.decision == OrderMemberDecision.Disagreement ||
+            !(order.buyer.decision == OrderMemberDecision.Disagreement ||
                 order.seller.decision == OrderMemberDecision.Disagreement) ||
-                (order.seller.decision == OrderMemberDecision.Deleted ||
+                !(order.seller.decision == OrderMemberDecision.Deleted ||
                     order.buyer.decision == OrderMemberDecision.Deleted),
             "This order was denied by buyer or seller."
         );
@@ -110,6 +118,29 @@ contract OrdersManager is AccessControlManager, ProductsManager {
             "This action available only for unconfirmed orders."
         );
         _;
+    }
+    modifier onlyConfirmedOrders(uint256 _orderId) {
+        Order memory order = _getOrderById(_orderId);
+
+        require(
+            order.buyer.decision == OrderMemberDecision.Agreement &&
+                order.seller.decision == OrderMemberDecision.Agreement,
+            "This action available only for unconfirmed orders."
+        );
+        _;
+    }
+
+    function isOrderFinished(uint256 _orderId) public view returns (bool) {
+        Order memory order = _getOrderById(_orderId);
+
+        if (
+            order.buyer.decision == OrderMemberDecision.Finished &&
+            order.seller.decision == OrderMemberDecision.Finished
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // todo: check this logic
@@ -124,70 +155,117 @@ contract OrdersManager is AccessControlManager, ProductsManager {
     }
 
     function createOrder(
+        uint256 _organizationId,
         address _buyerAddress,
         address _sellerAddress,
         string memory _description,
         string memory _location,
         OrderMode _orderMode
-    ) public onlyMerchants {
-        require(
-            _buyerAddress == msg.sender || _sellerAddress == msg.sender,
-            "Only agent can be buyer or seller."
-        );
+    ) public onlyOrganizationEmploye(_organizationId) {
+        uint256 timestamp = block.timestamp;
 
-        uint256 _buyerId = _getUserByAddress(_buyerAddress).id;
-        uint256 _sellerId = _getUserByAddress(_sellerAddress).id;
+        // check if exists
+        User storage buyer = _getUserByAddress(_buyerAddress);
+        User storage seller = _getUserByAddress(_sellerAddress);
 
         Order storage newOrder = orders[productIdCounter];
+
         newOrder.id = productIdCounter;
         newOrder.mode = _orderMode;
         ++productIdCounter; // increase a counter
-        newOrder.createdAt = block.timestamp;
+        newOrder.createdAt = timestamp;
+
         newOrder.buyer = OrderMember(
-            _buyerId,
+            buyer.organizationMember.organizationId,
+            _buyerAddress,
             false,
             OrderMemberDecision.Unhandled
         );
+
         newOrder.seller = OrderMember(
-            _sellerId,
+            seller.organizationMember.organizationId,
+            _sellerAddress,
             false,
             OrderMemberDecision.Unhandled
         );
 
         // fill first OrderState
-        OrderState storage currentOrderState = newOrder.orderStateList.push();
+        OrderState memory currentOrderState = newOrder.orderStateList.push();
+
+        // add new state
         if (!StringLibrary.compareTwoStrings(_description, "")) {
             currentOrderState.description = "Order was created.";
         } else {
             currentOrderState.description = _description;
         }
+
         if (!StringLibrary.compareTwoStrings(_location, "")) {
             currentOrderState.location = "Undefined";
         } else {
             currentOrderState.location = _location;
         }
-        currentOrderState.user = msg.sender;
-        currentOrderState.state = StateList.Unhandled;
+        currentOrderState.state = OrderStateList.Unhandled;
+        currentOrderState.createdBy = msg.sender;
+        currentOrderState.createdAt = timestamp;
+        // ---
 
-        emit CreatedOrder(newOrder.id, newOrder.createdAt, _sellerId, _buyerId);
+        emit CreatedOrder(
+            newOrder.id,
+            newOrder.createdAt,
+            _sellerAddress,
+            _buyerAddress
+        );
     }
 
-    function removeOrderById(uint256 _orderId)
+    modifier onlyUnblockedProduct(uint256 _productId) {
+        Product memory product = _getProductInStorageById(_productId);
+
+        string memory message = string(
+            abi.encodePacked(
+                "This operation unavailable, because product with id ",
+                _productId,
+                " is blocked from ordering."
+            )
+        );
+
+        require(product.isBlockedFromOrdering == true, message);
+
+        _;
+    }
+
+    function _productLock(uint256 _productId, bool _lockState) internal {
+        Product storage product = _getProductInStorageById(_productId);
+        product.isBlockedFromOrdering = _lockState;
+    }
+
+    function removeOrderById(uint256 _organizationId, uint256 _orderId)
         public
-        onlyMerchants
+        onlyOrganizationEmploye(_organizationId)
         onlyUnconfirmedOrders(_orderId)
         onlyOrderParticipants(_orderId)
     {
+        Order memory order = _getOrderById(_orderId);
+
+        // unblocked products in order
+        for (uint256 i = 0; i < order.productList.length; i++) {
+            _productLock(order.productList[i].id, false);
+        }
+
         delete orders[_orderId];
     }
 
-    function addProductToOrderById(uint256 _orderId, uint256 _productId)
+    function addProductToOrderById(
+        uint256 _organizationId,
+        uint256 _orderId,
+        uint256 _productId
+    )
         public
-        onlyMerchants
+        onlyOrganizationEmploye(_organizationId)
         onlyUnconfirmedOrders(_orderId)
         onlyOrderParticipants(_orderId)
+        onlyUnblockedProduct(_productId)
     {
-        ProductInOrder[] storage orderProductList = orders[_orderId]
+        ProductInOrder[] storage orderProductList = _getOrderById(_orderId)
             .productList;
 
         // check if product with such an id was added in order
@@ -196,6 +274,8 @@ contract OrdersManager is AccessControlManager, ProductsManager {
                 true,
             "Product with such an id was added in order."
         );
+
+        _productLock(_productId, true);
 
         orderProductList.push(ProductInOrder(_productId, false));
         emit ProductWasAddedToOrder(_productId, _orderId);
@@ -213,91 +293,132 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         return false;
     }
 
-    function removeProductFromOrderById(uint256 _orderId, uint256 _productId)
+    function removeProductFromOrderById(
+        uint256 _organizationId,
+        uint256 _orderId,
+        uint256 _productId
+    )
         public
-        onlyMerchants
+        onlyUnconfirmedOrders(_orderId)
+        onlyOrderParticipants(_orderId)
+        onlyOrganizationEmploye(_organizationId)
     {
         ProductInOrder[] storage orderProductList = orders[_orderId]
             .productList;
 
+        _productLock(_productId, false);
+
+        _removeProductsFromOrder(orderProductList, _productId);
+    }
+
+    function _removeProductsFromOrder(
+        ProductInOrder[] storage _productList,
+        uint256 _productId
+    ) internal {
         // check if product with such an id was added in order
+
         require(
-            _checkProductInOrderProductList(orderProductList, _productId) ==
-                true,
+            _checkProductInOrderProductList(_productList, _productId) == true,
             "Product with such an id was added in order."
         );
 
-        _removeProductFromOrderByIdProductList(orderProductList, _productId);
-    }
-
-    function _removeProductFromOrderByIdProductList(
-        ProductInOrder[] storage _array,
-        uint256 _productId
-    ) internal {
-        for (uint256 i = 0; i < _array.length; i++) {
-            if (_array[i].id == _productId) {
-                for (uint256 j = i; j < _array.length - 1; j++) {
-                    _array[j] = _array[j + 1];
+        for (uint256 i = 0; i < _productList.length; i++) {
+            if (_productList[i].id == _productId) {
+                for (uint256 j = i; j < _productList.length - 1; j++) {
+                    _productList[j] = _productList[j + 1];
                 }
-                _array.pop();
+                _productList.pop();
                 break;
             }
         }
     }
 
-
-    // method approve for everybody because regular user also approve
     function approveTransferringProductsByOrderId(
+        uint256 _organizationId,
         uint256 _orderId,
-        bool _decision
+        bool _transferDecision
     )
         public
+        onlyOrganizationEmploye(_organizationId)
         onlyOrderParticipants(_orderId)
         onlyUntransferredProductsInOrders(_orderId)
     {
+        require(
+            isOrderFinished(_orderId) == false,
+            "This order hasn't been finished yet."
+        );
+
         Order storage order = orders[_orderId];
 
-        uint256 currentUserId = _getUserByAddress(msg.sender).id;
+        User memory currentUser = _getUserByAddress(msg.sender);
 
-        if (order.seller.userId == currentUserId) {
-            order.seller.transferred = _decision; // true or false
+        // check if organization exists
+        _getOrganizationById(_organizationId);
+
+        if (
+            order.seller.organizationId ==
+            currentUser.organizationMember.organizationId
+        ) {
+            order.seller.transferred = _transferDecision;
         } else {
-            order.buyer.transferred = _decision; // true or false
+            order.buyer.transferred = _transferDecision;
         }
 
-        // if both Merchants approved then transfer
+        // if both Merchants approved transferring
         if (
             order.seller.transferred == true && order.buyer.transferred == true
         ) {
             _transferProductsInOrder(
                 order.productList,
-                order.seller.userId,
-                order.buyer.userId
+                order.seller.userAddress,
+                order.buyer.userAddress
             );
-            emit ProductsInOrderWasTransferred(order.id, msg.sender, _decision);
-        } 
+            emit ProductsInOrderWasTransferred(
+                order.id,
+                msg.sender,
+                _transferDecision
+            );
+        }
         // just emit event
         else {
-            emit UserApprovedTransferring(order.id, msg.sender, _decision);
+            emit UserApprovedTransferring(
+                order.id,
+                msg.sender,
+                _transferDecision
+            );
         }
-
     }
 
     function _transferProductsInOrder(
         ProductInOrder[] storage _productList,
-        uint256 _sellerId,
-        uint256 _buyerId
-    ) internal onlyMerchants {
-        User storage seller = _getUserById(_sellerId);
-        User storage buyer = _getUserById(_buyerId);
+        address _sellerAddress,
+        address _buyerAddress
+    ) internal {
+        User storage seller = _getUserByAddress(_sellerAddress);
+        User storage buyer = _getUserByAddress(_buyerAddress);
+
+        Organization storage orgSeller = _getOrganizationById(
+            seller.organizationMember.organizationId
+        );
+
+        Organization storage orgBuyer = _getOrganizationById(
+            buyer.organizationMember.organizationId
+        );
 
         for (uint256 i = 0; i < _productList.length; i++) {
-            for (uint256 j = 0; j < seller.inventory.length; j++) {
-                if (_productList[i].id == seller.inventory[j]) {
-                    _addProductToInventory(buyer.inventory, _productList[i].id);
+            _productLock(_productList[i].id, false);
+        }
+
+        for (uint256 i = 0; i < _productList.length; i++) {
+            for (uint256 j = 0; j < orgSeller.inventory.length; j++) {
+                if (_productList[i].id == orgSeller.inventory[j]) {
+                    _addProductToInventory(
+                        _productList[i].id,
+                        orgBuyer.inventory
+                    );
                     _removeProductFromInventory(
-                        seller.inventory,
-                        _productList[i].id
+                        _productList[i].id,
+                        orgSeller.inventory
                     );
 
                     _productList[i].transferred = true;
@@ -310,11 +431,10 @@ contract OrdersManager is AccessControlManager, ProductsManager {
     // todo: check this logic
     modifier strictOrderModeCheckAndStateList(
         uint256 _orderId,
-        StateList _orderState
+        OrderStateList _orderState
     ) {
-
         require(
-            _orderState != StateList.Unhandled,
+            _orderState != OrderStateList.Unhandled,
             "These operations are forbidden: Unhandled."
         );
 
@@ -322,69 +442,126 @@ contract OrdersManager is AccessControlManager, ProductsManager {
 
         if (order.mode == OrderMode.Default) {
             require(
-                _orderState == StateList.InTransit ||
-                    _orderState == StateList.InWarehouse ||
-                    _orderState == StateList.OnSale ||
-                    _orderState == StateList.Sold ||
-                    _orderState == StateList.Removed,
-                "Available only maintenance states: InTransit, InWarehouse, OnSale, Sold, Removed."
+                _orderState == OrderStateList.InTransit ||
+                    _orderState == OrderStateList.InWarehouse ||
+                    _orderState == OrderStateList.WasFinished ||
+                    _orderState == OrderStateList.WasStopped ||
+                    _orderState == OrderStateList.WasDeny ||
+                    _orderState == OrderStateList.Removed ||
+                    // Maintenance
+                    _orderState != OrderStateList.InService,
+                "Available only order states: InTransit, WasStopped, InWarehouse, WasFinished, WasDeny, Removed."
             );
-
-            require(
-                _orderState == StateList.Received &&
-                    _orderState ==
-                    order.orderStateList[order.orderStateList.length - 1].state,
-                "Operation 'Received' is forbidden because order has already received."
-            );
-
         }
-        // Maintenance
-        else {
-            require(
-                _orderState == StateList.InService ||
-                    _orderState == StateList.WasFinished ||
-                    _orderState == StateList.WasDeny,
-                "Available only maintenance states: InService, WasFinished, WasDeny."
-            );
 
-            // if order was got
-            require(
-            order
-                .orderStateList[
-                    order.orderStateList.length - 1
-                ]
-                .state != StateList.WasGotByOwner,
-            "Unavailable state, because order has already been got by owner."
+        // check if order has already been done
+        require(
+            (_orderState == OrderStateList.WasFinished ||
+                _orderState == OrderStateList.WasDeny ||
+                _orderState == OrderStateList.Removed) &&
+                _orderState ==
+                order.orderStateList[order.orderStateList.length - 1].state,
+            "Operation 'Received' is forbidden because order has already received."
         );
-        }
-
         _;
     }
 
-    function updateOrderStateById(
+    function approveOrder(
+        uint256 _organizationId,
         uint256 _orderId,
-        string memory _description,
-        string memory _location,
-        StateList _orderState,
         OrderMemberDecision _orderMemberDecision
     )
         public
-        onlyMerchants
+        onlyOrganizationEmploye(_organizationId)
         onlyOrderParticipants(_orderId)
         onlyUnconfirmedOrders(_orderId)
-        strictOrderModeCheckAndStateList(_orderId, _orderState)
     {
-
+        User storage currentUser = _getUserByAddress(msg.sender);
         Order storage order = _getOrderById(_orderId);
 
-
-        uint256 currentUserId = _getUserByAddress(msg.sender).id;
-
-        if (order.buyer.userId == currentUserId) {
+        if (
+            currentUser.organizationMember.organizationId ==
+            order.buyer.organizationId
+        ) {
             order.buyer.decision = _orderMemberDecision;
-        } else {
+        } else if (
+            currentUser.organizationMember.organizationId ==
+            order.seller.organizationId
+        ) {
             order.seller.decision = _orderMemberDecision;
         }
+
+        if (
+            order.seller.decision == OrderMemberDecision.Agreement &&
+            order.buyer.decision == OrderMemberDecision.Agreement
+        ) {
+            // it's blocked products in order
+            for (uint256 i = 0; i < order.productList.length; i++) {
+                _productLock(order.productList[i].id, true);
+            }
+        } else {
+            emit DecisionWasMadeOnOrder(
+                _orderId,
+                msg.sender,
+                _orderMemberDecision
+            );
+        }
+    }
+
+    function finishOrderById(
+        uint256 _organizationId,
+        uint256 _orderId,
+        OrderMemberDecision _orderMemberDecision
+    )
+        public
+        onlyOrganizationEmploye(_organizationId)
+        onlyOrderParticipants(_orderId)
+        onlyConfirmedOrders(_orderId)
+    {
+        User storage currentUser = _getUserByAddress(msg.sender);
+        Order storage order = _getOrderById(_orderId);
+
+        require(
+            _orderMemberDecision == OrderMemberDecision.Waiting ||
+                _orderMemberDecision == OrderMemberDecision.Finished,
+            "For this action are available the following decisions: Waiting, Finished."
+        );
+
+        require(
+            order.buyer.decision != OrderMemberDecision.Finished &&
+                order.seller.decision != OrderMemberDecision.Finished,
+            "This order has already been finished."
+        );
+
+        if (
+            currentUser.organizationMember.organizationId ==
+            order.buyer.organizationId
+        ) {
+            order.buyer.decision = _orderMemberDecision;
+        } else if (
+            currentUser.organizationMember.organizationId ==
+            order.seller.organizationId
+        ) {
+            order.seller.decision = _orderMemberDecision;
+        }
+    }
+
+    function updateOrderStateById(
+        uint256 _organizationId,
+        uint256 _orderId,
+        string memory _description,
+        string memory _location,
+        OrderStateList _orderState,
+        StateList _productsStates
+    )
+        public
+        // OrderMemberDecision _orderMemberDecision
+        onlyOrganizationEmploye(_organizationId)
+        onlyOrderParticipants(_orderId)
+        onlyConfirmedOrders(_orderId)
+        strictOrderModeCheckAndStateList(_orderId, _orderState)
+    {
+        Order storage order = _getOrderById(_orderId);
 
         // fill first OrderState
         OrderState storage currentOrderState = order.orderStateList.push();
@@ -399,17 +576,19 @@ contract OrdersManager is AccessControlManager, ProductsManager {
             currentOrderState.location = _location;
         }
 
-        currentOrderState.user = msg.sender;
-
+        currentOrderState.createdBy = msg.sender;
+        currentOrderState.createdAt = block.timestamp;
         currentOrderState.state = _orderState;
-        
-
 
         ProductInOrder[] storage productsList = order.productList;
 
-        // todo: checkhow it works
         for (uint256 i = 0; i < productsList.length; i++) {
-            updateProductState(productsList[i].id, _orderState, 0, _description);
+            _updateProductState(
+                productsList[i].id,
+                _productsStates,
+                0,
+                _description
+            );
         }
 
         emit OrderStateWasUpdated(
@@ -419,5 +598,4 @@ contract OrdersManager is AccessControlManager, ProductsManager {
             _description
         );
     }
-
 }

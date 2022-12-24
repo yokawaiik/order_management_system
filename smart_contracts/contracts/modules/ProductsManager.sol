@@ -12,26 +12,23 @@ import "../enums/ProductOwnerType.sol";
 import "../structures/State.sol";
 import "../structures/Product.sol";
 import "../structures/ProductOwner.sol";
+import "../structures/Organization.sol";
+import "../structures/User.sol";
 
-
-
-// 
 contract ProductsManager is AccessControlManager {
-    
     event ProductWasProduced(uint256 id, uint256 date);
     event ProductWasDeleted(uint256 id);
     event UpdatedProductState(uint256 id, uint256 date, StateList state);
     event ProductWasCompromised(uint256 id, uint256 date);
     event ProductIsRestored(uint256 id, uint256 date);
-    event TransferedOwnership(
+    event ProductWasTransferredFromOrganizationToOrganization(
         uint256 productId,
         ProductOwnerType ownerType,
         uint256 date
     );
 
     mapping(uint256 => Product) private products;
-
-    // certificates of products
+    // products' certificates
     uint256 private productIdCounter = 0;
 
     modifier onlyRolesMatchingToStates(StateList _state) {
@@ -44,10 +41,12 @@ contract ProductsManager is AccessControlManager {
         _;
     }
 
-    modifier onlyProductInInventory(uint256 _productId) {
-        uint256 userId = _getUserByAddress(msg.sender).id;
-        User memory currentUser = _getUserByAddress(msg.sender);
-        _getProductIndexInUserInventory(_productId, currentUser.inventory);
+    modifier onlyProductInInventory(
+        uint256 _productId,
+        uint256 _organizationId
+    ) {
+        Organization memory org = _getOrganizationById(_organizationId);
+        _getProductIndexInInventory(_productId, org.inventory);
         _;
     }
 
@@ -66,7 +65,7 @@ contract ProductsManager is AccessControlManager {
         returns (State memory)
     {
         Product memory product = _getProductInStorageById(_productId);
-        return product.lastState;
+        return product.stateHistory[product.stateHistory.length - 1];
     }
 
     function checkLegalityProductToTransferOrSale(uint256 _productId)
@@ -76,26 +75,35 @@ contract ProductsManager is AccessControlManager {
     {
         Product storage product = _getProductInStorageById(_productId);
 
+        // State storage lastState = product.stateHistory[
+        //     product.stateHistory.length - 1
+        // ];
+
+        State memory lastState = getProductState(_productId);
+        ProductOwner storage currentOwner = product.ownershipHistory[
+            product.ownershipHistory.length - 1
+        ];
+
         require(
-            product.lastState.state != StateList.WasDestroyed ||
-                product.lastState.state != StateList.Removed,
+            lastState.state != StateList.WasDestroyed ||
+                lastState.state != StateList.Removed,
             "Product was removed by manufacturer."
         );
 
         require(
-            product.owner.ownerType != ProductOwnerType.User,
+            currentOwner.ownerType != ProductOwnerType.User,
             "Product has owner user now."
         );
 
         require(
-            product.lastState.state != StateList.WasCompromised,
+            lastState.state != StateList.WasCompromised,
             "This product was compromised."
         );
 
         return true;
     }
 
-    function _getProductIndexInUserInventory(
+    function _getProductIndexInInventory(
         uint256 _productId,
         uint256[] memory _userInventory
     ) internal pure returns (uint256 index) {
@@ -107,12 +115,17 @@ contract ProductsManager is AccessControlManager {
     }
 
     function produceNewProduct(
+        uint256 _organizationId,
         uint256 _productType,
         uint256 _price,
         string memory _description,
         bytes32 _specification,
         uint256 expiresAt
-    ) public onlyRole(MANUFACTURER_ROLE) {
+    )
+        public
+        onlyOrganizationEmploye(_organizationId)
+        onlyRole(MANUFACTURER_ROLE)
+    {
         uint256 currentTimestamp = block.timestamp;
 
         require(
@@ -120,7 +133,7 @@ contract ProductsManager is AccessControlManager {
             "Guarantee expires at must be more then current time."
         );
 
-        uint256 currentUserId = _getUserByAddress(msg.sender).id;
+        User storage manufacturer = _getUserByAddress(msg.sender);
 
         uint256 newProductId = productIdCounter;
         Product storage newProduct = products[newProductId];
@@ -131,18 +144,10 @@ contract ProductsManager is AccessControlManager {
 
         newProduct.id = newProductId;
         newProduct.productType = _productType;
-        newProduct.owner = ProductOwner(
-            currentUserId,
-            currentTimestamp,
-            ProductOwnerType.Manufacturer
-        );
 
         newProduct.createdBy = msg.sender;
         newProduct.createdAt = currentTimestamp;
-
         newProduct.createdAt = expiresAt;
-
-        newProduct.lastPrice = _price;
         newProduct.specification = _specification;
 
         State storage pushedState = newProduct.stateHistory.push();
@@ -153,25 +158,30 @@ contract ProductsManager is AccessControlManager {
         pushedState.createdBy = msg.sender;
         pushedState.description = _description;
 
-        newProduct.lastState = pushedState;
+        ProductOwner memory currentOwner = ProductOwner(
+            manufacturer.userAddress,
+            currentTimestamp,
+            ProductOwnerType.Manufacturer
+        );
+        newProduct.ownershipHistory.push(currentOwner);
 
-        uint256 foundUserId = _getUserByAddress(msg.sender).id;
+        uint256[] storage orgInventory = _getOrganizationInventoryById(
+            _organizationId
+        );
 
-        newProduct.ownershipHistory.push(newProduct.owner);
+        _addProductToInventory(newProductId, orgInventory);
 
-        _addProductToInventory(newProductId, foundUserId);
         emit ProductWasProduced(newProductId, currentTimestamp);
     }
 
-    function _addProductToInventory(uint256 _productId, uint256 _userId)
-        internal
-    {
-        users[_userId].inventory.push(_productId);
-    }
-
     // ? info: if produced product was a mistake
-    function removeProduct(uint256 _productId, string memory _description)
+    function removeProduct(
+        uint256 _organizationId,
+        uint256 _productId,
+        string memory _description
+    )
         public
+        onlyOrganizationEmploye(_organizationId)
         onlyRole(MANUFACTURER_ROLE)
     {
         Product storage product = _getProductInStorageById(_productId);
@@ -180,52 +190,43 @@ contract ProductsManager is AccessControlManager {
 
         require(
             product.createdAt + TIME_TO_CORRECT_MISTAKE < block.timestamp,
-            "Operation not allowed because time for remove is out."
+            "Operation is not allowed because time for remove is out."
         );
 
         require(
-            product.lastState.state != StateList.Removed,
+            product.stateHistory[product.stateHistory.length - 1].state !=
+                StateList.Removed,
             "Product was removed."
         );
 
         State storage newState = product.stateHistory.push();
 
-        product.lastState = newState;
         newState.state = StateList.Removed;
         newState.date = currentTimestamp;
         newState.price = product.lastPrice;
         newState.createdBy = msg.sender;
         newState.description = _description;
 
-        uint256 foundUserId = _getUserByAddress(msg.sender).id;
+        uint256[] storage orgInventory = _getOrganizationInventoryById(
+            _organizationId
+        );
 
-        _removeProductFromInventory(_productId, foundUserId);
+        _removeProductFromInventory(_productId, orgInventory);
+
         emit ProductWasDeleted(_productId);
     }
 
-    function _removeProductFromInventory(uint256 _productId, uint256 _userId)
-        internal
-        onlyProductInInventory(_productId)
-    {
-        uint256[] storage userInventory = users[_userId].inventory;
-
-        for (uint256 i = 0; i < userInventory.length; i++) {
-            if (userInventory[i] == _productId) {
-                for (uint256 j = i; j < userInventory.length - 1; j++) {
-                    userInventory[j] = userInventory[j + 1];
-                }
-                userInventory.pop();
-                break;
-            }
-        }
-    }
-
-    function restoreProduct(uint256 _productId, string memory _description)
+    function restoreProduct(
+        uint256 _organizationId,
+        uint256 _productId,
+        string memory _description
+    )
         public
         onlyRole(MANUFACTURER_ROLE)
-        onlyProductInInventory(_productId)
+        onlyProductInInventory(_productId, _organizationId)
     {
         Product storage product = _getProductInStorageById(_productId);
+        State memory lastState = getProductState(_productId);
 
         uint256 currentTimestamp = block.timestamp;
 
@@ -235,14 +236,14 @@ contract ProductsManager is AccessControlManager {
         );
 
         require(
-            product.lastState.state != StateList.WasDestroyed ||
-                product.lastState.state != StateList.Removed,
+            lastState.state != StateList.WasDestroyed ||
+                lastState.state != StateList.Removed,
             "Repairing available only for existing products."
         );
 
         State storage newState = product.stateHistory.push();
 
-        product.lastState = newState;
+        // product.lastState = newState;
         newState.state = StateList.WasRestored;
         newState.date = currentTimestamp;
         newState.price = product.lastPrice;
@@ -253,6 +254,7 @@ contract ProductsManager is AccessControlManager {
     }
 
     function unlockProductOwnership(
+        uint256 _organizationId,
         uint256 _productId,
         string memory _description
     ) public onlyRole(MANUFACTURER_ROLE) {
@@ -261,27 +263,33 @@ contract ProductsManager is AccessControlManager {
         uint256 currentTimestamp = block.timestamp;
 
         require(
-            product.owner.ownerType == ProductOwnerType.UserLeft,
+            product
+                .ownershipHistory[product.ownershipHistory.length - 1]
+                .ownerType == ProductOwnerType.UserLeft,
             "Unlock ownership available only if last user agrees to left ownership."
         );
 
         State storage newState = product.stateHistory.push();
 
-        product.lastState = newState;
-        newState.state = StateList.WasRestored;
         newState.date = currentTimestamp;
         newState.price = product.lastPrice;
         newState.createdBy = msg.sender;
         newState.description = _description;
+        newState.state = StateList.Unlocked;
+
+        _resetOwnership(_organizationId, _productId, _description);
     }
 
     // ? info : if legal last owner left ownership
-    function _resetOwnership(uint256 _productId, string memory _description)
-        internal
-    {
+    function _resetOwnership(
+        uint256 _organizationId,
+        uint256 _productId,
+        string memory _description
+    ) internal {
         Product storage product = _getProductInStorageById(_productId);
 
         updateProductState(
+            _organizationId,
             _productId,
             StateList.OwnerWasChanged,
             0,
@@ -292,11 +300,10 @@ contract ProductsManager is AccessControlManager {
             product.ownershipHistory.length - 1
         ];
         lastOwner.ownerType = ProductOwnerType.UserLeft;
-        product.owner = lastOwner;
 
-        emit TransferedOwnership(
+        emit ProductWasTransferredFromOrganizationToOrganization(
             _productId,
-            ProductOwnerType.UserLeft,
+            lastOwner.ownerType,
             block.timestamp
         );
     }
@@ -314,34 +321,43 @@ contract ProductsManager is AccessControlManager {
 
     // ? info: sell roduct and transfer ownership
     function sellProduct(
+        uint256 _organizationId,
         uint256 _productId,
-        uint256 _newOwnerId,
+        address _newOwner,
         string memory _description
-    ) public onlyMerchants onlyProductInInventory(_productId) returns (bool) {
+    )
+        public
+        onlyOrganizationSeller(_organizationId)
+        onlyProductInInventory(_productId, _organizationId)
+        returns (bool)
+    {
         uint256 currentTimestamp = block.timestamp;
         Product storage product = _getProductInStorageById(_productId);
+        State memory lastState = getProductState(_productId);
+        ProductOwner memory lastOwner = product.ownershipHistory[
+            product.ownershipHistory.length - 1
+        ];
         checkLegalityProductToTransferOrSale(_productId);
 
         State storage newState = product.stateHistory.push();
         // sale attempt but the product someone compromised because product with such an id has an owner
+
         if (
-            product.lastState.state == StateList.Sold &&
-            product.owner.ownerType == ProductOwnerType.User
+            lastState.state == StateList.Sold &&
+            lastOwner.ownerType == ProductOwnerType.User
         ) {
-            product.lastState.state = StateList.WasCompromised;
             newState.state = StateList.WasCompromised;
             emit ProductWasCompromised(_productId, currentTimestamp);
         }
         // success transfer
         else {
-            product.owner = ProductOwner(
-                _newOwnerId,
+            ProductOwner memory newOrder = ProductOwner(
+                _newOwner,
                 currentTimestamp,
                 ProductOwnerType.User
             );
-            product.lastState.state = StateList.Sold;
             newState.state = StateList.Sold;
-            product.ownershipHistory.push(product.owner);
+            product.ownershipHistory.push(newOrder);
         }
 
         newState.date = currentTimestamp;
@@ -358,14 +374,15 @@ contract ProductsManager is AccessControlManager {
 
     // ? info: add shipping event
     function addShippingEvent(
+        uint256 organizationId,
         StateList _state,
         uint256 _productId,
         string memory _description
     )
         public
-        onlyRole(TRANSPORTER_ROLE)
+        onlyRole(SELLER_ROLE)
         onlyRolesMatchingToStates(_state)
-        onlyProductInInventory(_productId)
+        onlyProductInInventory(_productId, organizationId)
     {
         Product storage product = _getProductInStorageById(_productId);
 
@@ -382,66 +399,64 @@ contract ProductsManager is AccessControlManager {
         emit UpdatedProductState(_productId, currentTimestamp, _state);
     }
 
-    function transferProductOwnership(
+    function transferProductOrganizationToOrganization(
         uint256 _productId,
-        uint256 _userIdTo,
-        ProductOwnerType _ownerType
-    ) public onlyMerchants onlyProductInInventory(_productId) {
+        uint256 _organizationFromId,
+        uint256 _organizationIdTo
+    )
+        public
+        onlyOrganizationSeller(_organizationFromId)
+        onlyProductInInventory(_productId, _organizationFromId)
+    {
         uint256 currentTimestamp = block.timestamp;
         Product storage product = _getProductInStorageById(_productId);
 
-        ProductOwner memory currentProductOwner = product.owner;
-
-        uint256 currentUserId = _getUserByAddress(msg.sender).id;
-
-        require(
-            currentProductOwner.createdAt != 0 &&
-                product.owner.id == currentUserId,
-            "Transfer ownership available can only owner."
+        Organization storage orgFrom = _getOrganizationById(
+            _organizationFromId
         );
-
-        require(
-            product.lastState.state != StateList.Removed ||
-                product.lastState.state != StateList.WasDestroyed,
-            "Can not transfer ownerhip for products what was removed or destroyed."
-        );
-
-        require(
-            product.owner.ownerType == ProductOwnerType.User &&
-                product.owner.id == currentUserId,
-            "Transfer product ownership possible from only owner."
-        );
-
-        require(
-            _ownerType != ProductOwnerType.Manufacturer ||
-                _ownerType != ProductOwnerType.None,
-            "Can not set such an owner type. It requires special access right."
-        );
+        Organization storage orgTo = _getOrganizationById(_organizationIdTo);
 
         ProductOwner memory newProductOwner = ProductOwner(
-            _userIdTo,
+            address(0),
             currentTimestamp,
-            _ownerType
+            ProductOwnerType.Seller
         );
 
-        product.owner = newProductOwner;
         product.ownershipHistory.push(newProductOwner);
+        _removeProductFromInventory(_productId, orgFrom.inventory);
+        _addProductToInventory(_productId, orgTo.inventory);
 
-        emit TransferedOwnership(_productId, _ownerType, currentTimestamp);
+        emit ProductWasTransferredFromOrganizationToOrganization(
+            _productId,
+            ProductOwnerType.Seller,
+            currentTimestamp
+        );
     }
 
     // ? info: add new state to product history
     function updateProductState(
+        uint256 _organizationId,
         uint256 _productId,
         StateList _state,
         uint256 _price,
         string memory _description
     )
         public
-        onlyMerchants
+        onlyOrganizationSeller(_organizationId)
         onlyRolesMatchingToStates(_state)
-        onlyProductInInventory(_productId)
+        onlyProductInInventory(_productId, _organizationId)
     {
+        _updateProductState(_productId, _state, _price, _description);
+
+        emit UpdatedProductState(_productId, block.timestamp, _state);
+    }
+
+    function _updateProductState(
+        uint256 _productId,
+        StateList _state,
+        uint256 _price,
+        string memory _description
+    ) internal {
         Product storage product = _getProductInStorageById(_productId);
 
         State storage newState = product.stateHistory.push();
@@ -457,9 +472,6 @@ contract ProductsManager is AccessControlManager {
             newState.price = product.lastPrice;
         }
 
-        product.lastState = newState;
         product.stateHistory.push(newState);
-
-        emit UpdatedProductState(_productId, newState.date, newState.state);
     }
 }
