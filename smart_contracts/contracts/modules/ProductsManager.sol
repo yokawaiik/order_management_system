@@ -16,6 +16,7 @@ import "../structures/Organization.sol";
 import "../structures/User.sol";
 
 contract ProductsManager is AccessControlManager {
+    
     event ProductWasProduced(uint256 id, uint256 date);
     event ProductWasDeleted(uint256 id);
     event UpdatedProductState(uint256 id, uint256 date, StateList state);
@@ -372,32 +373,32 @@ contract ProductsManager is AccessControlManager {
         }
     }
 
-    // ? info: add shipping event
-    function addShippingEvent(
-        uint256 organizationId,
-        StateList _state,
-        uint256 _productId,
-        string memory _description
-    )
-        public
-        onlyRole(SELLER_ROLE)
-        onlyRolesMatchingToStates(_state)
-        onlyProductInInventory(_productId, organizationId)
-    {
-        Product storage product = _getProductInStorageById(_productId);
+    // // ? info: add shipping event
+    // function addShippingEvent(
+    //     uint256 organizationId,
+    //     StateList _state,
+    //     uint256 _productId,
+    //     string memory _description
+    // )
+    //     public
+    //     onlyRole(SELLER_ROLE)
+    //     onlyRolesMatchingToStates(_state)
+    //     onlyProductInInventory(_productId, organizationId)
+    // {
+    //     Product storage product = _getProductInStorageById(_productId);
 
-        uint256 currentTimestamp = block.timestamp;
+    //     uint256 currentTimestamp = block.timestamp;
 
-        State storage productStateHistory = product.stateHistory.push();
+    //     State storage productStateHistory = product.stateHistory.push();
 
-        productStateHistory.createdBy = msg.sender;
-        productStateHistory.date = currentTimestamp;
-        productStateHistory.description = _description;
-        productStateHistory.price = product.lastPrice;
-        productStateHistory.state = _state;
+    //     productStateHistory.createdBy = msg.sender;
+    //     productStateHistory.date = currentTimestamp;
+    //     productStateHistory.description = _description;
+    //     productStateHistory.price = product.lastPrice;
+    //     productStateHistory.state = _state;
 
-        emit UpdatedProductState(_productId, currentTimestamp, _state);
-    }
+    //     emit UpdatedProductState(_productId, currentTimestamp, _state);
+    // }
 
     function transferProductOrganizationToOrganization(
         uint256 _productId,

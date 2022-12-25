@@ -268,7 +268,17 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         ProductInOrder[] storage orderProductList = _getOrderById(_orderId)
             .productList;
 
-        // check if product with such an id was added in order
+        Order storage order = _getOrderById(_orderId);
+        Organization storage orgSeller = _getOrganizationById(
+            order.seller.organizationId
+        );
+
+     
+        require(
+            _checkProductInInventory(_productId, orgSeller.inventory) == true,
+            "Seller's organization doesn't have this product."
+        );
+
         require(
             _checkProductInOrderProductList(orderProductList, _productId) !=
                 true,

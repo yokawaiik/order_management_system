@@ -21,20 +21,12 @@ contract AccessControlManager is AccessControl {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     bytes32 public constant ADMIN_ORGANIZATION_ROLE =
         keccak256("ADMIN_ORGANIZATION_ROLE");
-    bytes32 public constant ORACLE_ROLE = keccak256("ORACLE_ROLE"); // ? info: IoT
     // ? info: it can produce products
     bytes32 public constant MANUFACTURER_ROLE = keccak256("MANUFACTURER_ROLE");
     bytes32 public constant SELLER_ROLE = keccak256("SELLER_ROLE");
     bytes32 public constant SIMPLE_USER_ROLE = keccak256("SIMPLE_USER_ROLE");
 
     uint256 public constant TIME_TO_CORRECT_MISTAKE = 60 * 15;
-
-    // modifier onlyMerchants() {
-    //     string memory message = "This action available only for merchants.";
-    //     require(hasRole(ORACLE_ROLE, msg.sender), message);
-    //     _;
-    // }
-
     constructor() {
         _setRoleAdmin(DEFAULT_ADMIN_ROLE, ADMIN_ROLE);
         _grantRole(ADMIN_ROLE, msg.sender);
