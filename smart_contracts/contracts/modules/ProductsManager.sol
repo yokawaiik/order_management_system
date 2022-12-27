@@ -3,12 +3,9 @@ pragma solidity >=0.8.15 <0.9.0;
 
 import "../../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 import "../../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
-
 import "./AccessControlManager.sol";
-
 import "../enums/StateList.sol";
 import "../enums/ProductOwnerType.sol";
-
 import "../structures/State.sol";
 import "../structures/Product.sol";
 import "../structures/ProductOwner.sol";
@@ -22,16 +19,11 @@ contract ProductsManager is AccessControlManager {
     event UpdatedProductState(uint256 id, uint256 date, StateList state);
     event ProductWasCompromised(uint256 id, uint256 date);
     event ProductIsRestored(uint256 id, uint256 date);
-    event ProductWasTransferredFromOrganizationToOrganization(
-        uint256 productId,
-        ProductOwnerType ownerType,
-        uint256 date
-    );
+    event ProductWasTransferredFromOrganizationToOrganization(uint256 productId, ProductOwnerType ownerType, uint256 date);
 
     mapping(uint256 => Product) private products;
-    // products' certificates
-    uint256 private productIdCounter = 0;
-
+    uint256 private productIdCounter = 0; // products' certificates
+    
     modifier onlyRolesMatchingToStates(StateList _state) {
         if (hasRole(MANUFACTURER_ROLE, msg.sender) != true) {
             require(
@@ -42,38 +34,23 @@ contract ProductsManager is AccessControlManager {
         _;
     }
 
-    modifier onlyProductInInventory(
-        uint256 _productId,
-        uint256 _organizationId
-    ) {
+    modifier onlyProductInInventory(uint256 _productId, uint256 _organizationId) {
         Organization memory org = _getOrganizationById(_organizationId);
         _getProductIndexInInventory(_productId, org.inventory);
         _;
     }
 
     // ? info: find product by id
-    function getProductById(uint256 productId)
-        public
-        view
-        returns (Product memory)
-    {
+    function getProductById(uint256 productId) public view returns (Product memory) {
         return _getProductInStorageById(productId);
     }
 
-    function getProductState(uint256 _productId)
-        public
-        view
-        returns (State memory)
-    {
+    function getProductState(uint256 _productId) public view returns (State memory) {
         Product memory product = _getProductInStorageById(_productId);
         return product.stateHistory[product.stateHistory.length - 1];
     }
 
-    function checkLegalityProductToTransferOrSale(uint256 _productId)
-        public
-        view
-        returns (bool)
-    {
+    function checkLegalityProductToTransferOrSale(uint256 _productId) public view returns (bool) {
         Product storage product = _getProductInStorageById(_productId);
 
         // State storage lastState = product.stateHistory[
@@ -104,10 +81,9 @@ contract ProductsManager is AccessControlManager {
         return true;
     }
 
-    function _getProductIndexInInventory(
-        uint256 _productId,
-        uint256[] memory _userInventory
-    ) internal pure returns (uint256 index) {
+    function _getProductIndexInInventory(uint256 _productId, uint256[] memory _userInventory) internal pure 
+    returns (uint256 index)
+    {
         for (uint256 i = 0; i < _userInventory.length; i++) {
             if (_productId == _userInventory[i]) return i;
         }
@@ -115,17 +91,9 @@ contract ProductsManager is AccessControlManager {
         revert("Such product didn't find in inventory.");
     }
 
-    function produceNewProduct(
-        uint256 _organizationId,
-        uint256 _productType,
-        uint256 _price,
-        string memory _description,
-        bytes32 _specification,
-        uint256 expiresAt
-    )
-        public
-        onlyOrganizationEmploye(_organizationId)
-        onlyRole(MANUFACTURER_ROLE)
+    function produceNewProduct(uint256 _organizationId, uint256 _productType, uint256 _price, 
+    string memory _description, bytes32 _specification, uint256 expiresAt)
+    public onlyOrganizationEmploye(_organizationId) onlyRole(MANUFACTURER_ROLE)
     {
         uint256 currentTimestamp = block.timestamp;
 
@@ -176,14 +144,8 @@ contract ProductsManager is AccessControlManager {
     }
 
     // ? info: if produced product was a mistake
-    function removeProduct(
-        uint256 _organizationId,
-        uint256 _productId,
-        string memory _description
-    )
-        public
-        onlyOrganizationEmploye(_organizationId)
-        onlyRole(MANUFACTURER_ROLE)
+    function removeProduct(uint256 _organizationId, uint256 _productId, string memory _description)
+    public onlyOrganizationEmploye(_organizationId) onlyRole(MANUFACTURER_ROLE)
     {
         Product storage product = _getProductInStorageById(_productId);
 
@@ -217,14 +179,8 @@ contract ProductsManager is AccessControlManager {
         emit ProductWasDeleted(_productId);
     }
 
-    function restoreProduct(
-        uint256 _organizationId,
-        uint256 _productId,
-        string memory _description
-    )
-        public
-        onlyRole(MANUFACTURER_ROLE)
-        onlyProductInInventory(_productId, _organizationId)
+    function restoreProduct(uint256 _organizationId, uint256 _productId, string memory _description)
+    public onlyRole(MANUFACTURER_ROLE) onlyProductInInventory(_productId, _organizationId)
     {
         Product storage product = _getProductInStorageById(_productId);
         State memory lastState = getProductState(_productId);
@@ -254,11 +210,8 @@ contract ProductsManager is AccessControlManager {
         emit ProductIsRestored(_productId, currentTimestamp);
     }
 
-    function unlockProductOwnership(
-        uint256 _organizationId,
-        uint256 _productId,
-        string memory _description
-    ) public onlyRole(MANUFACTURER_ROLE) {
+    function unlockProductOwnership(uint256 _organizationId, uint256 _productId, string memory _description) 
+    public onlyRole(MANUFACTURER_ROLE) {
         Product storage product = _getProductInStorageById(_productId);
 
         uint256 currentTimestamp = block.timestamp;
@@ -282,11 +235,7 @@ contract ProductsManager is AccessControlManager {
     }
 
     // ? info : if legal last owner left ownership
-    function _resetOwnership(
-        uint256 _organizationId,
-        uint256 _productId,
-        string memory _description
-    ) internal {
+    function _resetOwnership(uint256 _organizationId, uint256 _productId, string memory _description) internal {
         Product storage product = _getProductInStorageById(_productId);
 
         updateProductState(
@@ -309,11 +258,7 @@ contract ProductsManager is AccessControlManager {
         );
     }
 
-    function _getProductInStorageById(uint256 _productId)
-        internal
-        view
-        returns (Product storage)
-    {
+    function _getProductInStorageById(uint256 _productId) internal view returns (Product storage) {
         Product storage product = products[_productId];
 
         require(product.createdAt != 0, "Product with such an id wasn't find.");
@@ -321,16 +266,8 @@ contract ProductsManager is AccessControlManager {
     }
 
     // ? info: sell roduct and transfer ownership
-    function sellProduct(
-        uint256 _organizationId,
-        uint256 _productId,
-        address _newOwner,
-        string memory _description
-    )
-        public
-        onlyOrganizationSeller(_organizationId)
-        onlyProductInInventory(_productId, _organizationId)
-        returns (bool)
+    function sellProduct(uint256 _organizationId, uint256 _productId, address _newOwner, string memory _description)
+    public onlyOrganizationSeller(_organizationId) onlyProductInInventory(_productId, _organizationId) returns (bool)
     {
         uint256 currentTimestamp = block.timestamp;
         Product storage product = _getProductInStorageById(_productId);
@@ -373,41 +310,8 @@ contract ProductsManager is AccessControlManager {
         }
     }
 
-    // // ? info: add shipping event
-    // function addShippingEvent(
-    //     uint256 organizationId,
-    //     StateList _state,
-    //     uint256 _productId,
-    //     string memory _description
-    // )
-    //     public
-    //     onlyRole(SELLER_ROLE)
-    //     onlyRolesMatchingToStates(_state)
-    //     onlyProductInInventory(_productId, organizationId)
-    // {
-    //     Product storage product = _getProductInStorageById(_productId);
-
-    //     uint256 currentTimestamp = block.timestamp;
-
-    //     State storage productStateHistory = product.stateHistory.push();
-
-    //     productStateHistory.createdBy = msg.sender;
-    //     productStateHistory.date = currentTimestamp;
-    //     productStateHistory.description = _description;
-    //     productStateHistory.price = product.lastPrice;
-    //     productStateHistory.state = _state;
-
-    //     emit UpdatedProductState(_productId, currentTimestamp, _state);
-    // }
-
-    function transferProductOrganizationToOrganization(
-        uint256 _productId,
-        uint256 _organizationFromId,
-        uint256 _organizationIdTo
-    )
-        public
-        onlyOrganizationSeller(_organizationFromId)
-        onlyProductInInventory(_productId, _organizationFromId)
+    function transferProductOrganizationToOrganization(uint256 _productId, uint256 _organizationFromId, uint256 _organizationIdTo)
+    public onlyOrganizationSeller(_organizationFromId) onlyProductInInventory(_productId, _organizationFromId)
     {
         uint256 currentTimestamp = block.timestamp;
         Product storage product = _getProductInStorageById(_productId);
@@ -435,29 +339,16 @@ contract ProductsManager is AccessControlManager {
     }
 
     // ? info: add new state to product history
-    function updateProductState(
-        uint256 _organizationId,
-        uint256 _productId,
-        StateList _state,
-        uint256 _price,
-        string memory _description
-    )
-        public
-        onlyOrganizationSeller(_organizationId)
-        onlyRolesMatchingToStates(_state)
-        onlyProductInInventory(_productId, _organizationId)
-    {
+    function updateProductState(uint256 _organizationId, uint256 _productId, 
+    StateList _state, uint256 _price,string memory _description)
+    public onlyOrganizationSeller(_organizationId) onlyRolesMatchingToStates(_state)
+    onlyProductInInventory(_productId, _organizationId) {
         _updateProductState(_productId, _state, _price, _description);
 
         emit UpdatedProductState(_productId, block.timestamp, _state);
     }
 
-    function _updateProductState(
-        uint256 _productId,
-        StateList _state,
-        uint256 _price,
-        string memory _description
-    ) internal {
+    function _updateProductState(uint256 _productId, StateList _state, uint256 _price, string memory _description) internal {
         Product storage product = _getProductInStorageById(_productId);
 
         State storage newState = product.stateHistory.push();

@@ -2,12 +2,9 @@
 pragma solidity >=0.8.15 <0.9.0;
 
 import "../../node_modules/@openzeppelin/contracts/access/AccessControl.sol";
-
 import "../structures/User.sol";
 import "../enums/OrganizationRoles.sol";
-
 import "../libraries/StringLibrary.sol";
-
 import "../structures/Organization.sol";
 
 contract AccessControlManager is AccessControl {
@@ -15,18 +12,16 @@ contract AccessControlManager is AccessControl {
     // ?  grantRole
     // ?  revokeRole
     // ?  renounceRole
-
     // ? info: constants
     bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE"); // contract deployer
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
-    bytes32 public constant ADMIN_ORGANIZATION_ROLE =
-        keccak256("ADMIN_ORGANIZATION_ROLE");
+    bytes32 public constant ADMIN_ORGANIZATION_ROLE = keccak256("ADMIN_ORGANIZATION_ROLE");
     // ? info: it can produce products
     bytes32 public constant MANUFACTURER_ROLE = keccak256("MANUFACTURER_ROLE");
     bytes32 public constant SELLER_ROLE = keccak256("SELLER_ROLE");
     bytes32 public constant SIMPLE_USER_ROLE = keccak256("SIMPLE_USER_ROLE");
-
     uint256 public constant TIME_TO_CORRECT_MISTAKE = 60 * 15;
+
     constructor() {
         _setRoleAdmin(DEFAULT_ADMIN_ROLE, ADMIN_ROLE);
         _grantRole(ADMIN_ROLE, msg.sender);
@@ -36,12 +31,8 @@ contract AccessControlManager is AccessControl {
     mapping(uint256 => Organization) internal organizations;
     uint256 private organizationIdCounter;
 
-    function createUser(
-        address _userAddress,
-        string memory _login,
-        string memory _password,
-        bytes32 _role
-    ) public onlyRole(ADMIN_ROLE) {
+    function createUser(address _userAddress, string memory _login, string memory _password, bytes32 _role) 
+    public onlyRole(ADMIN_ROLE) {
         // ? info: need to have access to add a new user
 
         users[_userAddress].userAddress = _userAddress;
@@ -54,10 +45,7 @@ contract AccessControlManager is AccessControl {
     }
 
     // can update user on his own
-    function updateUserInfo(
-        address _userAddress,
-        string memory _login,
-        string memory _password
+    function updateUserInfo(address _userAddress, string memory _login, string memory _password
     ) public {
         User storage user = _getUserByAddress(msg.sender);
 
@@ -67,20 +55,12 @@ contract AccessControlManager is AccessControl {
     }
 
     // create a simple user by an organization employe
-    function addBuyer(
-        uint256 _organizationId,
-        address _userAddress,
-        string memory _login,
-        string memory _password
-    ) public onlyOrganizationEmploye(_organizationId) {
+    function addBuyer(uint256 _organizationId, address _userAddress, string memory _login, string memory _password) 
+    public onlyOrganizationEmploye(_organizationId) {
         createUser(_userAddress, _login, _password, SIMPLE_USER_ROLE);
     }
-
     // Add organization
-    // Add admin to organization
-    function createOrganization(string memory _title)
-        public
-        onlyRole(ADMIN_ORGANIZATION_ROLE)
+    function createOrganization(string memory _title) public onlyRole(ADMIN_ORGANIZATION_ROLE)
     {
         uint256 timestamp = block.timestamp;
         Organization storage newOrg = organizations[organizationIdCounter];
@@ -126,7 +106,6 @@ contract AccessControlManager is AccessControl {
         );
         _;
     }
-
     modifier onlyOrganizationSeller(uint256 _organizationId) {
         OrganizationMember memory employe = _getUserByAddress(msg.sender)
             .organizationMember;
@@ -144,10 +123,7 @@ contract AccessControlManager is AccessControl {
         _;
     }
 
-    function getOrganizationById(uint256 _organizationId)
-        public
-        view
-        returns (Organization memory)
+    function getOrganizationById(uint256 _organizationId) public view returns (Organization memory)
     {
         Organization memory organization = _getOrganizationById(
             _organizationId
@@ -155,10 +131,7 @@ contract AccessControlManager is AccessControl {
         return organization;
     }
 
-    function _getOrganizationById(uint256 _organizationId)
-        internal
-        view
-        returns (Organization storage)
+    function _getOrganizationById(uint256 _organizationId) internal view returns (Organization storage)
     {
         Organization storage organization = organizations[_organizationId];
 
@@ -166,14 +139,9 @@ contract AccessControlManager is AccessControl {
 
         return organization;
     }
-
-    // add employe
-    // or change his role
-    function addEmployeToOrganization(
-        uint256 _organizationId,
-        address _employeAddress,
-        OrganizationRoles _role
-    ) public onlyOrganizationAdmin(_organizationId) {
+    // add employe or change his role
+    function addEmployeToOrganization(uint256 _organizationId, address _employeAddress, OrganizationRoles _role)  
+    public onlyOrganizationAdmin(_organizationId) {
         uint256 timestamp = block.timestamp;
 
         OrganizationMember storage employe = _getUserByAddress(_employeAddress)
@@ -190,10 +158,7 @@ contract AccessControlManager is AccessControl {
         }
     }
 
-    function deleteEmployeFromOrganization(
-        uint256 _organizationId,
-        address _employeAddress
-    ) public onlyOrganizationAdmin(_organizationId) {
+    function deleteEmployeFromOrganization(uint256 _organizationId, address _employeAddress) public onlyOrganizationAdmin(_organizationId) {
         Organization storage organization = _getOrganizationById(
             _organizationId
         );
@@ -223,22 +188,8 @@ contract AccessControlManager is AccessControl {
         _revokeRole(ADMIN_ORGANIZATION_ROLE, _employeAddress);
     }
 
-    // // todo remove: _getUserInventoryByUserId
-    // function _getUserInventoryByUserId(uint256 _userId)
-    //     internal
-    //     view
-    //     returns (uint256[] storage)
-    // {
-    //     User storage user = _getUserById(_userId);
-    //     uint256[] storage inventory = user.inventory;
 
-    //     return inventory;
-    // }
-
-    function getOrganizationInventoryById(uint256 _organizationId)
-        internal
-        view
-        returns (uint256[] memory)
+    function getOrganizationInventoryById(uint256 _organizationId) internal view returns (uint256[] memory)
     {
         uint256[] memory inventory = _getOrganizationInventoryById(
             _organizationId
@@ -246,11 +197,8 @@ contract AccessControlManager is AccessControl {
         return inventory;
     }
 
-    function _getOrganizationInventoryById(uint256 _organizationId)
-        internal
-        view
-        onlyOrganizationEmploye(_organizationId)
-        returns (uint256[] storage)
+    function _getOrganizationInventoryById(uint256 _organizationId) internal view 
+    onlyOrganizationEmploye(_organizationId) returns (uint256[] storage)
     {
         Organization storage organization = _getOrganizationById(
             _organizationId
@@ -261,68 +209,8 @@ contract AccessControlManager is AccessControl {
         return inventory;
     }
 
-    // // todo remove: getUserInventoryByUserId
-    // function getUserInventoryByUserId(uint256 _userId)
-    //     external
-    //     view
-    //     returns (uint256[] memory)
-    // {
-    //     uint256[] memory inventory = _getUserInventoryByUserId(_userId);
-
-    //     return inventory;
-    // }
-
-    // function getUsersCount() public view returns (uint256) {
-    //     return userIdCounter;
-    // }
-
-    // // ? info: find user by id
-    // function getUserById(uint256 _userId) public view returns (User memory) {
-    //     User memory user = _getUserById(_userId);
-    //     user.password = "";
-    //     return users[_userId];
-    // }
-
-    // function getUserIdByAddress(address _userAddress)
-    //     public
-    //     view
-    //     returns (uint256)
-    // {
-    //     uint256 foundUserId;
-
-    //     for (uint256 i = 0; i < userIdCounter; i++) {
-    //         if (users[i].userAddress == _userAddress) {
-    //             foundUserId = i;
-    //             break;
-    //         }
-    //     }
-
-    //     require(
-    //         users[foundUserId].createdAt != 0 &&
-    //             users[foundUserId].userAddress == _userAddress,
-    //         "User with such an id wasn't find."
-    //     );
-
-    //     return foundUserId;
-    // }
-
-    // function _getUserById(uint256 _userId)
-    //     internal
-    //     view
-    //     returns (User storage)
-    // {
-    //     User storage user = users[_userId];
-
-    //     require(user.createdAt != 0, "User with such an id wasn't find.");
-
-    //     return user;
-    // }
-
     // ? info: find user by address
-    function _getUserByAddress(address _userAddress)
-        internal
-        view
-        returns (User storage)
+    function _getUserByAddress(address _userAddress) internal view returns (User storage)
     {
         User storage user = users[_userAddress];
 
@@ -331,21 +219,14 @@ contract AccessControlManager is AccessControl {
     }
 
     // ? info: find user by address
-    function getUserByAddress(address _userAddress)
-        public
-        view
-        returns (User memory)
+    function getUserByAddress(address _userAddress) public view returns (User memory)
     {
         User memory user = _getUserByAddress(_userAddress);
         user.password = "";
         return user;
     }
 
-    function exportOrganization(uint256 _organizationId)
-        external
-        view
-        onlyRole(OWNER_ROLE)
-        returns (Organization memory)
+    function exportOrganization(uint256 _organizationId) external view onlyRole(OWNER_ROLE) returns (Organization memory)
     {
         Organization memory organization = _getOrganizationById(
             _organizationId
@@ -353,18 +234,12 @@ contract AccessControlManager is AccessControl {
         return organization;
     }
 
-    function exportUser(address _userAddress)
-        external
-        view
-        onlyRole(OWNER_ROLE)
-        returns (User memory)
+    function exportUser(address _userAddress) external view onlyRole(OWNER_ROLE)returns (User memory)
     {
         return _getUserByAddress(_userAddress);
     }
 
-    function _checkProductInInventory(
-        uint256 _productId,
-        uint256[] storage _inventory
+    function _checkProductInInventory(uint256 _productId, uint256[] storage _inventory
     ) internal view returns (bool) {
         for (uint256 i = 0; i < _inventory.length; i++) {
             if (_inventory[i] == _productId) {
@@ -374,9 +249,7 @@ contract AccessControlManager is AccessControl {
         return false;
     }
 
-    function _removeProductFromInventory(
-        uint256 _productId,
-        uint256[] storage _inventory
+    function _removeProductFromInventory(uint256 _productId, uint256[] storage _inventory
     ) internal {
         require(
             _checkProductInInventory(_productId, _inventory) == true,
@@ -394,9 +267,7 @@ contract AccessControlManager is AccessControl {
         }
     }
 
-    function _addProductToInventory(
-        uint256 _productId,
-        uint256[] storage _inventory
+    function _addProductToInventory(uint256 _productId, uint256[] storage _inventory
     ) internal {
         _inventory.push(_productId);
     }

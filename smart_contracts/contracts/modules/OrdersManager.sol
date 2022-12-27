@@ -3,49 +3,21 @@ pragma solidity >=0.8.15 <0.9.0;
 
 import "./AccessControlManager.sol";
 import "./ProductsManager.sol";
-
 import "../enums/OrderMemberDecision.sol";
 import "../enums/StateList.sol";
 import "../enums/OrderStateList.sol";
 import "../enums/OrderMode.sol";
 import "../structures/Order.sol";
 import "../structures/State.sol";
-
-import {StringLibrary} from "../libraries/StringLibrary.sol";
+import "../libraries/StringLibrary.sol";
 
 contract OrdersManager is AccessControlManager, ProductsManager {
-    event CreatedOrder(
-        uint256 orderId,
-        uint256 createdAt,
-        address seller,
-        address buyer
-    );
-
+    event CreatedOrder(uint256 orderId, uint256 createdAt, address seller, address buyer);
     event ProductWasAddedToOrder(uint256 productId, uint256 orderId);
-
-    event OrderStateWasUpdated(
-        uint256 orderId,
-        OrderStateList _state,
-        address _user,
-        string _description
-    );
-
-    event DecisionWasMadeOnOrder(
-        uint256 _orderId,
-        address _userAddress,
-        OrderMemberDecision _memberDecision
-    );
-
-    event UserApprovedTransferring(
-        uint256 _orderId,
-        address _userAddress,
-        bool _decision
-    );
-    event ProductsInOrderWasTransferred(
-        uint256 _orderId,
-        address _userAddress,
-        bool _decision
-    );
+    event OrderStateWasUpdated(uint256 orderId, OrderStateList _state, address _user, string _description );
+    event DecisionWasMadeOnOrder(uint256 _orderId, address _userAddress, OrderMemberDecision _memberDecision );
+    event UserApprovedTransferring(uint256 _orderId, address _userAddress, bool _decision);
+    event ProductsInOrderWasTransferred(uint256 _orderId, address _userAddress, bool _decision);
 
     constructor() {
         _grantRole(OWNER_ROLE, msg.sender);
@@ -56,35 +28,21 @@ contract OrdersManager is AccessControlManager, ProductsManager {
     mapping(uint256 => Order) orders;
     uint256 private productIdCounter = 0;
 
-    function _getOrderById(uint256 _orderId)
-        internal
-        view
-        returns (Order storage)
-    {
+    function _getOrderById(uint256 _orderId) internal view returns (Order storage) {
         Order storage order = orders[_orderId];
         require(order.createdAt != 0, "Such an order wasn't registered.");
         return order;
     }
 
-    function getOrderById(uint256 _organizationId, uint256 _orderId)
-        public
-        view
-        onlyOrganizationEmploye(_organizationId)
-        returns (Order memory)
-    {
+    function getOrderById(uint256 _organizationId, uint256 _orderId) public view onlyOrganizationEmploye(_organizationId) returns (Order memory) {
         return _getOrderById(_orderId);
     }
 
-    function exportOrder(uint256 _orderId)
-        external
-        view
-        onlyRole(OWNER_ROLE)
-        returns (Order memory)
-    {
+    function exportOrder(uint256 _orderId) external view onlyRole(OWNER_ROLE) returns (Order memory) {
         return _getOrderById(_orderId);
     }
 
-    // organization participant users
+    // any organization participant users
     modifier onlyOrderParticipants(uint256 _orderId) {
         Order memory order = _getOrderById(_orderId);
 
@@ -99,8 +57,6 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         );
         _;
     }
-
-    // todo: check this logic
     modifier onlyUnconfirmedOrders(uint256 _orderId) {
         Order memory order = _getOrderById(_orderId);
 
@@ -143,7 +99,6 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         }
     }
 
-    // todo: check this logic
     modifier onlyUntransferredProductsInOrders(uint256 _orderId) {
         Order memory order = _getOrderById(_orderId);
 
@@ -154,14 +109,9 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         _;
     }
 
-    function createOrder(
-        uint256 _organizationId,
-        address _buyerAddress,
-        address _sellerAddress,
-        string memory _description,
-        string memory _location,
-        OrderMode _orderMode
-    ) public onlyOrganizationEmploye(_organizationId) {
+    function createOrder(uint256 _organizationId, address _buyerAddress, address _sellerAddress, string memory _description, 
+    string memory _location, OrderMode _orderMode) public onlyOrganizationEmploye(_organizationId) 
+    {
         uint256 timestamp = block.timestamp;
 
         // check if exists
@@ -238,12 +188,8 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         product.isBlockedFromOrdering = _lockState;
     }
 
-    function removeOrderById(uint256 _organizationId, uint256 _orderId)
-        public
-        onlyOrganizationEmploye(_organizationId)
-        onlyUnconfirmedOrders(_orderId)
-        onlyOrderParticipants(_orderId)
-    {
+    function removeOrderById(uint256 _organizationId, uint256 _orderId) 
+    public onlyOrganizationEmploye(_organizationId) onlyUnconfirmedOrders(_orderId) onlyOrderParticipants(_orderId) {
         Order memory order = _getOrderById(_orderId);
 
         // unblocked products in order
@@ -254,16 +200,9 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         delete orders[_orderId];
     }
 
-    function addProductToOrderById(
-        uint256 _organizationId,
-        uint256 _orderId,
-        uint256 _productId
-    )
-        public
-        onlyOrganizationEmploye(_organizationId)
-        onlyUnconfirmedOrders(_orderId)
-        onlyOrderParticipants(_orderId)
-        onlyUnblockedProduct(_productId)
+    function addProductToOrderById(uint256 _organizationId, uint256 _orderId, uint256 _productId)
+    public onlyOrganizationEmploye(_organizationId) onlyUnconfirmedOrders(_orderId) onlyOrderParticipants(_orderId) 
+    onlyUnblockedProduct(_productId)
     {
         ProductInOrder[] storage orderProductList = _getOrderById(_orderId)
             .productList;
@@ -291,10 +230,7 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         emit ProductWasAddedToOrder(_productId, _orderId);
     }
 
-    function _checkProductInOrderProductList(
-        ProductInOrder[] memory array,
-        uint256 _productId
-    ) internal pure returns (bool) {
+    function _checkProductInOrderProductList(ProductInOrder[] memory array, uint256 _productId) internal pure returns (bool) {
         for (uint256 i = 0; i < array.length; i++) {
             if (array[i].id == _productId) {
                 return true;
@@ -303,15 +239,8 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         return false;
     }
 
-    function removeProductFromOrderById(
-        uint256 _organizationId,
-        uint256 _orderId,
-        uint256 _productId
-    )
-        public
-        onlyUnconfirmedOrders(_orderId)
-        onlyOrderParticipants(_orderId)
-        onlyOrganizationEmploye(_organizationId)
+    function removeProductFromOrderById( uint256 _organizationId, uint256 _orderId,uint256 _productId )
+    public onlyUnconfirmedOrders(_orderId) onlyOrderParticipants(_orderId) onlyOrganizationEmploye(_organizationId) 
     {
         ProductInOrder[] storage orderProductList = orders[_orderId]
             .productList;
@@ -321,10 +250,7 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         _removeProductsFromOrder(orderProductList, _productId);
     }
 
-    function _removeProductsFromOrder(
-        ProductInOrder[] storage _productList,
-        uint256 _productId
-    ) internal {
+    function _removeProductsFromOrder(ProductInOrder[] storage _productList, uint256 _productId) internal {
         // check if product with such an id was added in order
 
         require(
@@ -343,15 +269,8 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         }
     }
 
-    function approveTransferringProductsByOrderId(
-        uint256 _organizationId,
-        uint256 _orderId,
-        bool _transferDecision
-    )
-        public
-        onlyOrganizationEmploye(_organizationId)
-        onlyOrderParticipants(_orderId)
-        onlyUntransferredProductsInOrders(_orderId)
+    function approveTransferringProductsByOrderId( uint256 _organizationId, uint256 _orderId, bool _transferDecision)
+    public onlyOrganizationEmploye(_organizationId) onlyOrderParticipants(_orderId) onlyUntransferredProductsInOrders(_orderId)
     {
         require(
             isOrderFinished(_orderId) == false,
@@ -399,11 +318,7 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         }
     }
 
-    function _transferProductsInOrder(
-        ProductInOrder[] storage _productList,
-        address _sellerAddress,
-        address _buyerAddress
-    ) internal {
+    function _transferProductsInOrder(ProductInOrder[] storage _productList, address _sellerAddress, address _buyerAddress ) internal {
         User storage seller = _getUserByAddress(_sellerAddress);
         User storage buyer = _getUserByAddress(_buyerAddress);
 
@@ -438,11 +353,7 @@ contract OrdersManager is AccessControlManager, ProductsManager {
     }
 
     // only strict correspondence of order functions
-    // todo: check this logic
-    modifier strictOrderModeCheckAndStateList(
-        uint256 _orderId,
-        OrderStateList _orderState
-    ) {
+    modifier strictOrderModeCheckAndStateList( uint256 _orderId, OrderStateList _orderState) {
         require(
             _orderState != OrderStateList.Unhandled,
             "These operations are forbidden: Unhandled."
@@ -476,15 +387,8 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         _;
     }
 
-    function approveOrder(
-        uint256 _organizationId,
-        uint256 _orderId,
-        OrderMemberDecision _orderMemberDecision
-    )
-        public
-        onlyOrganizationEmploye(_organizationId)
-        onlyOrderParticipants(_orderId)
-        onlyUnconfirmedOrders(_orderId)
+    function approveOrder(uint256 _organizationId, uint256 _orderId, OrderMemberDecision _orderMemberDecision)
+    public onlyOrganizationEmploye(_organizationId) onlyOrderParticipants(_orderId) onlyUnconfirmedOrders(_orderId)
     {
         User storage currentUser = _getUserByAddress(msg.sender);
         Order storage order = _getOrderById(_orderId);
@@ -518,15 +422,8 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         }
     }
 
-    function finishOrderById(
-        uint256 _organizationId,
-        uint256 _orderId,
-        OrderMemberDecision _orderMemberDecision
-    )
-        public
-        onlyOrganizationEmploye(_organizationId)
-        onlyOrderParticipants(_orderId)
-        onlyConfirmedOrders(_orderId)
+    function finishOrderById(uint256 _organizationId, uint256 _orderId, OrderMemberDecision _orderMemberDecision )
+    public onlyOrganizationEmploye(_organizationId) onlyOrderParticipants(_orderId) onlyConfirmedOrders(_orderId)
     {
         User storage currentUser = _getUserByAddress(msg.sender);
         Order storage order = _getOrderById(_orderId);
@@ -556,19 +453,10 @@ contract OrdersManager is AccessControlManager, ProductsManager {
         }
     }
 
-    function updateOrderStateById(
-        uint256 _organizationId,
-        uint256 _orderId,
-        string memory _description,
-        string memory _location,
-        OrderStateList _orderState,
-        StateList _productsStates
-    )
-        public
-        onlyOrganizationEmploye(_organizationId)
-        onlyOrderParticipants(_orderId)
-        onlyConfirmedOrders(_orderId)
-        strictOrderModeCheckAndStateList(_orderId, _orderState)
+    function updateOrderStateById(uint256 _organizationId, uint256 _orderId, string memory _description, 
+    string memory _location, OrderStateList _orderState, StateList _productsStates)
+    public onlyOrganizationEmploye(_organizationId) onlyOrderParticipants(_orderId) onlyConfirmedOrders(_orderId) 
+    strictOrderModeCheckAndStateList(_orderId, _orderState)
     {
         Order storage order = _getOrderById(_orderId);
 
