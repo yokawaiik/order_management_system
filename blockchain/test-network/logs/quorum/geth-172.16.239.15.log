@@ -1,0 +1,129 @@
+INFO [12-28|09:53:26.745] Starting pprof server                    addr=http://0.0.0.0:9545/debug/pprof
+INFO [12-28|09:53:28.532] IPC endpoint opened                      url=/data/geth.ipc isMultitenant=false
+INFO [12-28|09:53:28.546] Security Plugin is not enabled 
+WARN [12-28|09:53:28.942] full p2p peer                            id=2a2fe7f9e880372cfd2bda0cce412f988377e31f4d0ff12d74df73b51c42d0ca ethPeer="Peer 2a2fe7f9e880372c 172.16.239.13:30303"
+WARN [12-28|09:53:28.984] full p2p peer                            id=27059b2392ab7830b38b2f4d27a97c9aaf04f18f3014c32e036dd0ac76da5f18 ethPeer="Peer 27059b2392ab7830 172.16.239.12:30303"
+WARN [12-28|09:54:16.933] Served eth_getBlockByNumber              conn=172.16.239.31:50440 reqid=1 t=1.1032ms  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:21.589] Served eth_getBlockByNumber              conn=172.16.239.31:50488 reqid=1 t="28.8µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:21.630] Served eth_getBlockByNumber              conn=172.16.239.31:50494 reqid=1 t="70.8µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:22.174] Served eth_getBlockByNumber              conn=172.16.239.31:50498 reqid=1 t="455.6µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:30.702] Served eth_getBlockByNumber              conn=172.16.239.31:50630 reqid=1 t="294.1µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:36.974] Served eth_getBlockByNumber              conn=172.16.239.31:50714 reqid=1 t="49.1µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:36.992] Served eth_getBlockByNumber              conn=172.16.239.31:50716 reqid=1 t="52.2µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:46.707] Served eth_getBlockByNumber              conn=172.16.239.31:50846 reqid=1 t="80.2µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:46.839] Served eth_getBlockByNumber              conn=172.16.239.31:50860 reqid=1 t="87µs"    err="invalid argument 0: invalid hex string"
+WARN [12-28|09:54:50.748] Served eth_getBlockByNumber              conn=172.16.239.31:50928 reqid=1 t="38.6µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:01.550] Served eth_getBlockByNumber              conn=172.16.239.31:51060 reqid=1 t="49.1µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:01.595] Served eth_getBlockByNumber              conn=172.16.239.31:51070 reqid=1 t="173.6µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:06.606] Served eth_getBlockByNumber              conn=172.16.239.31:51126 reqid=1 t="56.2µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:06.641] Served eth_getBlockByNumber              conn=172.16.239.31:51136 reqid=1 t="46.5µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:10.610] Served eth_getBlockByNumber              conn=172.16.239.31:51178 reqid=1 t="142.7µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:16.638] Served eth_getBlockByNumber              conn=172.16.239.31:51306 reqid=1 t="50µs"    err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:26.731] Served eth_getBlockByNumber              conn=172.16.239.31:51434 reqid=1 t="116.6µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:26.734] Served eth_getBlockByNumber              conn=172.16.239.31:51436 reqid=1 t="54.5µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:26.744] Served eth_getBlockByNumber              conn=172.16.239.31:51438 reqid=1 t="52.6µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:30.589] Served eth_getBlockByNumber              conn=172.16.239.31:51490 reqid=1 t="48.4µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:30.589] Served eth_getBlockByNumber              conn=172.16.239.31:51492 reqid=1 t="65.7µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:36.828] Served eth_getBlockByNumber              conn=172.16.239.31:51568 reqid=1 t="62.1µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:36.862] Served eth_getBlockByNumber              conn=172.16.239.31:51578 reqid=1 t="102.1µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:36.900] Served eth_getBlockByNumber              conn=172.16.239.31:51580 reqid=1 t="90.7µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:40.750] Served eth_getBlockByNumber              conn=172.16.239.31:51636 reqid=1 t="49.4µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:40.750] Served eth_getBlockByNumber              conn=172.16.239.31:51638 reqid=1 t="27.4µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:40.764] Served eth_getBlockByNumber              conn=172.16.239.31:51640 reqid=1 t="153.4µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:46.659] Served eth_getBlockByNumber              conn=172.16.239.31:51728 reqid=1 t="62.8µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:46.681] Served eth_getBlockByNumber              conn=172.16.239.31:51732 reqid=1 t="56.5µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:50.706] Served eth_getBlockByNumber              conn=172.16.239.31:51830 reqid=1 t="79.8µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:50.719] Served eth_getBlockByNumber              conn=172.16.239.31:51832 reqid=1 t="147.7µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:57.387] Served eth_getBlockByNumber              conn=172.16.239.31:51912 reqid=1 t="49.2µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:57.398] Served eth_getBlockByNumber              conn=172.16.239.31:51914 reqid=1 t="50.6µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:55:57.415] Served eth_getBlockByNumber              conn=172.16.239.31:51916 reqid=1 t="51.9µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:11.983] Served eth_getBlockByNumber              conn=172.16.239.31:52100 reqid=1 t="53.2µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:11.983] Served eth_getBlockByNumber              conn=172.16.239.31:52098 reqid=1 t="28.8µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:11.991] Served eth_getBlockByNumber              conn=172.16.239.31:52102 reqid=1 t="53µs"    err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:16.736] Served eth_getBlockByNumber              conn=172.16.239.31:52160 reqid=1 t="74.6µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:16.743] Served eth_getBlockByNumber              conn=172.16.239.31:52162 reqid=1 t="109.9µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:16.752] Served eth_getBlockByNumber              conn=172.16.239.31:52164 reqid=1 t="84µs"    err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:16.756] Served eth_getBlockByNumber              conn=172.16.239.31:52166 reqid=1 t="79.2µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:21.865] Served eth_getBlockByNumber              conn=172.16.239.31:52224 reqid=1 t="52.7µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:21.875] Served eth_getBlockByNumber              conn=172.16.239.31:52228 reqid=1 t="291.6µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:21.905] Served eth_getBlockByNumber              conn=172.16.239.31:52230 reqid=1 t="75.4µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:31.941] Served eth_getBlockByNumber              conn=172.16.239.31:52374 reqid=1 t="46.6µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:36.843] Served eth_getBlockByNumber              conn=172.16.239.31:52426 reqid=1 t="80.9µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:36.902] Served eth_getBlockByNumber              conn=172.16.239.31:52432 reqid=1 t="85.5µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:40.812] Served eth_getBlockByNumber              conn=172.16.239.31:52484 reqid=1 t="53µs"    err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:46.883] Served eth_getBlockByNumber              conn=172.16.239.31:52574 reqid=1 t="30.1µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:56.856] Served eth_getBlockByNumber              conn=172.16.239.31:52690 reqid=1 t="58.8µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:56.877] Served eth_getBlockByNumber              conn=172.16.239.31:52692 reqid=1 t="112µs"   err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:56.880] Served eth_getBlockByNumber              conn=172.16.239.31:52694 reqid=1 t="53.3µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:56:56.885] Served eth_getBlockByNumber              conn=172.16.239.31:52696 reqid=1 t="83.7µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:57:00.720] Served eth_getBlockByNumber              conn=172.16.239.31:52780 reqid=1 t="92µs"    err="invalid argument 0: invalid hex string"
+WARN [12-28|09:57:00.748] Served eth_getBlockByNumber              conn=172.16.239.31:52786 reqid=1 t="57.9µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:57:06.729] Served eth_getBlockByNumber              conn=172.16.239.31:52874 reqid=1 t="50.4µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:57:48.723] Served eth_getBlockByNumber              conn=172.16.239.31:53148 reqid=1 t="82.4µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:58:48.816] Served eth_getBlockByNumber              conn=172.16.239.31:53482 reqid=1 t="77.9µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:58:48.841] Served eth_getBlockByNumber              conn=172.16.239.31:53484 reqid=1 t="85.5µs"  err="invalid argument 0: invalid hex string"
+INFO [12-28|09:59:41.968] Commit new mining work                   number=8 sealhash="543bd5…32f3dd" uncles=0 txs=0 gas=0 fees=0 elapsed="377.7µs"
+WARN [12-28|09:59:41.968] Block sealing failed                     err=unauthorized
+INFO [12-28|09:59:41.968] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=7 state="Accept request"
+INFO [12-28|09:59:41.968] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=7 target.round=0 lastProposal.number=7 lastProposal.hash="9a63ab…d39f5e"
+WARN [12-28|09:59:48.778] Served eth_getBlockByNumber              conn=172.16.239.31:53774 reqid=1 t="28.6µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|09:59:48.778] Served eth_getBlockByNumber              conn=172.16.239.31:53776 reqid=1 t="254.7µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|10:00:48.592] Served eth_getBlockByNumber              conn=172.16.239.31:54098 reqid=1 t="172.6µs" err="invalid argument 0: invalid hex string"
+WARN [12-28|10:00:48.605] Served eth_getBlockByNumber              conn=172.16.239.31:54100 reqid=1 t="47.5µs"  err="invalid argument 0: invalid hex string"
+WARN [12-28|10:07:34.277] Block sealing failed                     err=unauthorized
+INFO [12-28|10:09:32.521] Commit new mining work                   number=13 sealhash="fdbd53…fba211" uncles=0 txs=0 gas=0 fees=0 elapsed="437.2µs"
+WARN [12-28|10:09:32.521] Block sealing failed                     err=unauthorized
+INFO [12-28|10:09:32.521] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=12 state="Accept request"
+INFO [12-28|10:09:32.521] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=12 target.round=0 lastProposal.number=12 lastProposal.hash="43d81a…4c093f"
+INFO [12-28|10:09:32.521] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=12 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=13 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|10:11:30.552] Commit new mining work                   number=14 sealhash="0bb11c…43e682" uncles=0 txs=0 gas=0 fees=0 elapsed="457.1µs"
+WARN [12-28|10:11:30.552] Block sealing failed                     err=unauthorized
+INFO [12-28|10:11:30.552] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=13 state="Accept request"
+INFO [12-28|10:11:30.552] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=13 target.round=0 lastProposal.number=13 lastProposal.hash="5a1555…f5f6f4"
+INFO [12-28|10:11:30.552] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=13 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=14 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|10:13:28.602] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=14 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=15 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|10:15:27.170] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=2.281ms   mgasps=0.000 number=15 hash="e1a0f6…a43b32" age=1m59s   dirty=0.00B
+INFO [12-28|10:15:27.172] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=15 target.round=0 lastProposal.number=15 lastProposal.hash="e1a0f6…a43b32"
+INFO [12-28|10:19:22.803] Commit new mining work                   number=18 sealhash="7029f0…8e54c9" uncles=0 txs=0 gas=0 fees=0 elapsed="480.6µs"
+INFO [12-28|10:27:15.197] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=2.061ms   mgasps=0.000 number=21 hash="6e49c2…d1bf1b" age=1m58s   dirty=0.00B
+INFO [12-28|10:29:13.304] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=1.085ms   mgasps=0.000 number=22 hash="3b1290…6abf8f" age=1m58s   dirty=0.00B
+INFO [12-28|10:31:11.852] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed="998.5µs" mgasps=0.000 number=23 hash="b91f94…f412ce" age=1m58s   dirty=0.00B
+INFO [12-28|10:31:11.852] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=23 state="Accept request"
+INFO [12-28|10:31:11.853] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=23 target.round=0 lastProposal.number=23 lastProposal.hash="b91f94…f412ce"
+INFO [12-28|10:31:11.853] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=23 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=24 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|10:33:09.498] Commit new mining work                   number=25 sealhash="502c2a…9d26d2" uncles=0 txs=0 gas=0 fees=0 elapsed="613.4µs"
+WARN [12-28|10:33:09.498] Block sealing failed                     err=unauthorized
+INFO [12-28|10:37:05.623] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=26 target.round=0 lastProposal.number=26 lastProposal.hash="f11d35…d22e45"
+INFO [12-28|10:37:05.628] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=26 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=27 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|10:39:03.685] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=27 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=28 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|10:41:02.240] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=1.263ms   mgasps=0.000 number=28 hash="a41c4b…6fe795" age=1m59s   dirty=0.00B
+INFO [12-28|10:41:02.240] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=28 state="Accept request"
+INFO [12-28|10:41:02.241] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=28 target.round=0 lastProposal.number=28 lastProposal.hash="a41c4b…6fe795"
+WARN [12-28|10:41:02.241] Block sealing failed                     err=unauthorized
+INFO [12-28|11:03:47.540] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=7.402ms   mgasps=0.000 number=31 hash="228630…76ac18" age=18m50s  dirty=0.00B
+INFO [12-28|11:03:47.543] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=31 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=32 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|11:05:45.677] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=1.348ms   mgasps=0.000 number=32 hash="50027e…4d617f" age=1m58s   dirty=0.00B
+INFO [12-28|11:05:45.680] Commit new mining work                   number=33 sealhash="b5f813…c2ed3a" uncles=0 txs=0 gas=0 fees=0 elapsed="604.7µs"
+INFO [12-28|11:05:45.681] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=32 target.round=0 lastProposal.number=32 lastProposal.hash="50027e…4d617f"
+WARN [12-28|11:13:38.049] Block sealing failed                     err=unauthorized
+INFO [12-28|11:17:34.720] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=38 state="Accept request"
+INFO [12-28|11:17:34.722] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=38 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=39 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|11:17:34.723] Commit new mining work                   number=39 sealhash="2eb086…235247" uncles=0 txs=0 gas=0 fees=0 elapsed=3.400ms
+INFO [12-28|11:25:26.731] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=1.392ms   mgasps=0.000 number=42 hash="bb9821…f01068" age=1m58s   dirty=0.00B
+INFO [12-28|11:25:26.732] Commit new mining work                   number=43 sealhash="b5e7d7…8469d6" uncles=0 txs=0 gas=0 fees=0 elapsed="566.2µs"
+INFO [12-28|11:25:26.733] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=42 state="Accept request"
+INFO [12-28|11:25:26.733] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=42 target.round=0 lastProposal.number=42 lastProposal.hash="bb9821…f01068"
+INFO [12-28|11:25:26.733] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=42 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=43 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|11:29:22.999] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=44 state="Accept request"
+INFO [12-28|11:29:23.000] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=44 target.round=0 lastProposal.number=44 lastProposal.hash="1fc977…af40dc"
+INFO [12-28|11:29:23.002] Commit new mining work                   number=45 sealhash="d621f1…4ef7d3" uncles=0 txs=0 gas=0 fees=0 elapsed=3.285ms
+INFO [12-28|11:29:23.002] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=44 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=45 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+WARN [12-28|11:29:23.002] Block sealing failed                     err=unauthorized
+INFO [12-28|11:31:21.082] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=45 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=46 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|11:33:19.642] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=1.283ms   mgasps=0.000 number=46 hash="545fa0…df3f6c" age=1m58s   dirty=0.00B
+WARN [12-28|11:35:17.747] Block sealing failed                     err=unauthorized
+INFO [12-28|11:39:13.442] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=49 state="Accept request"
+INFO [12-28|11:43:10.182] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=1.915ms   mgasps=0.000 number=51 hash="e464ed…3a566b" age=1m59s   dirty=0.00B
+INFO [12-28|11:45:07.814] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=52 state="Accept request"
+INFO [12-28|11:45:07.814] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=52 target.round=0 lastProposal.number=52 lastProposal.hash="b93074…a5e272"
+INFO [12-28|11:45:07.814] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=52 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=53 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false

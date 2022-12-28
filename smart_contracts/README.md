@@ -2,6 +2,7 @@
 
 
 
+## Info about contract's modules
 
 - [x] AccessControlManager
 - only organizations have an inventory
@@ -12,13 +13,22 @@
 - create order, block products when order is confirmed, finish order and transferring products
 
 
-
-
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+## Test contract
 ```
+    npx hardhat test
+```
+
+## Deploy contract
+
+Deploy contract script to local blockchain  
+```
+    npx hardhat run scripts/deploy.ts --network goquorum
+```
+
+Deploy contract to local hardhat
+```
+    npx hardhat run scripts/deploy.ts
+```
+
+
+

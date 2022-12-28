@@ -95,10 +95,10 @@ contract ProductsManager is AccessControlManager {
     string memory _description, bytes32 _specification, uint256 expiresAt)
     public onlyOrganizationEmploye(_organizationId) onlyRole(MANUFACTURER_ROLE)
     {
-        uint256 currentTimestamp = block.timestamp;
+        // uint256 currentTimestamp = block.timestamp;
 
         require(
-            expiresAt > currentTimestamp,
+            expiresAt > block.timestamp,
             "Guarantee expires at must be more then current time."
         );
 
@@ -115,21 +115,21 @@ contract ProductsManager is AccessControlManager {
         newProduct.productType = _productType;
 
         newProduct.createdBy = msg.sender;
-        newProduct.createdAt = currentTimestamp;
+        newProduct.createdAt = block.timestamp;
         newProduct.createdAt = expiresAt;
         newProduct.specification = _specification;
 
         State storage pushedState = newProduct.stateHistory.push();
 
         pushedState.state = StateList.Produced;
-        pushedState.date = currentTimestamp;
+        pushedState.date = block.timestamp;
         pushedState.price = _price;
         pushedState.createdBy = msg.sender;
         pushedState.description = _description;
 
         ProductOwner memory currentOwner = ProductOwner(
             manufacturer.userAddress,
-            currentTimestamp,
+            block.timestamp,
             ProductOwnerType.Manufacturer
         );
         newProduct.ownershipHistory.push(currentOwner);
@@ -140,7 +140,7 @@ contract ProductsManager is AccessControlManager {
 
         _addProductToInventory(newProductId, orgInventory);
 
-        emit ProductWasProduced(newProductId, currentTimestamp);
+        emit ProductWasProduced(newProductId, block.timestamp);
     }
 
     // ? info: if produced product was a mistake
