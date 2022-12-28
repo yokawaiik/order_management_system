@@ -127,3 +127,335 @@ INFO [12-28|11:43:10.182] Imported new chain segment               blocks=1 txs=
 INFO [12-28|11:45:07.814] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=52 state="Accept request"
 INFO [12-28|11:45:07.814] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=52 target.round=0 lastProposal.number=52 lastProposal.hash="b93074…a5e272"
 INFO [12-28|11:45:07.814] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=52 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=53 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|11:51:02.067] Commit new mining work                   number=56 sealhash="1736dc…d9ece6" uncles=0 txs=0 gas=0 fees=0 elapsed="696.1µs"
+WARN [12-28|11:51:02.068] Block sealing failed                     err=unauthorized
+INFO [12-28|11:51:02.068] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=55 state="Accept request"
+INFO [12-28|11:51:02.068] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=55 target.round=0 lastProposal.number=55 lastProposal.hash="2f999e…ea626e"
+INFO [12-28|11:51:02.069] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=55 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=56 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|11:53:00.157] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=56 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=57 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|12:54:32.426] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=1.366ms   mgasps=0.000 number=57 hash="c27bf2…1ad9ef" age=1h1m32s dirty=0.00B
+INFO [12-28|12:54:32.429] Commit new mining work                   number=58 sealhash="d681d6…bfb3a8" uncles=0 txs=0 gas=0 fees=0 elapsed=2.274ms
+INFO [12-28|12:58:28.571] Imported new chain segment               blocks=1 txs=0 mgas=0.000 elapsed=1.781ms   mgasps=0.000 number=59 hash="f28eed…c59443" age=1m58s   dirty=0.00B
+WARN [12-28|12:58:28.584] Block sealing failed                     err=unauthorized
+WARN [12-28|13:01:09.946] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:09.948] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|13:01:11.885] Imported new chain segment               blocks=1 txs=1 mgas=0.211 elapsed=32.443ms  mgasps=6.489 number=61 hash="9d94ac…b46b3b" dirty=1.34KiB
+WARN [12-28|13:01:14.279] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|13:01:14.280] VM returned with error                   err="execution reverted"
+WARN [12-28|13:01:14.287] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.287] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.352] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.357] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.363] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.377] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.382] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.383] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.400] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.401] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|13:01:14.401] VM returned with error                   err="execution reverted"
+WARN [12-28|13:01:14.405] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.416] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.424] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.425] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.427] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.428] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.434] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.439] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:14.442] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|13:01:14.943] Commit new mining work                   number=62 sealhash="2352a6…fea25a" uncles=0 txs=1 gas=12716321 fees=0 elapsed=45.781ms
+WARN [12-28|13:01:15.112] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|13:01:15.126] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|13:03:14.069] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=5.096ms   mgasps=0.000   number=63 hash="8d415c…e11fb6" age=1m58s   dirty=5.03KiB
+INFO [12-28|13:03:14.079] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=63 state="Accept request"
+INFO [12-28|13:03:14.079] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=63 target.round=0 lastProposal.number=63 lastProposal.hash="8d415c…e11fb6"
+INFO [12-28|13:03:14.080] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=63 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=64 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|13:03:14.080] Commit new mining work                   number=64 sealhash="920db7…4f35aa" uncles=0 txs=0 gas=0        fees=0 elapsed=1.281ms
+INFO [12-28|13:07:10.248] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=65 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=66 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|13:07:10.249] Commit new mining work                   number=66 sealhash="41d25a…7c82c4" uncles=0 txs=0 gas=0        fees=0 elapsed=3.053ms
+INFO [12-28|13:09:53.863] Persisted the clean trie cache           path=/data/geth/triecache elapsed=36.827ms
+INFO [12-28|13:11:06.415] Commit new mining work                   number=68 sealhash="ce12e3…df970a" uncles=0 txs=0 gas=0        fees=0 elapsed="551.4µs"
+WARN [12-28|13:11:06.417] Block sealing failed                     err=unauthorized
+INFO [12-28|13:11:06.417] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=67 state="Accept request"
+INFO [12-28|13:11:06.428] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=67 target.round=0 lastProposal.number=67 lastProposal.hash="bb3a66…885a7e"
+INFO [12-28|13:11:06.428] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=67 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=68 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|13:13:04.556] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=4.057ms   mgasps=0.000   number=68 hash="af3ff4…af6a61" age=1m58s   dirty=5.03KiB
+INFO [12-28|13:15:02.619] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=69 state="Accept request"
+INFO [12-28|13:20:56.914] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.595ms   mgasps=0.000   number=72 hash="9d1d16…d61f14" age=1m58s   dirty=5.03KiB
+INFO [12-28|13:20:56.919] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=72 target.round=0 lastProposal.number=72 lastProposal.hash="9d1d16…d61f14"
+INFO [12-28|13:22:54.997] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.477ms   mgasps=0.000   number=73 hash="06cd1e…160985" age=1m58s   dirty=5.03KiB
+INFO [12-28|13:22:54.998] Commit new mining work                   number=74 sealhash="a67904…bdb246" uncles=0 txs=0 gas=0        fees=0 elapsed="464.5µs"
+WARN [12-28|13:22:54.998] Block sealing failed                     err=unauthorized
+INFO [12-28|13:22:54.999] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=73 state="Accept request"
+INFO [12-28|13:22:54.999] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=73 target.round=0 lastProposal.number=73 lastProposal.hash="06cd1e…160985"
+INFO [12-28|13:22:54.999] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=73 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=74 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|13:26:51.143] Commit new mining work                   number=76 sealhash="c398da…bab805" uncles=0 txs=0 gas=0        fees=0 elapsed="352.3µs"
+WARN [12-28|13:26:51.144] Block sealing failed                     err=unauthorized
+INFO [12-28|13:30:47.807] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=77 state="Accept request"
+INFO [12-28|13:30:47.807] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=77 target.round=0 lastProposal.number=77 lastProposal.hash="1a8bab…145bfb"
+INFO [12-28|13:30:47.807] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=77 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=78 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+WARN [12-28|13:30:47.808] Block sealing failed                     err=unauthorized
+INFO [12-28|13:34:43.604] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=79 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=80 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|13:36:41.639] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=5.230ms   mgasps=0.000   number=80 hash="dd4023…5fb3e3" age=1m58s   dirty=5.03KiB
+INFO [12-28|13:36:41.640] Commit new mining work                   number=81 sealhash="4ddfda…013d02" uncles=0 txs=0 gas=0        fees=0 elapsed="446.1µs"
+INFO [12-28|13:40:37.889] Commit new mining work                   number=83 sealhash="b2dc54…702c20" uncles=0 txs=0 gas=0        fees=0 elapsed=2.214ms
+WARN [12-28|13:40:37.890] Block sealing failed                     err=unauthorized
+INFO [12-28|13:44:34.008] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=5.249ms   mgasps=0.000   number=84 hash="b8d8d9…441dec" age=1m59s   dirty=5.03KiB
+INFO [12-28|13:44:34.018] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=84 state="Accept request"
+INFO [12-28|13:46:32.096] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=2.591ms   mgasps=0.000   number=85 hash="e45bfd…b63a4e" age=1m58s   dirty=5.03KiB
+INFO [12-28|13:48:30.190] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=2.215ms   mgasps=0.000   number=86 hash="98439f…3e9904" age=1m58s   dirty=5.03KiB
+INFO [12-28|13:48:30.193] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=86 state="Accept request"
+INFO [12-28|13:48:30.193] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=86 target.round=0 lastProposal.number=86 lastProposal.hash="98439f…3e9904"
+INFO [12-28|14:06:12.889] Commit new mining work                   number=96 sealhash="94006f…30ee22" uncles=0 txs=0 gas=0        fees=0 elapsed=1.951ms
+INFO [12-28|14:08:10.941] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=2.341ms   mgasps=0.000   number=96 hash="948164…f172b8" age=1m58s   dirty=5.03KiB
+INFO [12-28|14:08:10.943] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=96 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=97 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|14:14:05.086] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=2.478ms   mgasps=0.000   number=99 hash="d59756…8facad" age=1m58s   dirty=5.03KiB
+INFO [12-28|15:01:03.174] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=100 target.round=0 lastProposal.number=100 lastProposal.hash="7a2d61…6c4780"
+WARN [12-28|15:03:01.418] Block sealing failed                     err=unauthorized
+INFO [12-28|15:03:01.420] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=101 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=102 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|15:04:59.460] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=6.493ms   mgasps=0.000   number=102 hash="4454f9…94ac41" age=1m58s   dirty=5.03KiB
+INFO [12-28|15:04:59.462] Commit new mining work                   number=103 sealhash="e920e7…66a6b2" uncles=0 txs=0 gas=0        fees=0 elapsed="725.7µs"
+WARN [12-28|15:04:59.463] Block sealing failed                     err=unauthorized
+INFO [12-28|15:04:59.465] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=102 target.round=0 lastProposal.number=102 lastProposal.hash="4454f9…94ac41"
+INFO [12-28|15:08:56.147] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.096ms   mgasps=0.000   number=104 hash="278bcd…5148df" age=1m59s   dirty=5.03KiB
+INFO [12-28|15:08:56.148] Commit new mining work                   number=105 sealhash="26fcfd…9e0559" uncles=0 txs=0 gas=0        fees=0 elapsed="495.4µs"
+INFO [12-28|15:08:56.148] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=104 state="Accept request"
+INFO [12-28|15:08:56.149] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=104 target.round=0 lastProposal.number=104 lastProposal.hash="278bcd…5148df"
+INFO [12-28|15:18:46.316] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.281ms   mgasps=0.000   number=109 hash="0ee418…970cce" age=1m58s   dirty=5.03KiB
+INFO [12-28|15:18:46.330] Commit new mining work                   number=110 sealhash="a3a5a2…a2359f" uncles=0 txs=0 gas=0        fees=0 elapsed="431.4µs"
+WARN [12-28|15:18:46.330] Block sealing failed                     err=unauthorized
+INFO [12-28|15:18:46.330] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=109 state="Accept request"
+INFO [12-28|15:18:46.331] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=109 target.round=0 lastProposal.number=109 lastProposal.hash="0ee418…970cce"
+INFO [12-28|15:18:46.331] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=109 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=110 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|15:20:44.440] Commit new mining work                   number=111 sealhash="f19e21…74819f" uncles=0 txs=0 gas=0        fees=0 elapsed="356.4µs"
+WARN [12-28|15:20:44.440] Block sealing failed                     err=unauthorized
+INFO [12-28|15:20:44.440] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=110 state="Accept request"
+INFO [12-28|15:20:44.442] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=110 target.round=0 lastProposal.number=110 lastProposal.hash="1debb9…d9d025"
+INFO [12-28|15:20:44.442] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=110 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=111 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|15:22:42.462] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.745ms   mgasps=0.000   number=111 hash="71d4e0…e9b3eb" age=1m58s   dirty=5.03KiB
+INFO [12-28|15:22:42.463] Commit new mining work                   number=112 sealhash="f35fac…968304" uncles=0 txs=0 gas=0        fees=0 elapsed=1.446ms
+WARN [12-28|15:22:42.464] Block sealing failed                     err=unauthorized
+INFO [12-28|15:22:42.464] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=111 state="Accept request"
+INFO [12-28|15:22:42.464] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=111 target.round=0 lastProposal.number=111 lastProposal.hash="71d4e0…e9b3eb"
+INFO [12-28|15:58:12.890] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=3.130ms   mgasps=0.000   number=113 hash="d325f1…5e3bc2" age=33m32s  dirty=5.03KiB
+INFO [12-28|16:00:11.024] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.393ms   mgasps=0.000   number=114 hash="59f670…9faad5" age=1m59s   dirty=5.03KiB
+INFO [12-28|16:00:11.025] Commit new mining work                   number=115 sealhash="1bdf77…2e61ab" uncles=0 txs=0 gas=0        fees=0 elapsed="359.7µs"
+WARN [12-28|16:00:11.025] Block sealing failed                     err=unauthorized
+INFO [12-28|16:00:11.025] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=114 state="Accept request"
+INFO [12-28|16:00:11.025] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=114 target.round=0 lastProposal.number=114 lastProposal.hash="59f670…9faad5"
+INFO [12-28|16:00:11.025] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=114 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=115 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|16:04:07.084] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=116 state="Accept request"
+INFO [12-28|16:04:07.085] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=116 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=117 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|16:04:07.083] Commit new mining work                   number=117 sealhash="9cc539…fef3ff" uncles=0 txs=0 gas=0        fees=0 elapsed="499.9µs"
+WARN [12-28|16:04:07.084] Block sealing failed                     err=unauthorized
+INFO [12-28|16:06:05.130] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.911ms   mgasps=0.000   number=117 hash="fb80da…a5fa18" age=1m58s   dirty=5.03KiB
+INFO [12-28|16:06:05.131] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=117 state="Accept request"
+WARN [12-28|16:06:05.133] Block sealing failed                     err=unauthorized
+INFO [12-28|16:08:03.217] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=118 state="Accept request"
+INFO [12-28|16:08:03.218] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=118 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=119 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|16:15:55.496] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.318ms   mgasps=0.000   number=122 hash="fab927…b8d216" age=1m58s   dirty=5.03KiB
+INFO [12-28|16:15:55.497] Commit new mining work                   number=123 sealhash="1c52eb…af3b10" uncles=0 txs=0 gas=0        fees=0 elapsed="405.2µs"
+INFO [12-28|16:15:55.501] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=122 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=123 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+WARN [12-28|16:17:53.579] Block sealing failed                     err=unauthorized
+INFO [12-28|16:19:51.689] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=5.102ms   mgasps=0.000   number=124 hash="388203…877716" age=1m58s   dirty=5.03KiB
+INFO [12-28|16:23:47.881] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=126 state="Accept request"
+WARN [12-28|16:23:47.881] Block sealing failed                     err=unauthorized
+INFO [12-28|16:23:47.881] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=126 target.round=0 lastProposal.number=126 lastProposal.hash="f7081c…cb54eb"
+INFO [12-28|16:23:47.882] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=126 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=127 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|16:25:45.908] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.506ms   mgasps=0.000   number=127 hash="0cc4b0…a8f8f8" age=1m58s   dirty=5.03KiB
+INFO [12-28|16:25:45.908] Commit new mining work                   number=128 sealhash="b771e7…24b8a4" uncles=0 txs=0 gas=0        fees=0 elapsed="336.1µs"
+WARN [12-28|16:25:45.909] Block sealing failed                     err=unauthorized
+INFO [12-28|16:25:45.909] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=127 state="Accept request"
+INFO [12-28|16:25:45.909] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=127 target.round=0 lastProposal.number=127 lastProposal.hash="0cc4b0…a8f8f8"
+INFO [12-28|16:25:45.909] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=127 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=128 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|16:26:27.929] Writing clean trie cache to disk         path=/data/geth/triecache threads=1
+INFO [12-28|16:26:27.933] Regenerated local transaction journal    transactions=0 accounts=0
+INFO [12-28|16:27:43.964] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=5.835ms   mgasps=0.000   number=128 hash="fe684b…9c45b1" age=1m58s   dirty=5.03KiB
+INFO [12-28|16:27:43.971] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=128 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=129 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|16:27:43.972] Commit new mining work                   number=129 sealhash="e608bc…197c2d" uncles=0 txs=0 gas=0        fees=0 elapsed="652.4µs"
+INFO [12-28|16:29:42.652] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=7.895ms   mgasps=0.000   number=129 hash="412b15…bc172d" age=1m59s   dirty=5.03KiB
+INFO [12-28|16:31:40.700] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.404ms   mgasps=0.000   number=130 hash="6057f5…2aa1ac" age=1m58s   dirty=5.03KiB
+INFO [12-28|16:31:40.700] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=130 state="Accept request"
+INFO [12-28|16:31:40.700] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=130 target.round=0 lastProposal.number=130 lastProposal.hash="6057f5…2aa1ac"
+INFO [12-28|16:31:40.700] Commit new mining work                   number=131 sealhash="b19d5a…1599d3" uncles=0 txs=0 gas=0        fees=0 elapsed="332.1µs"
+INFO [12-28|16:31:40.700] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=130 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=131 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+WARN [12-28|16:31:40.700] Block sealing failed                     err=unauthorized
+INFO [12-28|16:45:27.371] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=2.043ms   mgasps=0.000   number=137 hash="8239ae…48dc6b" age=1m59s   dirty=5.03KiB
+INFO [12-28|16:45:27.372] Commit new mining work                   number=138 sealhash="e67707…215eca" uncles=0 txs=0 gas=0        fees=0 elapsed="337µs"
+INFO [12-28|16:49:23.021] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed="997.6µs" mgasps=0.000   number=139 hash="52002b…77f823" age=1m59s   dirty=5.03KiB
+INFO [12-28|16:59:13.563] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.217ms   mgasps=0.000   number=144 hash="205f6e…705509" age=1m58s   dirty=5.03KiB
+INFO [12-28|16:59:13.564] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=144 state="Accept request"
+INFO [12-28|16:59:13.565] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=144 target.round=0 lastProposal.number=144 lastProposal.hash="205f6e…705509"
+INFO [12-28|16:59:13.564] Commit new mining work                   number=145 sealhash="371ccb…705b05" uncles=0 txs=0 gas=0        fees=0 elapsed="489.1µs"
+WARN [12-28|16:59:13.564] Block sealing failed                     err=unauthorized
+INFO [12-28|17:01:11.639] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.131ms   mgasps=0.000   number=145 hash="bd8fe5…389668" age=1m58s   dirty=5.03KiB
+INFO [12-28|17:01:11.640] Commit new mining work                   number=146 sealhash="0be8f1…9e93cb" uncles=0 txs=0 gas=0        fees=0 elapsed="436.6µs"
+INFO [12-28|17:01:11.642] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=145 state="Accept request"
+INFO [12-28|17:01:11.645] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=145 target.round=0 lastProposal.number=145 lastProposal.hash="bd8fe5…389668"
+INFO [12-28|17:03:09.728] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=146 state="Accept request"
+INFO [12-28|17:03:09.734] Commit new mining work                   number=147 sealhash="594ca8…694af8" uncles=0 txs=0 gas=0        fees=0 elapsed=7.942ms
+INFO [12-28|17:03:09.730] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=146 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=147 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|17:07:05.876] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=2.366ms   mgasps=0.000   number=148 hash="61f4d0…a7fbf2" age=1m58s   dirty=5.03KiB
+INFO [12-28|17:09:03.983] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.746ms   mgasps=0.000   number=149 hash="8dfcf0…97bc1d" age=1m58s   dirty=5.03KiB
+INFO [12-28|17:14:58.190] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=152 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=153 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|17:16:56.263] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.032ms   mgasps=0.000   number=153 hash="67129e…465858" age=1m58s   dirty=5.03KiB
+INFO [12-28|17:16:56.264] Commit new mining work                   number=154 sealhash="f06ef5…44e6d7" uncles=0 txs=0 gas=0        fees=0 elapsed="507.8µs"
+WARN [12-28|17:16:56.265] Block sealing failed                     err=unauthorized
+INFO [12-28|17:16:56.265] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=153 state="Accept request"
+INFO [12-28|17:16:56.265] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=153 target.round=0 lastProposal.number=153 lastProposal.hash="67129e…465858"
+INFO [12-28|17:16:56.265] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=153 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=154 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|17:18:54.431] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=154 state="Accept request"
+INFO [12-28|17:18:54.431] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=154 old.state="Accept request" old.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.round=0 next.seq=155 next.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|17:20:52.540] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed="960.6µs" mgasps=0.000   number=155 hash="2ed8e8…e403eb" age=1m58s   dirty=5.03KiB
+INFO [12-28|17:20:52.541] Commit new mining work                   number=156 sealhash="60483f…c8bf81" uncles=0 txs=0 gas=0        fees=0 elapsed="323.3µs"
+INFO [12-28|17:20:52.543] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=155 state="Accept request"
+INFO [12-28|17:20:52.545] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=155 old.state="Accept request" old.proposer=0x98C1334496614aED49d2E81526D089f7264fED9C next.round=0 next.seq=156 next.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|17:22:50.664] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.603ms   mgasps=0.000   number=156 hash="3d91ab…d17590" age=1m58s   dirty=5.03KiB
+INFO [12-28|17:24:48.730] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.011ms   mgasps=0.000   number=157 hash="76d6b7…863698" age=1m58s   dirty=5.03KiB
+INFO [12-28|17:24:48.735] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=157 target.round=0 lastProposal.number=157 lastProposal.hash="76d6b7…863698"
+INFO [12-28|17:26:27.929] Writing clean trie cache to disk         path=/data/geth/triecache threads=1
+INFO [12-28|17:26:46.855] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=158 state="Accept request"
+INFO [12-28|17:28:44.881] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=5.252ms   mgasps=0.000   number=159 hash="9ea13a…df765a" age=1m58s   dirty=5.03KiB
+INFO [12-28|17:30:42.999] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=160 state="Accept request"
+INFO [12-28|17:30:43.000] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=160 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=161 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|17:32:41.088] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.323ms   mgasps=0.000   number=161 hash="04d2cf…4853fd" age=1m59s   dirty=5.03KiB
+INFO [12-28|17:32:41.089] Commit new mining work                   number=162 sealhash="a02bcc…06fa75" uncles=0 txs=0 gas=0        fees=0 elapsed="315.5µs"
+WARN [12-28|17:32:41.089] Block sealing failed                     err=unauthorized
+INFO [12-28|17:32:41.095] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=161 target.round=0 lastProposal.number=161 lastProposal.hash="04d2cf…4853fd"
+WARN [12-28|17:36:10.233] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.250] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.250] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.251] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.251] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.251] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.252] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:10.252] VM returned with error                   err="contract creation code storage out of gas"
+WARN [12-28|17:36:10.252] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:10.252] VM returned with error                   err="contract creation code storage out of gas"
+WARN [12-28|17:36:10.252] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:10.253] VM returned with error                   err="contract creation code storage out of gas"
+WARN [12-28|17:36:10.253] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.253] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.253] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.253] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.254] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:10.254] VM returned with error                   err="contract creation code storage out of gas"
+WARN [12-28|17:36:10.254] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.254] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.255] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.255] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.255] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:10.256] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:10.345] Submitted contract creation              hash=0x7262d28476ab7d0d9b977436177ae02c076cb67b15f1fa89c86d5229ce269c5e from=0xf0E2Db6C8dC6c681bB5D6aD121A107f300e9B2b5 nonce=3 contract=0x899CE22c2142f60ecA9574c3781A076136D46373 value=0
+INFO [12-28|17:36:10.345] QUORUM-CHECKPOINT                        name=TX-CREATED   tx=0x7262d28476ab7d0d9b977436177ae02c076cb67b15f1fa89c86d5229ce269c5e to=0x899CE22c2142f60ecA9574c3781A076136D46373
+WARN [12-28|17:36:12.266] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.521] Caller gas above allowance, capping      requested=700000000 cap=25000000
+WARN [12-28|17:36:14.530] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.532] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.534] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.536] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.542] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.547] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.550] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.554] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.554] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.556] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.559] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.560] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.563] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.565] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:14.567] VM returned with error                   err="execution reverted"
+WARN [12-28|17:36:14.569] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.571] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:14.571] VM returned with error                   err="execution reverted"
+WARN [12-28|17:36:14.579] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.587] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.588] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.592] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.600] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.604] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.605] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:14.613] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:14.992] Submitted contract creation              hash=0x6c266ba2cbaab66ccc4667d8440d8c2c75ba421ae89f1e18f94bd108ea3fbd05 from=0xf0E2Db6C8dC6c681bB5D6aD121A107f300e9B2b5 nonce=4 contract=0x2FB52Ef60fb8f38c6e3B9c1160868969773C8223 value=0
+INFO [12-28|17:36:14.992] QUORUM-CHECKPOINT                        name=TX-CREATED   tx=0x6c266ba2cbaab66ccc4667d8440d8c2c75ba421ae89f1e18f94bd108ea3fbd05 to=0x2FB52Ef60fb8f38c6e3B9c1160868969773C8223
+WARN [12-28|17:36:15.275] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:15.275] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:36:15.601] Block sealing failed                     err=unauthorized
+WARN [12-28|17:36:16.476] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:36:16.484] Commit new mining work                   number=165 sealhash="989645…df1930" uncles=0 txs=0 gas=0        fees=0 elapsed="945.1µs"
+INFO [12-28|17:36:16.485] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=164 state="Accept request"
+INFO [12-28|17:36:16.485] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=164 target.round=0 lastProposal.number=164 lastProposal.hash="0d767e…2e819a"
+INFO [12-28|17:36:16.486] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=164 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=165 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+WARN [12-28|17:38:27.689] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.928] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:38:31.930] VM returned with error                   err="execution reverted"
+WARN [12-28|17:38:31.931] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.932] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.933] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.939] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.940] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.941] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.941] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.942] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.942] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:38:31.942] VM returned with error                   err="execution reverted"
+WARN [12-28|17:38:31.945] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.953] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.955] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:38:31.955] VM returned with error                   err="execution reverted"
+WARN [12-28|17:38:31.957] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.959] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.960] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.961] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.961] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.962] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.963] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.963] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.964] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.965] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.965] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:38:31.965] VM returned with error                   err="execution reverted"
+INFO [12-28|17:38:31.967] VM returned with error                   err="execution reverted"
+WARN [12-28|17:38:31.969] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.970] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:38:31.970] VM returned with error                   err="execution reverted"
+WARN [12-28|17:38:31.970] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.971] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.972] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+WARN [12-28|17:38:31.973] WARNING: The attribute config.maxCodeSizeConfig is deprecated and will be removed in the future, please use config.transitions.contractsizelimit on genesis file 
+INFO [12-28|17:38:33.542] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=167 state="Accept request"
+INFO [12-28|17:38:33.547] Commit new mining work                   number=168 sealhash="62cd47…a449ed" uncles=0 txs=0 gas=0        fees=0 elapsed=5.202ms
+WARN [12-28|17:38:33.561] Block sealing failed                     err=unauthorized
+INFO [12-28|17:40:33.077] Commit new mining work                   number=169 sealhash="c2bcbb…c0868b" uncles=0 txs=0 gas=0        fees=0 elapsed="391.4µs"
+WARN [12-28|17:40:33.081] Block sealing failed                     err=unauthorized
+INFO [12-28|17:40:33.082] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=168 state="Accept request"
+INFO [12-28|17:40:33.085] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=168 old.state="Accept request" old.proposer=0xcE412f988377e31F4d0fF12d74df73B51C42d0cA next.round=0 next.seq=169 next.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|17:42:31.229] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=3.992ms   mgasps=0.000    number=169 hash="c60d2a…69fffd" age=1m58s   dirty=15.80KiB
+INFO [12-28|17:42:31.230] Commit new mining work                   number=170 sealhash="c5a200…a4d9e4" uncles=0 txs=0 gas=0        fees=0 elapsed="372µs"
+WARN [12-28|17:42:31.230] Block sealing failed                     err=unauthorized
+INFO [12-28|17:42:31.230] QBFT: handle final committed             address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=169 state="Accept request"
+INFO [12-28|17:42:31.230] QBFT: initialize new round               address=0xDF8b560be949C229C821731554C33EAD5E3888A4 current.round=0 current.sequence=169 target.round=0 lastProposal.number=169 lastProposal.hash="c60d2a…69fffd"
+INFO [12-28|17:42:31.230] QBFT: start new round                    address=0xDF8b560be949C229C821731554C33EAD5E3888A4 old.round=0  old.sequence=169 old.state="Accept request" old.proposer=0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 next.round=0 next.seq=170 next.proposer=0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a next.valSet="[0x27A97C9AaF04f18f3014c32e036dD0Ac76Da5f18 0x93917cADBace5dFCE132B991732c6Cda9bcC5B8a 0x98C1334496614aED49d2E81526D089f7264fED9C 0xcE412f988377e31F4d0fF12d74df73B51C42d0cA]" next.size=4 next.IsProposer=false
+INFO [12-28|17:44:29.325] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.892ms   mgasps=0.000    number=170 hash="839da9…4283c7" age=1m58s   dirty=15.80KiB
+WARN [12-28|17:44:29.328] Block sealing failed                     err=unauthorized
+INFO [12-28|17:48:25.909] Imported new chain segment               blocks=1 txs=0 mgas=0.000  elapsed=1.254ms   mgasps=0.000    number=172 hash="990277…49998b" age=1m58s   dirty=15.80KiB
+INFO [12-28|17:48:25.909] Commit new mining work                   number=173 sealhash="ee5ef2…623539" uncles=0 txs=0 gas=0        fees=0 elapsed="490.7µs"
+WARN [12-28|17:48:25.910] Block sealing failed                     err=unauthorized
+INFO [12-28|17:49:45.031] HTTP server stopped                      endpoint=[::]:8545
+INFO [12-28|17:49:45.118] HTTP server stopped                      endpoint=[::]:8546
+INFO [12-28|17:49:45.136] Stopping all plugins                     count=0
+INFO [12-28|17:49:45.136] All plugins stopped                      errors=[]
+INFO [12-28|17:49:45.136] Ethereum protocol stopped 
+INFO [12-28|17:49:45.140] Transaction pool stopped 
+INFO [12-28|17:49:45.143] BFT: deactivate 
+INFO [12-28|17:49:45.147] QBFT: stopped                            address=0xDF8b560be949C229C821731554C33EAD5E3888A4
+INFO [12-28|17:49:45.206] Writing cached state to disk             block=172 hash="990277…49998b" root="50c25b…37ddad"
+INFO [12-28|17:49:45.240] Persisted trie from memory database      nodes=43 size=5.67KiB time=33.4269ms gcnodes=0 gcsize=0.00B gctime="184.1µs" livenodes=23 livesize=3.55KiB
+INFO [12-28|17:49:45.240] Writing cached state to disk             block=171 hash="653b63…c4f352" root="50c25b…37ddad"
+INFO [12-28|17:49:45.240] Persisted trie from memory database      nodes=0  size=0.00B   time="9.3µs"   gcnodes=0 gcsize=0.00B gctime=0s        livenodes=23 livesize=3.55KiB
+INFO [12-28|17:49:45.240] Writing cached state to disk             block=45  hash="86130d…a958a5" root="53bb5e…1be382"
+INFO [12-28|17:49:45.241] Persisted trie from memory database      nodes=0  size=0.00B   time="4.8µs"   gcnodes=0 gcsize=0.00B gctime=0s        livenodes=23 livesize=3.55KiB
+INFO [12-28|17:49:45.241] Writing snapshot state to disk           root="d7d9af…f2e575"
+INFO [12-28|17:49:45.241] Persisted trie from memory database      nodes=0  size=0.00B   time="3.5µs"   gcnodes=0 gcsize=0.00B gctime=0s        livenodes=23 livesize=3.55KiB
+INFO [12-28|17:49:45.257] Writing clean trie cache to disk         path=/data/geth/triecache threads=2
+INFO [12-28|17:49:45.279] Persisted the clean trie cache           path=/data/geth/triecache elapsed=21.838ms
+INFO [12-28|17:49:45.282] Blockchain stopped 

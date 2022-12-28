@@ -1,6 +1,8 @@
 import { ethers } from "hardhat";
 
 async function main() {
+  console.log(`----------------- DEPLOY SCRIPT START -----------------`);
+
   const [deployer] = await ethers.getSigners();
   console.log(`Deploying contracts with the account: ${deployer.address}.`);
 
@@ -25,6 +27,7 @@ async function main() {
   console.log(
     `OrderManagementSystemUpgradable contract was deployed to ${orderManagementSystemUpgradable.address} address.`
   );
+  console.log(`----------------- DEPLOY SCRIPT END -----------------`);
 }
 
 main().catch((error) => {
