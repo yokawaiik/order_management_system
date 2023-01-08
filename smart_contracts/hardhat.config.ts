@@ -24,6 +24,9 @@ const config: HardhatUserConfig = {
     },
   },
   networks: {
+    hardhat: {
+      allowUnlimitedContractSize: true,
+    },
     goquorum: {
       url: `http://localhost:8545`,
       accounts: [OWNER_KEY],
