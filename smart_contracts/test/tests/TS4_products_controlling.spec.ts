@@ -1,11 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { deployOMS } from "./fixtures/deployOMS.fixture";
-import { OrderManagementSystem } from "./../typechain-types/contracts";
+import { deployOMS } from "../fixtures/deployOMS.fixture";
+import { OrderManagementSystem } from "../../typechain-types/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers/lib/ethers";
-import { setupManufacturerFixture } from "./fixtures/setupManufacturer.fixture";
-import { setupOrganizationFixture } from "./fixtures/setupOrganization.fixture";
+import { setupManufacturerFixture } from "../fixtures/setupManufacturer.fixture";
+import { setupOrganizationFixture } from "../fixtures/setupOrganization.fixture";
 
 describe("#TS4: product controlling", function () {
   let owner: SignerWithAddress;

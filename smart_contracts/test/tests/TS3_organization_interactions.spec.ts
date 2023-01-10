@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import {deployOMS} from "./fixtures/deployOMS.fixture";
+import {deployOMS} from "../fixtures/deployOMS.fixture";
 
-import { OrderManagementSystem } from "./../typechain-types/contracts";
+import { OrderManagementSystem } from "../../typechain-types/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers/lib/ethers";
 

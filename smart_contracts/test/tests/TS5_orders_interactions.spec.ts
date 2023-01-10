@@ -1,17 +1,17 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { deployOMS } from "./fixtures/deployOMS.fixture";
-import { OrderManagementSystem } from "./../typechain-types/contracts";
+import { deployOMS } from "../fixtures/deployOMS.fixture";
+import { OrderManagementSystem } from "../../typechain-types/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers/lib/ethers";
-import { setupManufacturerFixture } from "./fixtures/setupManufacturer.fixture";
-import { setupOrganizationFixture } from "./fixtures/setupOrganization.fixture";
-import Product from "./models/Product.model";
-import { produceNewProductFixture } from "./fixtures/produceNewProduct.fixture";
-import { createNewOrderFixture } from "./fixtures/createNewOrder.fixture";
-import OrderMemberDecision from "./enums/OrderMemberDecision.enum";
-import OrderStateList from "./enums/OrderStateList.enum";
-import StateList from "./enums/OrderState.enum";
+import { setupManufacturerFixture } from "../fixtures/setupManufacturer.fixture";
+import { setupOrganizationFixture } from "../fixtures/setupOrganization.fixture";
+import Product from "../models/Product.model";
+import { produceNewProductFixture } from "../fixtures/produceNewProduct.fixture";
+import { createNewOrderFixture } from "../fixtures/createNewOrder.fixture";
+import OrderMemberDecision from "../enums/OrderMemberDecision.enum";
+import OrderStateList from "../enums/OrderStateList.enum";
+import StateList from "../enums/OrderState.enum";
 
 describe("#TS5: orders interactions", function () {
   let owner: SignerWithAddress;
