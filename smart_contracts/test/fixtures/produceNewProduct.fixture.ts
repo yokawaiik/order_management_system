@@ -12,8 +12,8 @@ const produceNewProductFixture = async function (
   manufacturerOrgId: BigNumber,
   productType: BigNumber,
   price: BigNumber,
-  description: string,
-  link: string,
+  descriptionHash: string,
+  specification: string,
   guarantee: BigNumber
 ): Promise<Product> {
   const produceNewProductTx = orderManagementSystem
@@ -22,8 +22,8 @@ const produceNewProductFixture = async function (
       manufacturerOrgId,
       productType,
       price,
-      description,
-      link,
+      descriptionHash,
+      specification,
       guarantee
     );
 

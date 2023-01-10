@@ -3,11 +3,11 @@ import { ethers } from "hardhat";
 
 import {deployOMS} from "./fixtures/deployOMS.fixture";
 
-import { OrderManagementSystem } from "../typechain-types/contracts";
+import { OrderManagementSystem } from "./../typechain-types/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers/lib/ethers";
 
-describe("#TS2: testing the logic of interaction with organizations", function () {
+describe("#TS3: testing the logic of interaction with organizations", function () {
   let orderManagementSystem: OrderManagementSystem;
 
   let owner: SignerWithAddress;
@@ -38,7 +38,7 @@ describe("#TS2: testing the logic of interaction with organizations", function (
       );
   });
 
-  it("Create an organization.", async function () {
+  it("Create an organization", async function () {
     const createOrganizationTx = await orderManagementSystem
       .connect(adminOrganization)
       .createOrganization(orgTitle);
@@ -47,7 +47,7 @@ describe("#TS2: testing the logic of interaction with organizations", function (
     orgId = createOrganizationTx.value;
   });
 
-  it("Add a new employee to organization.", async function () {
+  it("Add a new employee to organization", async function () {
     const createUserTx = orderManagementSystem
       .connect(owner)
       .createUser(
@@ -73,7 +73,7 @@ describe("#TS2: testing the logic of interaction with organizations", function (
     expect(employeUser.organizationMember.role).to.be.equal(role);
   });
 
-  it("Change employe role.", async function () {
+  it("Change employe role", async function () {
     const newRole = 0; // 0 None, 1 Admin, 2 Employe
     const addEmployeToOrganizationTx = orderManagementSystem
       .connect(adminOrganization)
@@ -86,7 +86,7 @@ describe("#TS2: testing the logic of interaction with organizations", function (
     expect(employeWithChangedRole.organizationMember.role).to.be.equal(newRole);
   });
 
-  it("Remove employe from an organization.", async function () {
+  it("Remove employe from an organization", async function () {
     const deleteEmployeFromOrganizationTx = await orderManagementSystem
       .connect(adminOrganization)
       .deleteEmployeFromOrganization(orgId, employe.address);
@@ -110,15 +110,15 @@ describe("#TS2: testing the logic of interaction with organizations", function (
     expect(deletedEmployeHasSellerRole).to.be.equal(false);
   });
 
-  it("Another organization admin (from another organization) tries to change role.", async function () {
+  it("Another organization admin (from another organization) tries to change role", async function () {
     // todo
   });
 
-  it("Simple employe tries to change role.", async function () {
+  it("Simple employe tries to change role", async function () {
     // todo
   });
 
-  it("Simple employe tries to delete user.", async function () {
+  it("Simple employe tries to delete user", async function () {
     // todo
   });
 });

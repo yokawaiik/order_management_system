@@ -1,9 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-
 import { deployOMS } from "./fixtures/deployOMS.fixture";
-
-import { OrderManagementSystem } from "../typechain-types/contracts";
+import { OrderManagementSystem } from "./../typechain-types/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers/lib/ethers";
 import { setupManufacturerFixture } from "./fixtures/setupManufacturer.fixture";
@@ -11,12 +9,11 @@ import { setupOrganizationFixture } from "./fixtures/setupOrganization.fixture";
 import Product from "./models/Product.model";
 import { produceNewProductFixture } from "./fixtures/produceNewProduct.fixture";
 import { createNewOrderFixture } from "./fixtures/createNewOrder.fixture";
-
 import OrderMemberDecision from "./enums/OrderMemberDecision.enum";
 import OrderStateList from "./enums/OrderStateList.enum";
 import StateList from "./enums/OrderState.enum";
 
-describe("#TS4: orders interactions", function () {
+describe("#TS5: orders interactions", function () {
   let owner: SignerWithAddress;
   let orderManagementSystem: OrderManagementSystem;
 
@@ -168,7 +165,7 @@ describe("#TS4: orders interactions", function () {
     }
   });
 
-  it("Confirm order state (supplier and buyer)", async function () {
+  it("Confirm order (supplier and buyer)", async function () {
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
     const orderMode = BigNumber.from(0);
 
@@ -214,7 +211,7 @@ describe("#TS4: orders interactions", function () {
     // todo
   });
 
-  it("Don't add products to confirmed order", async function () {
+  it("Isn't possible to add products to confirmed order", async function () {
     // todo
   });
 
@@ -286,10 +283,6 @@ describe("#TS4: orders interactions", function () {
   });
 
   it("It isn't possible to update order (unconfirmed and confirmed) state by buyer", async function () {
-    // todo
-  });
-
-  it("It isn't possible to update unconfirmed order state by seller", async function () {
     // todo
   });
 
@@ -365,7 +358,6 @@ describe("#TS4: orders interactions", function () {
     // end update state>
 
     // < finish order
-    // todo
     // const finished = BigNumber.from(OrderMemberDecision.Finished);
     const finished = OrderMemberDecision.Finished;
     const finishOrderByIdBySelerTx = orderManagementSystem
@@ -387,11 +379,7 @@ describe("#TS4: orders interactions", function () {
     // todo
   });
 
-  it("Isn't possible to transferr products if only one orders' member set 'finish' order", async function () {
-    // todo
-  });
-
-  it("Update order state by byuer", async function () {
+  it("Isn't possible to transfer products if only one orders' member set 'finish' order", async function () {
     // todo
   });
 
@@ -495,14 +483,18 @@ describe("#TS4: orders interactions", function () {
     // now supplier doesn't have products
     expect(
       rawManufacturer.inventory.map((item) => item.toNumber())
-    ).not.to.deep.include.members(producedProducts.map((item) => item.id!.toNumber()));
+    ).not.to.deep.include.members(
+      producedProducts.map((item) => item.id!.toNumber())
+    );
 
     const rawOrg = await orderManagementSystem
       .connect(organization)
       .getOrganizationById(orgId);
     // now buyer has products
 
-    expect(rawOrg.inventory.map((item) => item.toNumber())).to.deep.include.members(
+    expect(
+      rawOrg.inventory.map((item) => item.toNumber())
+    ).to.deep.include.members(
       producedProducts.map((item) => item.id!.toNumber())
     );
   });
@@ -511,23 +503,19 @@ describe("#TS4: orders interactions", function () {
     // todo
   });
 
-  it("Deny order", async function () {
-    // todo
-  });
-
   it("Remove order by partcipant", async function () {
     // todo
   });
 
-  it("Remove order by other user", async function () {
+  it("Isn't possible to remove order by other user", async function () {
     // todo
   });
 
-  it("Approve an order by other user", async function () {
+  it("Isn't possible to approve an order by other user", async function () {
     // todo
   });
 
-  it("Approve an order when it has already been approved", async function () {
+  it("An attempt to cancel an order when both parties confirm it", async function () {
     // todo
   });
 });
