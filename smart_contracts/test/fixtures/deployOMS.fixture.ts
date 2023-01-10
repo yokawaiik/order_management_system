@@ -1,10 +1,13 @@
 import hre, { ethers } from "hardhat";
 
-export default async (deployer: any) => {
+const deployOMS = async (deployer: any) => {
   const StringLibrary = await ethers.getContractFactory("StringLibrary");
-  
   const stringLibrary = await StringLibrary.deploy();
   await stringLibrary.deployed();
+
+  const BytesLibrary = await ethers.getContractFactory("BytesLibrary");
+  const bytesLibrary = await BytesLibrary.deploy();
+  await bytesLibrary.deployed();
 
   const OrderManagementSystem = await ethers.getContractFactory(
     "OrderManagementSystem",
@@ -12,6 +15,7 @@ export default async (deployer: any) => {
       signer: deployer,
       libraries: {
         StringLibrary: stringLibrary.address,
+        BytesLibrary: bytesLibrary.address,
       },
     }
   );
@@ -20,3 +24,5 @@ export default async (deployer: any) => {
 
   return orderManagementSystem;
 };
+
+export { deployOMS };

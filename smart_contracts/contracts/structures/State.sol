@@ -8,5 +8,5 @@ struct State {
     uint256 date;
     uint256 price;
     address createdBy; // who changed it
-    string description; // maybe here needs to make a hash from ipfs
+    bytes32 descriptionHash; // maybe here needs to make a hash from ipfs
 }

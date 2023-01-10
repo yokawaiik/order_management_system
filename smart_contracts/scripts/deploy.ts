@@ -11,12 +11,17 @@ async function main() {
   const stringLibrary = await StringLibrary.deploy();
   await stringLibrary.deployed();
 
+  const BytesLibrary = await ethers.getContractFactory("BytesLibrary");
+  const bytesLibrary = await BytesLibrary.deploy();
+  await bytesLibrary.deployed();
+
   const OrderManagementSystemUpgradable = await ethers.getContractFactory(
     "OrderManagementSystemUpgradable",
     {
       signer: deployer,
       libraries: {
-        StringLibrary: stringLibrary.address,
+        StringLibrary: bytesLibrary.address,
+        BytesLibrary: stringLibrary.address,
       },
     }
   );

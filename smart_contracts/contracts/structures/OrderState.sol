@@ -5,8 +5,7 @@ import "../enums/OrderStateList.sol";
 
 struct OrderState {
     OrderStateList state;
-    string location;
-    string description;
+    bytes32 descriptionHash;
     address createdBy;
     uint256 createdAt;
 }

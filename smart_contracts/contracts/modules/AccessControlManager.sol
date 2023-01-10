@@ -63,6 +63,10 @@ contract AccessControlManager is AccessControl {
     mapping(uint256 => Organization) internal organizations;
     uint256 private organizationIdCounter;
 
+    function getOrganizationIdCounter() public view returns (uint256) {
+        return organizationIdCounter;
+    }
+
     function createUser(
         address _userAddress,
         string memory _login,
@@ -92,7 +96,7 @@ contract AccessControlManager is AccessControl {
 
         users[_userAddress].createdAt = block.timestamp;
         users[_userAddress].role = _role;
-        grantRole(_role, msg.sender);
+        grantRole(_role, _userAddress);
     }
 
     // can update user on his own
@@ -152,7 +156,7 @@ contract AccessControlManager is AccessControl {
 
         require(
             employe.role != OrganizationRoles.None,
-            "You're an employe of this organization, but you can't cat any action."
+            "You're an employe of this organization, but you can't do any action."
         );
 
         _;
@@ -175,7 +179,7 @@ contract AccessControlManager is AccessControl {
             .organizationMember;
 
         require(
-            employe.organizationId != _organizationId,
+            employe.organizationId == _organizationId,
             "You aren't an employe of this organization."
         );
 
@@ -224,6 +228,7 @@ contract AccessControlManager is AccessControl {
         employe.role = _role;
         employe.organizationId = _organizationId;
 
+        // _setupRole(role, account);
         if (_role == OrganizationRoles.Admin) {
             _grantRole(SELLER_ROLE, _employeAddress);
             _grantRole(ADMIN_ORGANIZATION_ROLE, _employeAddress);
