@@ -1,14 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-
 import {deployOMS} from "../fixtures/deployOMS.fixture";
-
 import { OrderManagementSystem } from "../../typechain-types/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 describe("#TS1: administrators logics", function () {
   let orderManagementSystem: OrderManagementSystem;
-
   let owner: SignerWithAddress;
   let newAdmin: SignerWithAddress;
 
@@ -81,4 +78,5 @@ describe("#TS1: administrators logics", function () {
 
     await expect(revokeAdminTx).to.be.reverted;
   });
+
 });

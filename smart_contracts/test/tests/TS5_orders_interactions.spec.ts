@@ -16,16 +16,13 @@ import StateList from "../enums/OrderState.enum";
 describe("#TS5: orders interactions", function () {
   let owner: SignerWithAddress;
   let orderManagementSystem: OrderManagementSystem;
-
   let manufacturer: SignerWithAddress;
   let manufacturerOrgId: BigNumber;
   let manufacturerEmploye: SignerWithAddress;
   let simpleUser: SignerWithAddress;
-
   let organization: SignerWithAddress;
   let orgId: BigNumber;
   let orgEmploye: SignerWithAddress;
-
   let producedProducts: Array<Product> = [];
 
   before(async function () {
@@ -73,7 +70,6 @@ describe("#TS5: orders interactions", function () {
       (new Date().getTime() / 1000 + 60 * 4).toFixed(0)
     );
     const productType = BigNumber.from(1);
-
     for (let index = 0; index < 2; index++) {
       const newProduct = await produceNewProductFixture(
         orderManagementSystem,
@@ -85,11 +81,9 @@ describe("#TS5: orders interactions", function () {
         link,
         guarantee
       );
-
       producedProducts.push(newProduct);
     }
   });
-
   it("Create a new order", async function () {
     //
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -106,7 +100,6 @@ describe("#TS5: orders interactions", function () {
 
     await expect(createOrderTx).not.to.be.reverted;
   });
-
   it("Add product to a unconfirmed order", async function () {
     //
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -131,7 +124,6 @@ describe("#TS5: orders interactions", function () {
       await expect(addProductToOrderByIdTx).not.to.be.reverted;
     }
   });
-
   it("Remove products from an unconfirmed order", async function () {
     //
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -164,7 +156,6 @@ describe("#TS5: orders interactions", function () {
       await expect(addProductToOrderByIdTx).not.to.be.reverted;
     }
   });
-
   it("Confirm order (supplier and buyer)", async function () {
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
     const orderMode = BigNumber.from(0);
@@ -190,39 +181,35 @@ describe("#TS5: orders interactions", function () {
 
     const agreement = BigNumber.from(OrderMemberDecision.Agreement);
 
+    // approveOrder by organization
     const approveOrderByFirstOrgTx = orderManagementSystem
       .connect(organization)
       .approveOrder(orgId, newOrder.id!, agreement);
 
     await expect(approveOrderByFirstOrgTx).not.to.be.reverted;
 
+    // approveOrder by manufacturer
     const approveOrderBySecondOrgTx = orderManagementSystem
       .connect(manufacturer)
       .approveOrder(manufacturerOrgId, newOrder.id!, agreement);
 
     await expect(approveOrderBySecondOrgTx).not.to.be.reverted;
   });
-
   it("Isn't possible to confirm order only supplier and finish it", async function () {
     // todo
   });
-
   it("Isn't possible to confirm order only buyer and finish it", async function () {
     // todo
   });
-
   it("Isn't possible to add products to confirmed order", async function () {
     // todo
   });
-
   it("Delete unconfirmed order", async function () {
     // todo
   });
-
   it("It isn't possible to delete confirmed order", async function () {
     // todo
   });
-
   it("Update order state (by seller)", async function () {
     //
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -281,23 +268,18 @@ describe("#TS5: orders interactions", function () {
 
     await expect(updateOrderStafteBySelerTx).not.to.be.reverted;
   });
-
   it("It isn't possible to update order (unconfirmed and confirmed) state by buyer", async function () {
     // todo
   });
-
   it("Disaprove order", async function () {
     // todo
   });
-
   it("Delete order (unconfirmed)", async function () {
     // todo
   });
-
   it("Isn't possible to delete confirmed order", async function () {
     // todo
   });
-
   it("Finish order", async function () {
     //
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -374,15 +356,12 @@ describe("#TS5: orders interactions", function () {
 
     // finish order>
   });
-
   it("Isn't possible to finish order if only one orders' member approve order", async function () {
     // todo
   });
-
   it("Isn't possible to transfer products if only one orders' member set 'finish' order", async function () {
     // todo
   });
-
   it("Approve transferring products", async function () {
     //
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -498,23 +477,18 @@ describe("#TS5: orders interactions", function () {
       producedProducts.map((item) => item.id!.toNumber())
     );
   });
-
   it("Isn't possible to transfer products if it's already happened", async function () {
     // todo
   });
-
   it("Remove order by partcipant", async function () {
     // todo
   });
-
   it("Isn't possible to remove order by other user", async function () {
     // todo
   });
-
   it("Isn't possible to approve an order by other user", async function () {
     // todo
   });
-
   it("An attempt to cancel an order when both parties confirm it", async function () {
     // todo
   });

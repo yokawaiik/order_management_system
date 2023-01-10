@@ -1,19 +1,15 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-
 import {deployOMS} from "../fixtures/deployOMS.fixture";
-
 import { OrderManagementSystem } from "../../typechain-types/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers/lib/ethers";
 
 describe("#TS3: testing the logic of interaction with organizations", function () {
   let orderManagementSystem: OrderManagementSystem;
-
   let owner: SignerWithAddress;
   let adminOrganization: SignerWithAddress;
   let employe: SignerWithAddress;
-
   const orgTitle = "OrgTitle";
   let orgId: BigNumber;
 

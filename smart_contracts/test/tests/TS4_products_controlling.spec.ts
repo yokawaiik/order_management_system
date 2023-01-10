@@ -10,12 +10,10 @@ import { setupOrganizationFixture } from "../fixtures/setupOrganization.fixture"
 describe("#TS4: product controlling", function () {
   let owner: SignerWithAddress;
   let orderManagementSystem: OrderManagementSystem;
-
   let manufacturer: SignerWithAddress;
   let manufacturerOrgId: BigNumber;
   let manufacturerEmploye: SignerWithAddress;
   let simpleUser: SignerWithAddress;
-
   let organization: SignerWithAddress;
   let orgId: BigNumber;
   let orgEmploye: SignerWithAddress;
@@ -53,11 +51,9 @@ describe("#TS4: product controlling", function () {
       orgEmploye
     );
   });
-
   it("Check if a new manufacturer was Registered", async function () {
     expect(manufacturerOrgId).not.to.be.null;
   });
-
   it("Manufacturer produce products", async function () {
     const price = BigNumber.from(100);
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -87,7 +83,6 @@ describe("#TS4: product controlling", function () {
 
     expect(productValue.id).to.be.eq(newProductId);
   });
-
   it("Other roles can't produce products", async function () {
     const price = BigNumber.from(100);
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -113,7 +108,6 @@ describe("#TS4: product controlling", function () {
       "You aren't an employe of this organization."
     );
   });
-
   it("Manufacturer's employees can't produce products", async function () {
     const price = BigNumber.from(100);
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -137,7 +131,6 @@ describe("#TS4: product controlling", function () {
 
     await expect(produceNewProductTx).to.be.reverted;
   });
-
   it("Update product state by only organization's seller", async function () {
     const price = BigNumber.from(100);
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -186,7 +179,6 @@ describe("#TS4: product controlling", function () {
       ].state
     ).to.be.equal(newProductState);
   });
-
   it("Transfer product from organization to organization", async function () {
     const price = BigNumber.from(100);
     const descriptionHash = ethers.utils.formatBytes32String("descriptionHash");
@@ -233,31 +225,24 @@ describe("#TS4: product controlling", function () {
       organizationObject.inventory.map((item) => item.toNumber())
     ).to.be.include(productId.toNumber());
   });
-
   it("Attempt updating product state if organization hasn't it in inventory", async function () {
     //  todo
   });
-
   it("Unlock product", async function () {
     //  todo
   });
-
   it("Success restore product by manufacturer (product guarantee)", async function () {
     //  todo
   });
-
   it("Unsuccess restore product by manufacturer (product guarantee is expired)", async function () {
     //  todo
   });
-
   it("Not a manufacturer can't restore product", async function () {
     //  todo
   });
-
   it("Unlock product ownership by manufacturer", async function () {
     //  todo
   });
-
   it("Sell product to seller", async function () {
     //  todo
   });

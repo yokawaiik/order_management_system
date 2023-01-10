@@ -74,9 +74,4 @@ Deploy contract to local hardhat
     npx hardhat test --grep 'TS'
 ```
 
-- To test all test suits
-```
-    npm run test-suits
-```
-
 
