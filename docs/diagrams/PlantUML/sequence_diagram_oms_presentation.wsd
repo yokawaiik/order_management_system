@@ -1,0 +1,89 @@
+@startuml "Interaction of components in a decentralized application"
+hide footbox
+
+' theme
+skinparam sequence {
+    ActorBorderColor #e2eec9
+
+    LifeLineBorderColor #000000
+    LifeLineBackgroundColor #e2eec9
+
+    ParticipantBorderColor #e2eec9
+    ParticipantBackgroundColor #e2eec9
+    ParticipantFontColor #000000
+
+    ActorBackgroundColor #e2eec9
+    ActorFontColor #000000
+}
+skinparam backgroundcolor transparent
+
+
+actor "User" as User
+participant "Application" as Application
+participant "Blockchain" as Blockchain
+participant "IPFS" as IPFS
+participant "Query Server" as QDB
+participant "Oracle Server" as Oracle
+participant "IoT devices \n and sensors" as IoT
+
+title Send transaction
+' == Send transaction by user ==
+
+User -> Application : Interaction
+activate Application
+
+Application -> Blockchain : Send transaction
+activate Blockchain
+Application <- Blockchain : Response with hash \n or any payload
+deactivate Blockchain
+
+Application -> IPFS : Upload any content
+activate IPFS
+Application <- IPFS : Response with content's hash
+deactivate IPFS
+
+Application -> Application : Display data
+
+Application --> User : End operation
+deactivate Application
+
+newpage Send transaction from IoT with oracle
+
+IoT -> Oracle : Register data
+
+activate Oracle
+
+Oracle -> Blockchain : Send transaction
+activate Blockchain
+Oracle <- Blockchain :  Response with hash \n or any payload
+deactivate Blockchain
+Oracle -> QDB : Send transaction's \n hash and caching \n data
+
+deactivate Oracle
+
+
+newpage Read data and quering
+
+
+User -> Application : Interaction
+activate Application
+
+Application -> QDB : Request data
+activate QDB
+Application <- QDB : Response data
+deactivate QDB
+
+Application -> IPFS : Request data
+activate IPFS
+Application <- IPFS : Response data
+deactivate IPFS
+Application -> Application : Display data
+
+Application --> User : End operation
+deactivate Application
+
+
+
+
+
+@enduml
