@@ -41,6 +41,11 @@ activate IPFS
 Application <- IPFS : Response with content's hash
 deactivate IPFS
 
+Application -> QDB : Send data cache
+activate QDB
+Application <- QDB : Server response
+deactivate QDB
+
 Application -> Application : Display data
 
 Application --> User : End operation
