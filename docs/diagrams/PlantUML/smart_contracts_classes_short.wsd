@@ -1,0 +1,37 @@
+@startuml "smart contracts classes"
+
+
+' it's done
+class OrderManagementSystem  << (C, Orchid) Contract >>  {}
+
+' it's done
+class OrderManagementSystemUpgradable << (C, Orchid) Contract >> {
+}
+
+class AccessControlManager << (C, Orchid) Contract >> {
+}
+
+
+
+class OrdersManager << (C, Orchid) Contract >> {
+}
+
+
+
+class ProductsManager << (C, Orchid) Contract >> {
+}
+
+
+
+OrderManagementSystemUpgradable ..> OrderManagementSystem
+OrderManagementSystem <|-- AccessControlManager
+OrderManagementSystem <|-- OrdersManager
+OrderManagementSystem <|-- ProductsManager
+OrdersManager <|-- AccessControlManager
+ProductsManager <|-- AccessControlManager
+
+
+
+
+
+@enduml

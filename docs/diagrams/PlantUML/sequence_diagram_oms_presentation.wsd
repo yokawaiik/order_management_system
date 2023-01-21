@@ -15,6 +15,7 @@ skinparam sequence {
     ActorBackgroundColor #e2eec9
     ActorFontColor #000000
 }
+skinparam backgroundcolor transparent
 
 
 actor "User" as User
@@ -25,8 +26,8 @@ participant "Query Server" as QDB
 participant "Oracle Server" as Oracle
 participant "IoT devices \n and sensors" as IoT
 
-' title "Send transaction"
-== Send transaction by user ==
+title Send transaction
+' == Send transaction by user ==
 
 User -> Application : Interaction
 activate Application
@@ -51,7 +52,7 @@ Application -> Application : Display data
 Application --> User : End operation
 deactivate Application
 
-== Send transaction from IoT with oracle ==
+newpage Send transaction from IoT with oracle
 
 IoT -> Oracle : Register data
 
@@ -65,8 +66,9 @@ Oracle -> QDB : Send transaction's \n hash and caching \n data
 
 deactivate Oracle
 
-' newpage Read data and quering
-== Read data and quering ==
+
+newpage Read data and quering
+
 
 User -> Application : Interaction
 activate Application
@@ -84,8 +86,6 @@ Application -> Application : Display data
 
 Application --> User : End operation
 deactivate Application
-
-' newpage S
 
 
 
