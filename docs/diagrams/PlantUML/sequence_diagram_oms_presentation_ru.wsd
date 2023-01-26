@@ -1,0 +1,94 @@
+@startuml "Interaction of components in a decentralized application"
+hide footbox
+
+' theme
+skinparam sequence {
+    ActorBorderColor #e2eec9
+
+    LifeLineBorderColor #000000
+    LifeLineBackgroundColor #e2eec9
+
+    ParticipantBorderColor #e2eec9
+    ParticipantBackgroundColor #e2eec9
+    ParticipantFontColor #000000
+
+    ActorBackgroundColor #e2eec9
+    ActorFontColor #000000
+}
+skinparam backgroundcolor transparent
+
+
+actor "User" as User
+participant "Application" as Application
+participant "Blockchain" as Blockchain
+participant "IPFS" as IPFS
+participant "Query Server" as QDB
+participant "Oracle Server" as Oracle
+participant "IoT devices \n and sensors" as IoT
+
+title Отправление транзакции
+' == Send transaction by user ==
+
+User -> Application : Взаимодействие
+activate Application
+
+Application -> Blockchain : Отправка транзакции
+activate Blockchain
+Application <- Blockchain : Ответ с хэшем \n и другими данными
+deactivate Blockchain
+
+Application -> IPFS : Обновление/добавление контента
+activate IPFS
+Application <- IPFS : Ответ с хэшем контента
+deactivate IPFS
+
+Application -> QDB : Кэширование данных
+activate QDB
+Application <- QDB : Ответ сервера
+deactivate QDB
+
+Application -> Application : Отображение данных
+
+Application --> User : Конец операции
+deactivate Application
+
+newpage Отправление транзакции сервером IoT
+
+IoT -> Oracle : Регистрация данных
+
+activate Oracle
+
+Oracle -> Blockchain : Отправление транзакции
+activate Blockchain
+Oracle <- Blockchain : Ответ с хэшем \n и другими данными
+deactivate Blockchain
+Oracle -> QDB : Отправка хэша транзакции \n и кэширование \n данных
+
+deactivate Oracle
+
+
+newpage Чтение данных и запросы
+
+
+User -> Application : Взаимодействие
+activate Application
+
+Application -> QDB : Запрос данных
+activate QDB
+Application <- QDB : Данные
+deactivate QDB
+
+Application -> IPFS : Запрос данных
+activate IPFS
+Application <- IPFS : Данные
+deactivate IPFS
+Application -> Application : Обновление интерфейса \n приложения
+
+Application --> User : Конец операции
+deactivate Application
+
+
+
+
+
+@enduml

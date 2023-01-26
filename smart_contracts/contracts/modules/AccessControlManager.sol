@@ -26,11 +26,46 @@ contract AccessControlManager is AccessControl {
     constructor() {
         _setRoleAdmin(DEFAULT_ADMIN_ROLE, ADMIN_ROLE);
         _grantRole(ADMIN_ROLE, msg.sender);
+        _grantRole(OWNER_ROLE, msg.sender);
+
+        createUser(msg.sender, "owner", "owner", ADMIN_ROLE);
+    }
+
+    function revokeRole(bytes32 role, address account)
+        public
+        override
+        onlyRole(ADMIN_ROLE)
+    {
+        if (role == OWNER_ROLE || role == ADMIN_ROLE)
+            require(
+                hasRole(OWNER_ROLE, msg.sender) == true,
+                "Revoke admins and owners are available only for contract's owner."
+            );
+
+        _revokeRole(role, account);
+    }
+
+    function grantRole(bytes32 role, address account)
+        public
+        override
+        onlyRole(ADMIN_ROLE)
+    {
+        if (role == OWNER_ROLE || role == ADMIN_ROLE)
+            require(
+                hasRole(OWNER_ROLE, msg.sender) == true,
+                "Grant role admins and owners are available only for contract's owner."
+            );
+
+        _grantRole(role, account);
     }
 
     mapping(address => User) internal users;
     mapping(uint256 => Organization) internal organizations;
     uint256 private organizationIdCounter;
+
+    function getOrganizationIdCounter() public view returns (uint256) {
+        return organizationIdCounter;
+    }
 
     function createUser(
         address _userAddress,
@@ -40,6 +75,20 @@ contract AccessControlManager is AccessControl {
     ) public onlyRole(ADMIN_ROLE) {
         // ? info: need to have access to add a new user
 
+        // other admin can't delete admin-owner
+
+        require(
+            users[_userAddress].createdAt == 0,
+            "Such user has already been created."
+        );
+
+        if ((_role == ADMIN_ROLE || _role == OWNER_ROLE)) {
+            require(
+                hasRole(OWNER_ROLE, msg.sender) == true,
+                "Set up admins and owners are available only for contract's owner."
+            );
+        }
+
         users[_userAddress].userAddress = _userAddress;
 
         users[_userAddress].password = StringLibrary.hash(_password);
@@ -47,6 +96,7 @@ contract AccessControlManager is AccessControl {
 
         users[_userAddress].createdAt = block.timestamp;
         users[_userAddress].role = _role;
+        grantRole(_role, _userAddress);
     }
 
     // can update user on his own
@@ -76,6 +126,7 @@ contract AccessControlManager is AccessControl {
     function createOrganization(string memory _title)
         public
         onlyRole(ADMIN_ORGANIZATION_ROLE)
+        returns (uint256)
     {
         uint256 timestamp = block.timestamp;
         Organization storage newOrg = organizations[organizationIdCounter];
@@ -90,6 +141,8 @@ contract AccessControlManager is AccessControl {
         admin.organizationId = organizationIdCounter;
 
         ++organizationIdCounter;
+
+        return newOrg.id;
     }
 
     modifier onlyOrganizationEmploye(uint256 _organizationId) {
@@ -103,7 +156,7 @@ contract AccessControlManager is AccessControl {
 
         require(
             employe.role != OrganizationRoles.None,
-            "You're an employe of this organization, but you can't cat any action."
+            "You're an employe of this organization, but you can't do any action."
         );
 
         _;
@@ -126,7 +179,7 @@ contract AccessControlManager is AccessControl {
             .organizationMember;
 
         require(
-            employe.organizationId != _organizationId,
+            employe.organizationId == _organizationId,
             "You aren't an employe of this organization."
         );
 
@@ -175,6 +228,7 @@ contract AccessControlManager is AccessControl {
         employe.role = _role;
         employe.organizationId = _organizationId;
 
+        // _setupRole(role, account);
         if (_role == OrganizationRoles.Admin) {
             _grantRole(SELLER_ROLE, _employeAddress);
             _grantRole(ADMIN_ORGANIZATION_ROLE, _employeAddress);
@@ -190,10 +244,12 @@ contract AccessControlManager is AccessControl {
         Organization storage organization = _getOrganizationById(
             _organizationId
         );
+
         OrganizationMember storage currentEmploye = _getUserByAddress(
             msg.sender
         ).organizationMember;
-        OrganizationMember storage deleteEmploye = _getUserByAddress(
+
+        OrganizationMember storage deletedEmploye = _getUserByAddress(
             _employeAddress
         ).organizationMember;
 
@@ -202,16 +258,17 @@ contract AccessControlManager is AccessControl {
             "You don't have rights for this action."
         );
 
-        require(
-            (deleteEmploye.role == OrganizationRoles.Admin &&
-                organization.createdBy == msg.sender),
-            "Delete admins can only creator of the organization."
-        );
+        if (deletedEmploye.role == OrganizationRoles.Admin) {
+            require(
+                organization.createdBy == msg.sender,
+                "Only creator can delete admins of the organization."
+            );
+        }
 
         // delete organization information
-        deleteEmploye.addedAt = 0;
-        deleteEmploye.organizationId = 0;
-        deleteEmploye.role = OrganizationRoles.None;
+        deletedEmploye.addedAt = 0;
+        deletedEmploye.organizationId = 0;
+        deletedEmploye.role = OrganizationRoles.None;
         _revokeRole(SELLER_ROLE, _employeAddress);
         _revokeRole(ADMIN_ORGANIZATION_ROLE, _employeAddress);
     }
@@ -247,7 +304,7 @@ contract AccessControlManager is AccessControl {
     {
         User storage user = users[_userAddress];
 
-        require(user.createdAt != 0, "User with such an id wasn't find.");
+        require(user.createdAt != 0, "User with such an address wasn't find.");
         return user;
     }
 
