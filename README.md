@@ -6,6 +6,35 @@ This project was developed for a master's thesis on the topic "Order management 
 
 The main results of the work are described here.
 
+## Table of Contents
+
+- [Order Management System](#order-management-system)
+  - [Table of Contents](#table-of-contents)
+  - [Directories](#directories)
+  - [Problems analysis](#problems-analysis)
+  - [Requirements](#requirements)
+  - [Architectural design](#architectural-design)
+    - [System's architecture](#systems-architecture)
+    - [Client-server interaction and client's architecture](#client-server-interaction-and-clients-architecture)
+    - [Technology stack](#technology-stack)
+  - [Developing (MVP)](#developing-mvp)
+    - [What was done](#what-was-done)
+    - [Way of improvements](#way-of-improvements)
+  - [UI Design for desktop app](#ui-design-for-desktop-app)
+  - [Testing](#testing)
+    - [Info about contract testing](#info-about-contract-testing)
+    - [Test results](#test-results)
+  - [Conclusion](#conclusion)
+  - [Author](#author)
+  - [Licence](#licence)
+
+
+## Directories
+
+- blockchain: GoQuorum test-network with QBFT consensus.
+- docs: text master's thesis text, images, presentation.
+- smart_contracts: smart contracts, tests.
+
 
 ## Problems analysis 
 
@@ -118,3 +147,15 @@ As a result of the work, a smart contract was implemented - the most significant
 - the smart contract is designed in such a way as to ensure its scalability when deployed in a production environment.
 
 Partial testing was carried out for the operation of the basic logic of the smart contract.
+
+
+## Author
+
+Shubin Danil Vitalievich (@yokawaiik)
+
+2023
+
+## Licence 
+
+GPL
+
