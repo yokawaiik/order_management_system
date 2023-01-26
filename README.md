@@ -73,7 +73,7 @@ To improve the smart contract:
 ![App map](./docs/diagrams/images/oms_pages.png)
 
 
-To design UI I used Penpot. File with the project available in  [folder](./docs/ui_design).
+To design UI I used Penpot. File with the project available in [folder](./docs/ui_design).
 
 ## Testing
 
@@ -96,6 +96,16 @@ Testing in the project was carried out partially and the main functions of the s
 
 - [x] Test Suits 5: orders interactions (only primary) 
     Check for creating a new order, adding a product (in vendor inventory) to an unconfirmed order, deleting products from an unconfirmed order, confirming an order, not being able to confirm an order by an outside supplier or customer and completing it, not being able to add products to a confirmed order, not being able to delete a confirmed order, updating status order (available only to the supplier), inability to update the status of the order by the supplier, check the refusal of the proposed order, delete only unconfirmed order, the inability to delete the confirmed order, check the completion of the order, check the completion of the order if only one of the participants confirmed it, the impossibility of transportation while the order is incomplete, confirmation of transfer of products from a completed order, the impossibility of re-transfer of products from a completed order, verification of an attempt to delete an order by an outside user, an attempt to cancel an order when both parties confirm it or
+
+### Test results
+
+You can see it [README.md](./smart_contracts/README.md).
+
+![Test coverage tests](./docs/tests/images/test_coverage_tests.png)
+
+
+![Test coverage table](./docs/tests/images/test_coverage.png)
+
 
 ## Conclusion
 
